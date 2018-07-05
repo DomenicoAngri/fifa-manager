@@ -1,0 +1,36 @@
+/*******************************
+ * Users routes.
+ *******************************/
+
+ // Requirements.
+const express = require('express');
+const userController = require('./user.controller');
+const userMiddleware = require('./user.middleware');
+
+// Initialize.
+const router = express.Router();
+
+// Routes.
+
+// TODO - Aggiungere a quel punto il controllo della login (?)
+
+router.get('/:username',
+        userMiddleware.checkUserExists,
+        userController.getUser);
+
+router.get('/', userController.getAllUsers);
+
+router.post('/',
+        userMiddleware.checkRegisterFields,
+        userMiddleware.checkUserNotExists,
+        userController.insertNewUser);
+
+router.put('/:username',
+        userMiddleware.checkUserExists,
+        userController.updateUser);
+
+router.delete('/:username',
+        userMiddleware.checkUserExists,
+        userController.deleteUser);
+
+module.exports = router;

@@ -5,12 +5,12 @@
 
 // Requirements.
 const express = require('express');
-//const usersRoutes = require('../features/users/users.routes');
+const userRoutes = require('../features/users/user.routes');
 
 // Initialize.
 const router = express.Router();
 
 // Routes.
-//router.use('/users', usersRoutes);
+router.use('/user', userRoutes);
 
 module.exports = router;
