@@ -5,7 +5,7 @@
 
 // Requirements.
 const express = require('express');
-const userRoutes = require('../features/users/user.routes');
+const userRoutes = require('../features/user/user.routes');
 
 // Initialize.
 const router = express.Router();
