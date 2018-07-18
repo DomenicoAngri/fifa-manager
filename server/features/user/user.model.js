@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const userSchema = new mongoose.Schema({
     _id: {
@@ -10,14 +11,16 @@ const userSchema = new mongoose.Schema({
         minlength: 2,
         maxlength: 50,
         unique: true,
+        lowercase: true,
         required: true
     },
     email: {
         type: String,
-        minlength: 3,
         maxlength: 320,
         unique: true,
-        required: true
+        lowercase: true,
+        match: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+        required: false
     },
     password: {
         type: String,
@@ -31,26 +34,33 @@ const userSchema = new mongoose.Schema({
         minlength: 2,
         maxlength: 50,
         unique: false,
-        required: true
+        required: false
     },
     surname: {
         type: String,
         minlength: 2,
         maxlength: 50,
         unique: false,
-        required: true
+        required: false
     },
     telephoneNumber: {
         type: String,
         minlength: 8,
         maxlength: 16,
         unique: true,
-        required: true
+        required: false
     },
-    stickers: {
-        type: [String],
+    leagues: {
+        type: [ObjectId],
+        required: false
+    },
+    team: {
+        type: ObjectId,
         required: false
     }
+
+    // TODO - Add profile trophies.
+
 });
 
 module.exports = mongoose.model('users', userSchema);

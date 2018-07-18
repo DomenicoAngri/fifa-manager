@@ -50,7 +50,7 @@ function usersMiddlewares(){
     }
 
     function checkUserExists(request, response, next){
-        userHelper.getUser(request.params.username)
+        userHelper.getUserByUsername(request.params.username)
         .then(function(user){
             if(user != null){
                 console.info('INFO - User found!');
@@ -70,7 +70,7 @@ function usersMiddlewares(){
     }
 
     function checkUserNotExists(request, response, next){
-        userHelper.getUser(request.params.username)
+        userHelper.getUserByUsername(request.params.username)
         .then(function(user){
             if(user == null){
                 console.info('INFO - User not found!');

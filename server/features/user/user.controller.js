@@ -1,8 +1,9 @@
 /*******************************
- * Users controllers
+ * User controllers
  *******************************/
 
 const helper = require('./user.helper');
+const log = require('../../utils/logger');
 const responseMessage = require('../../utils/responseMessage');
 
 function userController(){
@@ -17,7 +18,7 @@ function userController(){
     return userController;
 
     function getUser(request, response){
-        helper.getUser(request.params.username)
+        helper.getUserByUsername(request.params.username)
         .then(function(user){
             if(user != null){
                 console.info('INFO --> User found!');
@@ -60,6 +61,7 @@ function userController(){
     function insertNewUser(request, response){
         helper.insertNewUser(request.body)
         .then(function(userSaved){
+            log.logSeparator();
             console.info('INFO --> User registered!');
             console.debug(userSaved);
             response.status(200).send(new responseMessage('INFO', 'INFO --> User saved correctly!'));

@@ -1,5 +1,5 @@
 /*******************************
- * Users helper.
+ * User helper.
  *******************************/
 
 const userModel = require('./user.model');
@@ -7,7 +7,7 @@ const userModel = require('./user.model');
 function userHelper(){
     let userHelper = this;
 
-    userHelper.getUser = getUser;
+    userHelper.getUserByUsername = getUserByUsername;
     userHelper.getAllUsers = getAllUsers;
     userHelper.insertNewUser = insertNewUser;
     userHelper.updateUser = updateUser;
@@ -15,7 +15,7 @@ function userHelper(){
 
     return userHelper;
 
-    function getUser(username){
+    function getUserByUsername(username){
         return new Promise(function(resolve, reject){
             userModel.findOne({username: username})
             .then(function(user){
@@ -50,7 +50,8 @@ function userHelper(){
             user.name = userBody.name;
             user.surname = userBody.surname;
             user.telephoneNumber = userBody.telephoneNumber;
-            user.stickers = userBody.stickers;
+            user.leagues = userBody.leagues;
+            user.team = userBody.team;
 
             user.save()
             .then(function(userSaved){
