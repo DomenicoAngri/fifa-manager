@@ -1,24 +1,24 @@
 /*******************************
- * User middlewares
+ * User middleware
  *******************************/
 
 const userHelper = require('./user.helper');
 const responseMessage = require('../../utils/responseMessage');
 const log = require('../../utils/logger');
 
-function usersMiddlewares(){
-    let usersMiddlewares = this;
+function userMiddleware(){
+    let userMiddleware = this;
 
-    usersMiddlewares.checkRegisterFields = checkRegisterFields;
-    usersMiddlewares.checkUserExists = checkUserExists;
-    usersMiddlewares.checkUserNotExists = checkUserNotExists;
+    userMiddleware.checkMandatoryFields = checkMandatoryFields;
+    userMiddleware.checkUserExists = checkUserExists;
+    userMiddleware.checkUserNotExists = checkUserNotExists;
 
-    return usersMiddlewares;
+    return userMiddleware;
 
     /**
      * Check mandatory fields for new user.
      */
-    function checkRegisterFields(request, response, next){
+    function checkMandatoryFields(request, response, next){
         const body = request.body;
         const whiteSpaceValidationString = RegExp('^ *$');
         const emailValidationString = RegExp('/^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/');
@@ -51,8 +51,8 @@ function usersMiddlewares(){
         userHelper.getUserByUsername(requestParam != null ? requestParam : requestBody)
         .then(function(user){
             if(user != null){
-                log.logSeparator(console.info, 'INFO - User found!');
-                log.logSeparator(console.debug, user);
+                // log.logSeparator(console.info, 'INFO - User found!');
+                // log.logSeparator(console.debug, user);
                 next();
             }
             else{
@@ -74,7 +74,7 @@ function usersMiddlewares(){
         userHelper.getUserByUsername(requestParam != null ? requestParam : requestBody)
         .then(function(user){
             if(user == null){
-                log.logSeparator(console.info, 'INFO - User not found!');
+                // log.logSeparator(console.info, 'INFO - User not found!');
                 next();
             }
             else{
@@ -92,4 +92,4 @@ function usersMiddlewares(){
 
 }
 
-module.exports = new usersMiddlewares();
+module.exports = new userMiddleware();

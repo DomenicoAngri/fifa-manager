@@ -22,7 +22,7 @@ router.get('/:username',
 router.get('/', userController.getAllUsers);
 
 router.post('/',
-        userMiddleware.checkRegisterFields,
+        userMiddleware.checkMandatoryFields,
         userMiddleware.checkUserNotExists,
         userController.insertNewUser);
 

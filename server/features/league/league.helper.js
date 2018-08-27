@@ -2,62 +2,62 @@
  * User helper
  *******************************/
 
- const leagueModel = require('./league.model');
+const leagueModel = require('./league.model');
 
- function leagueHelper(){
-     let leagueHelper = this;
+function leagueHelper(){
+    let leagueHelper = this;
 
-     leagueHelper.getCurrentLeagues = getCurrentLeagues;
-     leagueHelper.getLeague = getLeague;
-     leagueHelper.getAllLeagues = getAllLeagues;
-     leagueHelper.insertNewLeague = insertNewLeague;
-     leagueHelper.updateLeague = updateLeague;
-     leagueHelper.setCurrentLeague = setCurrentLeague;
-     leagueHelper.deleteLeague = deleteLeague;
+    leagueHelper.getCurrentLeagues = getCurrentLeagues;
+    leagueHelper.getLeagueById = getLeagueById;
+    leagueHelper.getAllLeagues = getAllLeagues;
+    leagueHelper.insertNewLeague = insertNewLeague;
+    leagueHelper.updateLeague = updateLeague;
+    leagueHelper.setCurrentLeague = setCurrentLeague;
+    leagueHelper.deleteLeague = deleteLeague;
 
-     return leagueHelper;
+    return leagueHelper;
 
-     function getCurrentLeagues(){
-         return new Promise(function(resolve, reject){
-             leagueModel.find({current: true})
-             .then(function(currentLeagues){
-                 resolve(currentLeagues);
-             })
-             .catch(function(error){
-                 reject(error);
-             });
-         });
-     }
-
-     function setCurrentLeague(id){
-         return new Promise(function(resolve, reject){
-             leagueModel.updateOne(
-                 {_id: id},
-                 {current: true},
-                 {new: true}
-             )
-             .then(function(leagueModelUpdated){
-                 resolve(leagueModelUpdated);
-             })
+    function getCurrentLeagues(){
+        return new Promise(function(resolve, reject){
+            leagueModel.find({current: true})
+            .then(function(currentLeagues){
+                resolve(currentLeagues);
+            })
             .catch(function(error){
                 reject(error);
             });
-         });
-     }
+        });
+    }
 
-     function getLeague(id){
-         return new Promise(function(resolve, reject){
-             leagueModel.findOne({_id: id})
-             .then(function(league){
-                 resolve(league);
-             })
-             .catch(function(error){
-                 reject(error);
-             })
-         });
-     }
+    function setCurrentLeague(id){
+        return new Promise(function(resolve, reject){
+            leagueModel.updateOne(
+                {_id: id},
+                {current: true},
+                {new: true}
+            )
+            .then(function(leagueUpdated){
+                resolve(leagueUpdated);
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        });
+    }
 
-     function getAllLeagues(){
+    function getLeagueById(id){
+        return new Promise(function(resolve, reject){
+            leagueModel.findOne({_id: id})
+            .then(function(league){
+                resolve(league);
+            })
+            .catch(function(error){
+                reject(error);
+            })
+        });
+    }
+
+    function getAllLeagues(){
         return new Promise(function(resolve, reject){
             leagueModel.find({})
             .then(function(leagues){
@@ -67,51 +67,50 @@
                 reject(error);
             });
         });
+    }
 
-     }
+    function insertNewLeague(leagueBody){
+        return new Promise(function(resolve, reject){
+            let league = new leagueModel();
 
-     function insertNewLeague(leagueBody){
-         return new Promise(function(resolve, reject){
-             let league = new leagueModel();
+            // TODO - Vedere se i campi sono nulli prima di salvarli.
 
-             // TODO - Vedere se i campi sono nulli prima di salvarli.
+            league._id = leagueBody.id;
+            league.name = leagueBody.name;
+            league.year = leagueBody.year;
+            league.month = leagueBody.month;
+            league.current = leagueBody.current;
+            league.participantTeams = league.participantTeams;
 
-             league._id = leagueBody._id;
-             league.name = leagueBody.name;
-             league.year = leagueBody.year;
-             league.month = leagueBody.month;
-             league.current = leagueBody.current;
-             league.participantTeams = league.participantTeams;
+            // TODO - Insert type of tournament (?)
 
-             // TODO - Insert type of tournament (?)
+            league.save()
+            .then(function(leagueSaved){
+                resolve(leagueSaved);
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        });
+    }
 
-             league.save()
-             .then(function(leagueSaved){
-                 resolve(leagueSaved);
-             })
-             .catch(function(error){
-                 reject(error);
-             });
-         });
-     }
-
-     function updateLeague(id, leagueBody){
+    function updateLeague(id, leagueBody){
         return new Promise(function(resolve, reject){
             leagueModel.updateOne(
                 {_id: id},
                 {$set: leagueBody},
                 {new: true}
             )
-            .then(function(leagueModelUpdated){
-                resolve(leagueModelUpdated);
+            .then(function(leagueUpdated){
+                resolve(leagueUpdated);
             })
-           .catch(function(error){
-               reject(error);
-           });
+            .catch(function(error){
+                reject(error);
+            });
         });
-     }
+    }
 
-     function deleteLeague(id){
+    function deleteLeague(id){
         return new Promise(function(resolve, reject){
             userModel.deleteOne({_id: id})
             .then(function(leagueDeleted){
@@ -121,8 +120,8 @@
                 reject(error);
             });
         });
-     }
+    }
 
- }
+}
 
- module.exports = new leagueModel();
+module.exports = new leagueHelper();

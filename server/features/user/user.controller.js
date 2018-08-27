@@ -1,5 +1,5 @@
 /*******************************
- * User controllers
+ * User controller
  *******************************/
 
 const helper = require('./user.helper');
@@ -76,7 +76,7 @@ function userController(){
         helper.updateUser(request.params.username, request.body)
         .then(function(userUpdated){
             log.logSeparator(console.info, 'INFO --> User updated!');
-            log.logSeparator(console.log, userUpdated)
+            log.logSeparator(console.log, userUpdated);
             response.status(200).send(new responseMessage('INFO', 'INFO --> User updated correctly!'));
         })
         .catch(function(error){
