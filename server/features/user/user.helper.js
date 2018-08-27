@@ -1,5 +1,5 @@
 /*******************************
- * User helper.
+ * User helper
  *******************************/
 
 const userModel = require('./user.model');
@@ -43,6 +43,8 @@ function userHelper(){
         return new Promise(function(resolve, reject){
             let user = new userModel();
 
+            // TODO - Vedere se i campi sono nulli prima di salvarli.
+
             user._id = userBody._id;
             user.username = userBody.username;
             user.email = userBody.email;
@@ -82,8 +84,8 @@ function userHelper(){
     function deleteUser(username){
         return new Promise(function(resolve, reject){
             userModel.deleteOne({username: username})
-            .then(function(userUpdated){
-                resolve(userUpdated);
+            .then(function(userDeleted){
+                resolve(userDeleted);
             })
             .catch(function(error){
                 reject(error);
