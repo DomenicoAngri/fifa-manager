@@ -12,9 +12,6 @@ const router = express.Router();
 
 // Routes.
 
-// TODO - verificare i campi obbligatori
-// TODO - verificare prechè al trovamento della lega del get stampa log 2 volte
-
 router.put('/setCurrentLeague/:id',
         leagueMiddleware.checkLeagueExists,
         leagueController.setCurrentLeague);

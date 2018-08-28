@@ -73,8 +73,6 @@ function leagueHelper(){
         return new Promise(function(resolve, reject){
             let league = new leagueModel();
 
-            // TODO - Vedere se i campi sono nulli prima di salvarli.
-
             league._id = leagueBody.id;
             league.name = leagueBody.name;
             league.year = leagueBody.year;

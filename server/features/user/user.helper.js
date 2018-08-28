@@ -43,7 +43,7 @@ function userHelper(){
         return new Promise(function(resolve, reject){
             let user = new userModel();
 
-            // TODO - Vedere se i campi sono nulli prima di salvarli.
+            // TODO - Vedere se i campi sono nulli prima di salvarli. (update: forse è una cazzata)
 
             user._id = userBody._id;
             user.username = userBody.username;

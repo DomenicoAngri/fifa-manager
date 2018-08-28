@@ -61,7 +61,7 @@ function leagueController(){
         .catch(function(error){
             log.logSeparator(console.error, 'FATAL --> FAT_029 - Fatal error on getting league ' + id + ' from DB.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_029', 'FATAL --> Fatal error on getting current leagues ' + id + ' from DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_029', 'FATAL --> Fatal error on getting leagues ' + id + ' from DB. Check immediately console and logs.'));
         });
     }
 
@@ -80,16 +80,18 @@ function leagueController(){
     }
 
     function insertNewLeague(request, response){
+        const leagueName = request.body.name;
+
         helper.insertNewLeague(request.body)
         .then(function(leagueSaved){
-            log.logSeparator(console.info, 'INFO --> League ' + id + ' saved!');
+            log.logSeparator(console.info, 'INFO --> League ' + leagueName + ' saved!');
             log.logSeparator(console.debug, leagueSaved);
             response.status(200).send(new responseMessage('INFO', 'INFO --> League saved correctly!'));
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL --> FAT_031 - Fatal error on saving league ' + id);
+            log.logSeparator(console.error, 'FATAL --> FAT_031 - Fatal error on saving league ' + leagueName);
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_031', 'FATAL --> Fatal error on saving league ' + id + ' on DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_031', 'FATAL --> Fatal error on saving league ' + leagueName + ' on DB. Check immediately console and logs.'));
         });
     }
 
@@ -121,7 +123,7 @@ function leagueController(){
         .catch(function(error){
             log.logSeparator(console.error, 'FATAL - FAT_033 --> Fatal error on deleting league ' + id);
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_033', 'FATAL --> Fatal error on deleting league ' + id + ' on DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_033', 'FATAL --> Fatal error on deleting league ' + id + ' from DB. Check immediately console and logs.'));
         });
     }
 
