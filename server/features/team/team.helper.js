@@ -22,7 +22,7 @@ function teamHelper(){
 
     function getTeamById(id){
         return new Promise(function(resolve, reject){
-            teamModel.findOne({_id: id})
+            teamModel.findOne({name: id})
             .then(function(team){
                 resolve(team);
             })
@@ -60,7 +60,7 @@ function teamHelper(){
         return new Promise(function(resolve, reject){
             let team = new teamModel();
 
-            team._id = teamBody.id;
+            // team._id = teamBody.id;
             team.name = teamBody.name;
             team.createdData = teamBody.createdData;
             team.managerUser = teamBody.managerUser;

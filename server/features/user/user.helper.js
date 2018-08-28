@@ -45,7 +45,7 @@ function userHelper(){
 
             // TODO - Vedere se i campi sono nulli prima di salvarli. (update: forse è una cazzata)
 
-            user._id = userBody._id;
+            // user._id = userBody._id;
             user.username = userBody.username;
             user.email = userBody.email;
             user.password = userBody.password;

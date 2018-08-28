@@ -23,11 +23,11 @@ function userMiddleware(){
         const whiteSpaceValidationString = RegExp('^ *$');
         const emailValidationString = RegExp('/^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/');
 
-        if(!body._id || whiteSpaceValidationString.test(body._id)){
+        /*if(!body._id || whiteSpaceValidationString.test(body._id)){
             log.logSeparator(console.error, 'ERROR - ERR_027 --> ID cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_027', 'ERROR --> ID cannot be empty or null!'));
         }
-        else if(!body.username || whiteSpaceValidationString.test(body.username)){
+        else */if(!body.username || whiteSpaceValidationString.test(body.username)){
             log.logSeparator(console.error, 'ERROR - ERR_020 --> Username cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_020', 'ERROR --> Username cannot be empty or null!'));
         }

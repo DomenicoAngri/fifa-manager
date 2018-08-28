@@ -3,13 +3,13 @@
  *******************************/
 
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const ObjectId = mongoose.Schema.ObjectId;
 
 const teamSchema = new mongoose.Schema({
-    _id: {
-        type: String,
-        required: true
-    },
+    // _id: {
+    //     type: String,
+    //     required: true
+    // },
     name: {
         type: String,
         minlength: 2,
@@ -29,7 +29,8 @@ const teamSchema = new mongoose.Schema({
         required: false
     },
     leagues: {
-        type: [ObjectId],
+        // TODO - fare vettore di leagues.
+        type: ObjectId,
         ref: 'league',
         unique: false,
         required: false
