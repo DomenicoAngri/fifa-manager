@@ -17,6 +17,8 @@ function leagueHelper(){
 
     return leagueHelper;
 
+    // TODO - I'm here.
+
     function getCurrentLeagues(){
         return new Promise(function(resolve, reject){
             leagueModel.find({current: true})
