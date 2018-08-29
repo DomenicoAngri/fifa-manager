@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const router = require('./server/configs/routes');
 
+// TODO - Add documentations on every functions
+
 // Dotenv current environment.
 if(process.env.ENV === 'production'){
     require('dotenv').config({path: '.env.production'});

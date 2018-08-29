@@ -3,13 +3,9 @@
  *******************************/
 
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const ObjectId = mongoose.Schema.ObjectId;
 
 const userSchema = new mongoose.Schema({
-    // _id: {
-    //     type: String,
-    //     required: true
-    // },
     username: {
         type: String,
         minlength: 2,
@@ -54,13 +50,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: false
     },
-    leagues: {
-        type: [ObjectId],
-        required: false
-    },
     team: {
         type: ObjectId,
         ref: 'team',
+        unique: true,
         required: false
     }
 

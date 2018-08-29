@@ -12,8 +12,8 @@ const router = express.Router();
 
 // Routes.
 
-// TODO - Aggiungere a quel punto il controllo della login (?)
-// TODO - Aggiungere altri tipi di getUser (anche per update ?) in base alla ricerca che si fa (ad esempio: nome, cognome, ecc.)
+// TODO - Add login logic
+// TODO - Add other get type, like name, surname, team, ecc..
 
 router.get('/:username',
         userMiddleware.checkUserExists,
