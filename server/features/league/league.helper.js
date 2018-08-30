@@ -17,8 +17,6 @@ function leagueHelper(){
 
     return leagueHelper;
 
-    // TODO - I'm here.
-
     function getCurrentLeagues(){
         return new Promise(function(resolve, reject){
             leagueModel.find({current: true})
@@ -34,7 +32,7 @@ function leagueHelper(){
     function setCurrentLeague(id){
         return new Promise(function(resolve, reject){
             leagueModel.updateOne(
-                {_id: id},
+                {id: id},
                 {current: true},
                 {new: true}
             )
@@ -49,7 +47,7 @@ function leagueHelper(){
 
     function getLeagueById(id){
         return new Promise(function(resolve, reject){
-            leagueModel.findOne({_id: id})
+            leagueModel.findOne({id: id})
             .then(function(league){
                 resolve(league);
             })
@@ -75,14 +73,14 @@ function leagueHelper(){
         return new Promise(function(resolve, reject){
             let league = new leagueModel();
 
-            league._id = leagueBody.id;
+            league.id = leagueBody.id;
             league.name = leagueBody.name;
             league.year = leagueBody.year;
             league.month = leagueBody.month;
             league.current = leagueBody.current;
             league.participantTeams = league.participantTeams;
 
-            // TODO - Insert type of tournament (?)
+            // TODO - Insert type of tournament
 
             league.save()
             .then(function(leagueSaved){
@@ -97,7 +95,7 @@ function leagueHelper(){
     function updateLeague(id, leagueBody){
         return new Promise(function(resolve, reject){
             leagueModel.updateOne(
-                {_id: id},
+                {id: id},
                 {$set: leagueBody},
                 {new: true}
             )
@@ -112,7 +110,7 @@ function leagueHelper(){
 
     function deleteLeague(id){
         return new Promise(function(resolve, reject){
-            userModel.deleteOne({_id: id})
+            userModel.deleteOne({id: id})
             .then(function(leagueDeleted){
                 resolve(leagueDeleted);
             })

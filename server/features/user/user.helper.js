@@ -12,12 +12,14 @@ function userHelper(){
     userHelper.insertNewUser = insertNewUser;
     userHelper.updateUser = updateUser;
     userHelper.deleteUser = deleteUser;
+    userHelper.setUserTeam = setUserTeam;
 
     return userHelper;
 
     function getUserByUsername(username){
         return new Promise(function(resolve, reject){
             userModel.findOne({username: username})
+            .populate('team')
             .then(function(user){
                 resolve(user);
             })
@@ -82,6 +84,22 @@ function userHelper(){
             userModel.deleteOne({username: username})
             .then(function(userDeleted){
                 resolve(userDeleted);
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        });
+    }
+
+    function setUserTeam(username, teamId){
+        return new Promise(function(resolve, reject){
+            userModel.updateOne(
+                {username: username},
+                {team: teamId},
+                {new: true}
+            )
+            .then(function(userUpdated){
+                resolve(userUpdated);
             })
             .catch(function(error){
                 reject(error);

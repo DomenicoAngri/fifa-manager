@@ -17,22 +17,22 @@ function leagueMiddleware(){
 
     function checkMandatoryFields(request, response, next){
         const body = request.body;
-        const whiteSpaceValidationString = RegExp('^ *$');
+        const whiteSpaceValidation = RegExp('^ *$');
 
-        if(!body.id || whiteSpaceValidationString.test(body.id)){
-            log.logSeparator(console.error, 'ERROR - ERR_028 --> ID cannot be empty or null!');
-            response.status(400).send(new responseMessage('ERR_028', 'ERROR --> ID cannot be empty or null!'));
+        if(!body.id || whiteSpaceValidation.test(body.id)){
+            log.logSeparator(console.error, 'ERROR - ERR_028 --> League ID cannot be empty or null!');
+            response.status(400).send(new responseMessage('ERR_028', 'ERROR --> League ID cannot be empty or null!'));
         }
-        else if(!body.name || whiteSpaceValidationString.test(body.name)){
+        else if(!body.name || whiteSpaceValidation.test(body.name)){
             log.logSeparator(console.error, 'ERROR - ERR_029 --> League name cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_029', 'ERROR --> League name cannot be empty or null!'));
         }
-        else if(!body.year || body.year < 1900 || body.year > 2099){
-            log.logSeparator(console.error, 'ERROR - ERR_030 --> Year is null or have wrong format!');
+        else if(!body.year || body.year < 1900 || body.year > 3000){
+            log.logSeparator(console.error, 'ERROR - ERR_030 --> League year is null or have wrong format!');
             response.status(400).send(new responseMessage('ERR_030', 'ERROR --> Year is null or have wrong format!'));
         }
         else if(!body.month || body.month < 1 || body.month > 12){
-            log.logSeparator(console.error, 'ERROR - ERR_031 --> Month is null or have wrong format!');
+            log.logSeparator(console.error, 'ERROR - ERR_031 --> League month is null or have wrong format!');
             response.status(400).send(new responseMessage('ERR_031', 'ERROR --> Month is null or have wrong format!'));
         }
         else if(body.current == null){
@@ -54,8 +54,6 @@ function leagueMiddleware(){
         leagueHelper.getLeagueById(id)
         .then(function(league){
             if(league != null){
-                // log.logSeparator(console.info, 'INFO - League ' + id + ' exists!');
-                // log.logSeparator(console.debug, league);
                 next();
             }
             else{
@@ -76,11 +74,10 @@ function leagueMiddleware(){
         leagueHelper.getLeagueById(id)
         .then(function(league){
             if(league == null){
-                // log.logSeparator(console.info, 'INFO - League ' + id + ' not exists!');
                 next();
             }
             else{
-                log.logSeparator(console.warn, 'WARN - WARN_024 --> WARN --> League ' + id + ' exists!');
+                log.logSeparator(console.warn, 'WARN - WARN_024 --> League ' + id + ' exists!');
                 log.logSeparator(console.debug, league);
                 response.status(409).send(new responseMessage('WARN_024', 'WARN --> League ' + id + ' exists!'));
             }

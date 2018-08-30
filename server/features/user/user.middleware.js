@@ -28,7 +28,7 @@ function userMiddleware(){
             response.status(400).send(new responseMessage('ERR_020', 'ERROR --> Username cannot be empty or null!'));
         }
         else if(emailValidation.test(body.email)){
-            log.logSeparator(console.error, 'ERROR - ERR_021 --> Wrong email format! Email: ' + body.email);
+            log.logSeparator(console.error, 'ERROR - ERR_021 --> Wrong email format! Email: ' + body.email + '.');
             response.status(400).send(new responseMessage('ERR_021', 'ERROR --> Wrong email format!'));
         }
         else if(!body.password || whiteSpaceValidation.test(body.password)){
