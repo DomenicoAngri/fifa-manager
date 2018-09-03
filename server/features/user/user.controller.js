@@ -113,29 +113,17 @@ function userController(){
     function setUserTeam(request, response){
         const username = request.params.username;
         const teamId = request.params.teamId;
-        let trueTeamId;
 
-        // TODO - Secondo me ci vuole altra feature per roba incrociata, ora facciamo metodo pezzotto
-
-        const team = teamHelper.getTeamById(teamId)
-        .then(function(team){
-            //dopo fare controlli
-            trueTeamId = team._id;
-
-            helper.setUserTeam(username, trueTeamId)
-            .then(function(userUpdated){
-                log.logSeparator(console.info, 'INFO --> ' + teamId + ' team correctly added to user ' + username + '!');
-                log.logSeparator(console.debug, userUpdated);
-                response.status(200).send(new responseMessage('INFO', 'INFO --> ' + teamId + ' team correctly added to user ' + username + '!'));
-            })
-            .catch(function(error){
-                log.logSeparator(console.error, 'FATAL - FAT_044 --> Fatal error on adding ' + teamId + 'team to user ' + username + '.');
-                log.logSeparator(console.error, error);
-                response.status(500).send(new responseMessage('FAT_044', 'FATAL - FAT_044 --> Fatal error on adding ' + teamId + 'team to user ' + username + '. Check immediately console and logs.'));
-            });
+        helper.setUserTeam(username, teamId)
+        .then(function(userUpdated){
+            log.logSeparator(console.info, 'INFO --> ' + teamId + ' team correctly added to user ' + username + '!');
+            log.logSeparator(console.debug, userUpdated);
+            response.status(200).send(new responseMessage('INFO', 'INFO --> ' + teamId + ' team correctly added to user ' + username + '!'));
         })
         .catch(function(error){
-            response.status(500).send('MINGHIA CHE RERORE!!!!');
+            log.logSeparator(console.error, 'FATAL - FAT_044 --> Fatal error on adding ' + teamId + 'team to user ' + username + '.');
+            log.logSeparator(console.error, error);
+            response.status(500).send(new responseMessage('FAT_044', 'FATAL - FAT_044 --> Fatal error on adding ' + teamId + 'team to user ' + username + '. Check immediately console and logs.'));
         });
     }
 

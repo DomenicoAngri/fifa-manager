@@ -32,7 +32,6 @@ router.put('/:username',
 
 router.put('/userteam/:username/:teamId',
         userMiddleware.checkUserExists,
-        // Check if team exists ??
         userController.setUserTeam);
 
 router.delete('/:username',
