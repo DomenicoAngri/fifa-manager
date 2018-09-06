@@ -5,7 +5,6 @@
 const helper = require('./user.helper');
 const responseMessage = require('../../utils/responseMessage');
 const log = require('../../utils/logger');
-const teamHelper = require('../../features/team/team.helper');
 
 function userController(){
     let userController = this;

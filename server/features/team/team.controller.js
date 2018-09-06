@@ -98,22 +98,7 @@ function teamController(){
         });
     }
 
-    // TODO - Capire come fare, non si fa così.
     // function setUserTeam(request, response){
-    //     const teamId = request.params.id;
-    //     const username = request.params.username;
-
-    //     helper.setUserTeam(teamId, username)
-    //     .then(function(teamUpdated){
-    //         log.logSeparator(console.info, 'INFO --> Team ' + teamId + ' assigned to ' + username);
-    //         log.logSeparator(console.debug, teamUpdated);
-    //         response.status(200).send(new responseMessage('INFO', 'INFO --> Team ' + teamId + ' assigned to ' + username));
-    //     })
-    //     .catch(function(error){
-    //         log.logSeparator(console.error, 'FATAL - FAT_041 --> Fatal error on assigning team ' + teamId + ' to ' + username);
-    //         log.logSeparator(console.error, error);
-    //         response.status(500).send(new responseMessage('FAT_041', 'FATAL --> Fatal error on assigning team ' + teamId + ' to ' + username + '. Check immediately console and logs.'));
-    //     });
     // }
 
     function deleteTeam(request, response){

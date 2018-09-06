@@ -98,21 +98,7 @@ function teamHelper(){
         });
     }
 
-    // TODO - Non si fa così, capire come fare.
     // function setUserTeam(teamId, username){
-    //     return new Promise(function(resolve, reject){
-    //         teamModel.updateOne(
-    //             {id: teamId},
-    //             {managerUser: username},
-    //             {new: true}
-    //         )
-    //         .then(function(teamUpdated){
-    //             resolve(teamUpdated);
-    //         })
-    //         .catch(function(error){
-    //             reject(error);
-    //         });
-    //     });
     // }
 
     function deleteTeam(id){
