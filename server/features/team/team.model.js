@@ -3,12 +3,16 @@
  *******************************/
 
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const ObjectId = mongoose.Schema.ObjectId;
 
 const teamSchema = new mongoose.Schema({
-    _id: {
+    id: {
         type: String,
-        required: true
+        minlength: 2,
+        maxlength: 50,
+        lowercase: true,
+        unique: true,
+        required: true,
     },
     name: {
         type: String,
@@ -42,38 +46,39 @@ const teamSchema = new mongoose.Schema({
         minlength: 0,
         default: 0,
         unique: false,
-        required: true
+        required: false
     },
     concededGoals: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: true
+        required: false
     },
     wonMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: true
+        required: false
     },
     lossesMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: true
+        required: false
     },
     drawMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: true
+        required: false
     }
 
-    // TODO - Points - ?
+    // TODO - Points - (?)
+
 });
 
 module.exports = mongoose.model('team', teamSchema);

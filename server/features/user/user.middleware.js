@@ -20,22 +20,18 @@ function userMiddleware(){
      */
     function checkMandatoryFields(request, response, next){
         const body = request.body;
-        const whiteSpaceValidationString = RegExp('^ *$');
-        const emailValidationString = RegExp('/^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/');
+        const whiteSpaceValidation = RegExp('^ *$');
+        const emailValidation = RegExp('/^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/');
 
-        if(!body._id || whiteSpaceValidationString.test(body._id)){
-            log.logSeparator(console.error, 'ERROR - ERR_027 --> ID cannot be empty or null!');
-            response.status(400).send(new responseMessage('ERR_027', 'ERROR --> ID cannot be empty or null!'));
-        }
-        else if(!body.username || whiteSpaceValidationString.test(body.username)){
+        if(!body.username || whiteSpaceValidation.test(body.username)){
             log.logSeparator(console.error, 'ERROR - ERR_020 --> Username cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_020', 'ERROR --> Username cannot be empty or null!'));
         }
-        else if(emailValidationString.test(body.email)){
-            log.logSeparator(console.error, 'ERROR - ERR_021 --> Wrong email format! Email: ' + body.email);
+        else if(emailValidation.test(body.email)){
+            log.logSeparator(console.error, 'ERROR - ERR_021 --> Wrong email format! Email: ' + body.email + '.');
             response.status(400).send(new responseMessage('ERR_021', 'ERROR --> Wrong email format!'));
         }
-        else if(!body.password || whiteSpaceValidationString.test(body.password)){
+        else if(!body.password || whiteSpaceValidation.test(body.password)){
             log.logSeparator(console.error, 'ERROR - ERR_022 --> Password cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_022', 'ERROR --> Password cannot be empty or null!'));
         }
@@ -45,48 +41,43 @@ function userMiddleware(){
     }
 
     function checkUserExists(request, response, next){
-        requestParam = request.params.username;
-        requestBody = request.body.username;
+        username = request.params.username != null ? request.params.username : request.body.username;
 
-        userHelper.getUserByUsername(requestParam != null ? requestParam : requestBody)
+        userHelper.getUserByUsername(username)
         .then(function(user){
             if(user != null){
-                // log.logSeparator(console.info, 'INFO - User found!');
-                // log.logSeparator(console.debug, user);
                 next();
             }
             else{
-                log.logSeparator(console.warn, 'WARN - WARN_020 --> User not found!');
-                response.status(404).send(new responseMessage('WARN_020', 'WARNING --> User not found!'));
+                log.logSeparator(console.warn, 'WARN - WARN_020 --> User ' + username + ' not exists!');
+                response.status(404).send(new responseMessage('WARN_020', 'WARNING --> User ' + username + ' not exists!'));
             }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_020 --> Fatal server error on checking user exists. Check immediately console and logs.');
+            log.logSeparator(console.error, 'FATAL - FAT_020 --> Fatal server error on checking user ' + username + ' exists.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_020', 'FATAL --> Fatal server error on checking user exists. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_020', 'FATAL --> Fatal server error on checking user ' + username + ' exists. Check immediately console and logs.'));
         });
     }
 
     function checkUserNotExists(request, response, next){
-        requestParam = request.params.username;
-        requestBody = request.body.username;
+        username = request.params.username != null ? request.params.username : request.body.username;
 
-        userHelper.getUserByUsername(requestParam != null ? requestParam : requestBody)
+        userHelper.getUserByUsername(username)
         .then(function(user){
             if(user == null){
-                // log.logSeparator(console.info, 'INFO - User not found!');
                 next();
             }
             else{
-                log.logSeparator(console.warn, 'WARN - WARN_022 --> WARN --> User found!');
+                log.logSeparator(console.warn, 'WARN - WARN_022 --> WARN --> User ' + username + ' exists!');
                 log.logSeparator(console.debug, user);
-                response.status(409).send(new responseMessage('WARN_022', 'WARN --> User found!'));
+                response.status(409).send(new responseMessage('WARN_022', 'WARN --> User ' + username + ' exists!'));
             }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_025 --> Fatal error on checking user not exists. Check immediately console and logs.');
+            log.logSeparator(console.error, 'FATAL - FAT_025 --> Fatal error on checking user ' + username + ' not exists.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_025', 'FATAL --> Fatal error on checking user not exists. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_025', 'FATAL --> Fatal error on checking user ' + username + ' not exists. Check immediately console and logs.'));
         });
     }
 

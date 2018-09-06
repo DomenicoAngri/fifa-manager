@@ -22,7 +22,7 @@ function leagueController(){
     function getCurrentLeagues(request, response){
         helper.getCurrentLeagues()
         .then(function(currentLeagues){
-            log.logSeparator(console.info, 'INFO --> Active leagues found: ' + currentLeagues.length);
+            log.logSeparator(console.info, 'INFO --> Active leagues found: ' + currentLeagues.length) + '.';
             log.logSeparator(console.debug, currentLeagues);
             response.status(200).send(currentLeagues);
         })
@@ -68,7 +68,7 @@ function leagueController(){
     function getAllLeagues(request, response){
         helper.getAllLeagues()
         .then(function(leagues){
-            log.logSeparator(console.info, 'INFO --> Leagues found: ' + leagues.length);
+            log.logSeparator(console.info, 'INFO --> Leagues found: ' + leagues.length + '.');
             log.logSeparator(console.debug, leagues);
             response.status(200).send(leagues);
         })
@@ -86,10 +86,10 @@ function leagueController(){
         .then(function(leagueSaved){
             log.logSeparator(console.info, 'INFO --> League ' + leagueName + ' saved!');
             log.logSeparator(console.debug, leagueSaved);
-            response.status(200).send(new responseMessage('INFO', 'INFO --> League saved correctly!'));
+            response.status(200).send(new responseMessage('INFO', 'INFO --> League ' + leagueName + ' saved correctly!'));
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL --> FAT_031 - Fatal error on saving league ' + leagueName);
+            log.logSeparator(console.error, 'FATAL --> FAT_031 - Fatal error on saving league ' + leagueName + '.');
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_031', 'FATAL --> Fatal error on saving league ' + leagueName + ' on DB. Check immediately console and logs.'));
         });
@@ -97,17 +97,18 @@ function leagueController(){
 
     function updateLeague(request, response){
         const id = request.params.id;
+        const leagueName = request.body.name;
 
         helper.updateLeague(id, request.body)
         .then(function(leagueUpdated){
-            log.logSeparator(console.info, 'INFO --> League ' + id + ' updated!');
+            log.logSeparator(console.info, 'INFO --> League ' + leagueName + ' updated!');
             log.logSeparator(console.debug, leagueUpdated);
-            response.status(200).send(new responseMessage('INFO', 'INFO --> League ' + id + ' updated correctly!'));
+            response.status(200).send(new responseMessage('INFO', 'INFO --> League ' + leagueName + ' updated correctly!'));
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL --> FAT_032 - Fatal error on updating league ' + id + ' on DB.');
+            log.logSeparator(console.error, 'FATAL --> FAT_032 - Fatal error on updating league ' + leagueName + ' on DB.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_032', 'FATAL --> Fatal error on updating league ' + id + ' on DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_032', 'FATAL --> Fatal error on updating league ' + leagueName + ' on DB. Check immediately console and logs.'));
         });
     }
 
@@ -121,7 +122,7 @@ function leagueController(){
             response.status(200).send(new responseMessage('INFO', 'INFO --> League ' + id + ' deleted correctly!'));
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_033 --> Fatal error on deleting league ' + id);
+            log.logSeparator(console.error, 'FATAL - FAT_033 --> Fatal error on deleting league ' + id + '.');
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_033', 'FATAL --> Fatal error on deleting league ' + id + ' from DB. Check immediately console and logs.'));
         });

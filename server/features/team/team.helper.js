@@ -12,9 +12,10 @@ function teamHelper(){
     teamHelper.getTeamByUser = getTeamByUser;
     teamHelper.insertNewTeam = insertNewTeam;
     teamHelper.updateteam = updateteam;
-    teamHelper.setUserTeam = setUserTeam;
+    // teamHelper.setUserTeam = setUserTeam;
     teamHelper.deleteTeam = deleteTeam;
 
+    // TODO
     // deleteteam by user?
     // updateteam by user?
 
@@ -22,7 +23,7 @@ function teamHelper(){
 
     function getTeamById(id){
         return new Promise(function(resolve, reject){
-            teamModel.findOne({_id: id})
+            teamModel.findOne({id: id})
             .then(function(team){
                 resolve(team);
             })
@@ -35,8 +36,8 @@ function teamHelper(){
     function getAllTeams(){
         return new Promise(function(resolve, reject){
             teamModel.find({})
-            .then(function(team){
-                resolve(team);
+            .then(function(teams){
+                resolve(teams);
             })
             .catch(function(error){
                 reject(error);
@@ -60,7 +61,7 @@ function teamHelper(){
         return new Promise(function(resolve, reject){
             let team = new teamModel();
 
-            team._id = teamBody.id;
+            team.id = teamBody.id;
             team.name = teamBody.name;
             team.createdData = teamBody.createdData;
             team.managerUser = teamBody.managerUser;
@@ -84,7 +85,7 @@ function teamHelper(){
     function updateteam(id, teamBody){
         return new Promise(function(resolve, reject){
             teamModel.updateOne(
-                {_id: id},
+                {id: id},
                 {$set: teamBody},
                 {new: true}
             )
@@ -97,25 +98,12 @@ function teamHelper(){
         });
     }
 
-    function setUserTeam(teamId, username){
-        return new Promise(function(resolve, reject){
-            teamModel.updateOne(
-                {_id: teamId},
-                {managerUser: username},
-                {new: true}
-            )
-            .then(function(teamUpdated){
-                resolve(teamUpdated);
-            })
-            .catch(function(error){
-                reject(error);
-            });
-        });
-    }
+    // function setUserTeam(teamId, username){
+    // }
 
     function deleteTeam(id){
         return new Promise(function(resolve, reject){
-            userModel.deleteOne({_id: id})
+            userModel.deleteOne({id: id})
             .then(function(teamDeleted){
                 resolve(teamDeleted);
             })

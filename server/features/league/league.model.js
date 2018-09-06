@@ -6,9 +6,13 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 
 const leagueSchema = new mongoose.Schema({
-    _id: {
+    id: {
         type: String,
-        required: true
+        minlength: 2,
+        maxlength: 50,
+        lowercase: true,
+        unique: true,
+        required: true,
     },
     name: {
         type: String,
@@ -20,7 +24,7 @@ const leagueSchema = new mongoose.Schema({
     year: {
         type: Number,
         minlength: 1900,
-        maxlength: 2099,
+        maxlength: 3000,
         unique: false,
         required: true
     },
@@ -39,13 +43,12 @@ const leagueSchema = new mongoose.Schema({
     participantTeams: {
         type: ObjectId,
         ref: 'team',
+        unique: true,
         required: false
     }
     
-    // TODO - Type of tournament
-    // type: {
-    //     // Tipe of tournament
-    // }
+    // TODO - Add type of tournament.
+    
 });
 
 module.exports = mongoose.model('league', leagueSchema);

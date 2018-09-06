@@ -12,12 +12,14 @@ function userHelper(){
     userHelper.insertNewUser = insertNewUser;
     userHelper.updateUser = updateUser;
     userHelper.deleteUser = deleteUser;
+    userHelper.setUserTeam = setUserTeam;
 
     return userHelper;
 
     function getUserByUsername(username){
         return new Promise(function(resolve, reject){
             userModel.findOne({username: username})
+            .populate('team')
             .then(function(user){
                 resolve(user);
             })
@@ -43,16 +45,12 @@ function userHelper(){
         return new Promise(function(resolve, reject){
             let user = new userModel();
 
-            // TODO - Vedere se i campi sono nulli prima di salvarli. (update: forse è una cazzata)
-
-            user._id = userBody._id;
             user.username = userBody.username;
             user.email = userBody.email;
             user.password = userBody.password;
             user.name = userBody.name;
             user.surname = userBody.surname;
             user.telephoneNumber = userBody.telephoneNumber;
-            user.leagues = userBody.leagues;
             user.team = userBody.team;
 
             user.save()
@@ -67,7 +65,7 @@ function userHelper(){
 
     function updateUser(username, userBody){
         return new Promise(function(resolve, reject){
-            userModel.update(
+            userModel.updateOne(
                 {username: username},
                 {$set: userBody},
                 {new: true}
@@ -86,6 +84,22 @@ function userHelper(){
             userModel.deleteOne({username: username})
             .then(function(userDeleted){
                 resolve(userDeleted);
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        });
+    }
+
+    function setUserTeam(username, teamId){
+        return new Promise(function(resolve, reject){
+            userModel.updateOne(
+                {username: username},
+                {team: teamId},
+                {new: true}
+            )
+            .then(function(userUpdated){
+                resolve(userUpdated);
             })
             .catch(function(error){
                 reject(error);

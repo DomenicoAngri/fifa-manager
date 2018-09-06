@@ -12,11 +12,11 @@ const router = express.Router();
 
 // Routes.
 
-router.put('/setCurrentLeague/:id',
+router.put('/currentLeague/:id',
         leagueMiddleware.checkLeagueExists,
         leagueController.setCurrentLeague);
 
-router.get('/getCurrentLeagues', leagueController.getCurrentLeagues);
+router.get('/currentLeagues', leagueController.getCurrentLeagues);
 
 router.get('/:id',
         leagueMiddleware.checkLeagueExists,
