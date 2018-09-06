@@ -55,6 +55,11 @@ const userSchema = new mongoose.Schema({
         ref: 'team',
         unique: true,
         required: false
+    },
+    isAdmin: {
+        type: boolean,
+        default: false,
+        required: true
     }
 
     // TODO - Add profile trophies.
