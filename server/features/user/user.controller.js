@@ -126,6 +126,10 @@ function userController(){
         });
     }
 
+    function login(request, response){
+
+    }
+
 }
 
 module.exports = new userController();

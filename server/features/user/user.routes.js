@@ -26,6 +26,9 @@ router.post('/',
         userMiddleware.checkUserNotExists,
         userController.insertNewUser);
 
+// TODO - Check field?
+router.post('/login', userController.login);
+
 router.put('/:username',
         userMiddleware.checkUserExists,
         userController.updateUser);
