@@ -5,6 +5,8 @@
 const helper = require('./user.helper');
 const responseMessage = require('../../utils/responseMessage');
 const log = require('../../utils/logger');
+const jwt = require('jwt-simple');
+const moment = require('moment');
 
 function userController(){
     let userController = this;
@@ -15,6 +17,7 @@ function userController(){
     userController.updateUser = updateUser;
     userController.deleteUser = deleteUser;
     userController.setUserTeam = setUserTeam;
+    userController.login = login;
 
     return userController;
 
@@ -127,7 +130,40 @@ function userController(){
     }
 
     function login(request, response){
+        const username = request.body.username;
+        const password = request.body.password;
 
+        helper.login(username)
+        .then(function(user){
+            if(password == user.password){
+                const userResponse = {
+                    token: createJWTToken(user),
+                    user: user
+                };
+                response.status(200).send(userResponse);
+            }
+            else{
+                // TODO - Message error.
+                log.logSeparator(console.error, 'pwd mismatch you are not authorized');
+                response.status(401).send('NON SEI AUTORIZZATO CAZZO!!');
+            }
+
+        })
+        .catch(function(error){
+            // TODO - fare errore.
+            console.log(error);
+        });
+
+    }
+
+    function createJWTToken(user){
+        const payload = {
+            sub : user.username,
+            iat : moment().unix(),
+            exp : moment().add(14, 'days').unix()
+        }
+
+        return jwt.encode(payload, 'SUPER-PASSWORD-SECRET-POMUMENT');
     }
 
 }

@@ -35,6 +35,9 @@ function userMiddleware(){
             log.logSeparator(console.error, 'ERROR - ERR_022 --> Password cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_022', 'ERROR --> Password cannot be empty or null!'));
         }
+        
+        // TODO - Check admin field.
+
         else{
             next();
         }

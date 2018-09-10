@@ -6,6 +6,7 @@
 const express = require('express');
 const userController = require('./user.controller');
 const userMiddleware = require('./user.middleware');
+const auth = require('../../middlewares/authentication');
 
 // Initialize.
 const router = express.Router();
@@ -19,7 +20,9 @@ router.get('/:username',
         userMiddleware.checkUserExists,
         userController.getUserByUsername);
 
-router.get('/', userController.getAllUsers);
+router.get('/',
+        auth.authentication,
+        userController.getAllUsers);
 
 router.post('/',
         userMiddleware.checkMandatoryFields,

@@ -2,10 +2,11 @@
  * Authentication middleware
  *******************************/
 
-const log = require('../../utils/logger');
+const log = require('../utils/logger');
 const jwt = require('jwt-simple');
 const moment = require('moment');
-const userHelper = require()
+const responseMessage = require('../utils/responseMessage');
+const userHelper = require('../features/user/user.helper');
 
 function authenticationMiddleware(){
     let authenticationMiddleware = this;
@@ -15,11 +16,13 @@ function authenticationMiddleware(){
     return authenticationMiddleware;
 
     function authentication(request, response, next){
-        let token = request.header('Authorization');
+        let token = request.header('auth');
         if(!token){
             log.logSeparator(console.error, 'ERROR - ERR_036 --> Not authorized.');
             response.status(401).send(new responseMessage('ERR_036', 'ERROR --> Not authorized.'));
         }
+
+        log.logSeparator(console.log, 'Token --> ' + token);
 
         let payload = jwt.decode(token, process.env.SECRET_JWT_TOKEN);
         if(payload.ext <= moment().unix()){
