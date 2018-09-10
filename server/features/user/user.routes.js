@@ -13,7 +13,6 @@ const router = express.Router();
 
 // Routes.
 
-// TODO - Add login logic
 // TODO - Add other get type, like name, surname, team, ecc..
 
 router.get('/:username',
@@ -30,7 +29,9 @@ router.post('/',
         userController.insertNewUser);
 
 // TODO - Check field?
-router.post('/login', userController.login);
+router.post('/login',
+        auth.checkMandatoryFields,
+        userController.login);
 
 router.put('/:username',
         userMiddleware.checkUserExists,

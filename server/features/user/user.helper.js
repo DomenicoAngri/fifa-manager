@@ -111,7 +111,6 @@ function userHelper(){
     function login(username){
         return new Promise(function(resolve, reject){
             userModel.findOne({username: username})
-            // .select('password')
             .then(function(user){
                 resolve(user);
             })

@@ -57,9 +57,9 @@ function userMiddleware(){
             }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_020 --> Fatal server error on checking user ' + username + ' exists.');
+            log.logSeparator(console.error, 'FATAL - FAT_020 --> Fatal error on checking user ' + username + ' exists.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_020', 'FATAL --> Fatal server error on checking user ' + username + ' exists. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_020', 'FATAL --> Fatal error on checking user ' + username + ' exists. Check immediately console and logs.'));
         });
     }
 

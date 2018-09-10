@@ -32,8 +32,8 @@ function userController(){
                 response.status(200).send(user);
             }
             else{
-                log.logSeparator(console.warn, 'WARN - WARN_020 --> User ' + username + ' not found!');
-                response.status(404).send(new responseMessage('WARN_020','WARN --> User  ' + username + ' not found!'));
+                log.logSeparator(console.warn, 'WARN - WARN_020 --> User ' + username + ' not exists!');
+                response.status(404).send(new responseMessage('WARN_020','WARN --> User  ' + username + ' not exists!'));
             }
         })
         .catch(function(error){
@@ -53,8 +53,8 @@ function userController(){
                 response.status(200).send(users);
             }
             else{
-                log.logSeparator(console.warn, 'WARN - WARN_021 --> No users was found!');
-                response.status(404).send(new responseMessage('WARN_021','WARN --> No users was found!'));
+                log.logSeparator(console.warn, 'WARN - WARN_021 --> No users found!');
+                response.status(404).send(new responseMessage('WARN_021','WARN --> No users found!'));
             }
         })
         .catch(function(error){
@@ -123,9 +123,9 @@ function userController(){
             response.status(200).send(new responseMessage('INFO', 'INFO --> ' + teamId + ' team correctly added to user ' + username + '!'));
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_044 --> Fatal error on adding ' + teamId + 'team to user ' + username + '.');
+            log.logSeparator(console.error, 'FATAL - FAT_044 --> Fatal error on adding ' + teamId + ' team to user ' + username + '.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_044', 'FATAL - FAT_044 --> Fatal error on adding ' + teamId + 'team to user ' + username + '. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_044', 'FATAL --> Fatal error on adding ' + teamId + ' team to user ' + username + '. Check immediately console and logs.'));
         });
     }
 
@@ -136,24 +136,25 @@ function userController(){
         helper.login(username)
         .then(function(user){
             if(password == user.password){
-                const userResponse = {
+                const userInfoWithToken = {
                     token: createJWTToken(user),
                     user: user
                 };
-                response.status(200).send(userResponse);
+
+                log.logSeparator(console.debug, 'userInfoWithToken = ' + userResponseWithToken);
+                response.status(200).send(userInfoWithToken);
             }
             else{
-                // TODO - Message error.
-                log.logSeparator(console.error, 'pwd mismatch you are not authorized');
-                response.status(401).send('NON SEI AUTORIZZATO CAZZO!!');
+                log.logSeparator(console.error, 'ERROR - ERR_036 --> Password is incorrect. Please insert correct password.');
+                response.status(401).send(new responseMessage('ERR_036', 'ERROR --> Password is incorrect. Please insert correct password.'));
             }
 
         })
         .catch(function(error){
-            // TODO - fare errore.
-            console.log(error);
+            log.logSeparator(console.error, 'FATAL - FAT_045 --> Fatal error occurred on ' + username + '\'s login.');
+            log.logSeparator(console.error, error);
+            response.status(500).send(new responseMessage('FAT_045', 'FATAL --> Fatal error occurred on ' + username + '\'s login. Check immediately console and logs.'));
         });
-
     }
 
     function createJWTToken(user){
@@ -163,6 +164,7 @@ function userController(){
             exp : moment().add(14, 'days').unix()
         }
 
+        // TODO - cambiare qui token.
         return jwt.encode(payload, 'SUPER-PASSWORD-SECRET-POMUMENT');
     }
 
