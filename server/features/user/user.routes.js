@@ -13,9 +13,11 @@ const router = express.Router();
 
 // Routes.
 
+// TODO - Check lowercase fields.
 // TODO - Add other get type, like name, surname, team, ecc..
 
 router.get('/:username',
+        auth.authentication,
         userMiddleware.checkUserExists,
         userController.getUserByUsername);
 
@@ -28,20 +30,22 @@ router.post('/',
         userMiddleware.checkUserNotExists,
         userController.insertNewUser);
 
-// TODO - Check field?
 router.post('/login',
         auth.checkMandatoryFields,
         userController.login);
 
 router.put('/:username',
+        auth.authentication,
         userMiddleware.checkUserExists,
         userController.updateUser);
 
 router.put('/userteam/:username/:teamId',
+        auth.authentication,
         userMiddleware.checkUserExists,
         userController.setUserTeam);
 
 router.delete('/:username',
+        auth.authentication,
         userMiddleware.checkUserExists,
         userController.deleteUser);
 

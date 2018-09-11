@@ -43,6 +43,7 @@ function authenticationMiddleware(){
             response.status(401).send(new responseMessage('ERR_037', 'ERROR --> You are not authorized. Please login first.'));
         }
 
+        // TODO - Sta roba va in eccezione, capire come gestirla con i messaggi.
         let payload = jwt.decode(token, process.env.SECRET_JWT_TOKEN);
         log.logSeparator(console.debug, 'payload --> ' + payload);
 

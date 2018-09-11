@@ -140,7 +140,6 @@ function userController(){
                     token: createJWTToken(user),
                     user: user
                 };
-
                 log.logSeparator(console.debug, 'userInfoWithToken = ' + userResponseWithToken);
                 response.status(200).send(userInfoWithToken);
             }
@@ -148,7 +147,6 @@ function userController(){
                 log.logSeparator(console.error, 'ERROR - ERR_036 --> Password is incorrect. Please insert correct password.');
                 response.status(401).send(new responseMessage('ERR_036', 'ERROR --> Password is incorrect. Please insert correct password.'));
             }
-
         })
         .catch(function(error){
             log.logSeparator(console.error, 'FATAL - FAT_045 --> Fatal error occurred on ' + username + '\'s login.');
@@ -164,8 +162,7 @@ function userController(){
             exp : moment().add(14, 'days').unix()
         }
 
-        // TODO - cambiare qui token.
-        return jwt.encode(payload, 'SUPER-PASSWORD-SECRET-POMUMENT');
+        return jwt.encode(payload, process.env.SECRET_JWT_TOKEN);
     }
 
 }
