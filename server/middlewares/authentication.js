@@ -45,6 +45,8 @@ function authenticationMiddleware(){
 
         // TODO - Sta roba va in eccezione, capire come gestirla con i messaggi.
         let payload = jwt.decode(token, process.env.SECRET_JWT_TOKEN);
+        
+        // TODO - questo non lo stampa PD
         log.logSeparator(console.debug, 'payload --> ' + payload);
 
         if(payload.ext <= moment().unix()){

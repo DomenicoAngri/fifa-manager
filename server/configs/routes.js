@@ -3,7 +3,7 @@
  * This router handle all get and post app requests.
  ****************************************************/
 
-// TODO - Insert log for track all request routes: starting method, what to do, finish method, ecc..
+// TODOPOST - Insert log for track all request routes: starting method, what to do, finish method, ecc..
 
 // Requirements.
 const express = require('express');

@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 
-    // TODO - Add profile trophies.
+    // TODOPOST - Add profile trophies.
 
 });
 

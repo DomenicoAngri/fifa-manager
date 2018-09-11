@@ -140,7 +140,7 @@ function userController(){
                     token: createJWTToken(user),
                     user: user
                 };
-                log.logSeparator(console.debug, 'userInfoWithToken = ' + userResponseWithToken);
+                log.logSeparator(console.debug, 'userInfoWithToken = ' + userInfoWithToken);
                 response.status(200).send(userInfoWithToken);
             }
             else{

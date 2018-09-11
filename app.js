@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const router = require('./server/configs/routes');
 
-// TODO - Add documentations on every functions
+// TODOPOST - Add documentations on every functions
 
 // Dotenv current environment.
 if(process.env.ENV === 'production'){
@@ -31,7 +31,7 @@ app.use('/', router);
  * Others
  ********************************/
 
-// TODO - Check if create a db file configuration.
+// TODOPOST - Check if create a db file configuration.
 
 // DB connection.
 if(process.env.ENV === 'local'){

@@ -13,8 +13,8 @@ const router = express.Router();
 
 // Routes.
 
-// TODO - Check lowercase fields.
-// TODO - Add other get type, like name, surname, team, ecc..
+// TODOPOST - Check lowercase fields.
+// TODOPOST - Add other get type, like name, surname, team, ecc..
 
 router.get('/:username',
         auth.authentication,
