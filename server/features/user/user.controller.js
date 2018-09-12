@@ -155,11 +155,13 @@ function userController(){
         });
     }
 
+    // TODO - Choose how much days and refresh token?
     function createJWTToken(user){
         const payload = {
             sub : user.username,
             iat : moment().unix(),
             exp : moment().add(14, 'days').unix()
+            //exp : moment().add(10, 'seconds').unix()
         }
 
         return jwt.encode(payload, process.env.SECRET_JWT_TOKEN);

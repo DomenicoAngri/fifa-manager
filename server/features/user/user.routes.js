@@ -13,6 +13,7 @@ const router = express.Router();
 
 // Routes.
 
+// TODO - Develop admin permission for method.
 // TODOPOST - Check lowercase fields.
 // TODOPOST - Add other get type, like name, surname, team, ecc..
 
@@ -39,6 +40,7 @@ router.put('/:username',
         userMiddleware.checkUserExists,
         userController.updateUser);
 
+// TODO - Develop this method correctly.
 router.put('/userteam/:username/:teamId',
         auth.authentication,
         userMiddleware.checkUserExists,

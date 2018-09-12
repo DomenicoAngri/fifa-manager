@@ -43,18 +43,15 @@ function authenticationMiddleware(){
             response.status(401).send(new responseMessage('ERR_037', 'ERROR --> You are not authorized. Please login first.'));
         }
 
-        // TODO - Sta roba va in eccezione, capire come gestirla con i messaggi.
-        let payload = jwt.decode(token, process.env.SECRET_JWT_TOKEN);
-        
-        // TODO - questo non lo stampa PD
-        log.logSeparator(console.debug, 'payload --> ' + payload);
-
-        if(payload.ext <= moment().unix()){
-            log.logSeparator(console.debug, 'Token time --> ' + payload.ext + '.');
+        let payload;
+        try{
+            payload = jwt.decode(token, process.env.SECRET_JWT_TOKEN);
+        }
+        catch{
             log.logSeparator(console.error, 'ERROR - ERR_038 --> Your session is expired. Please login again.');
             response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Your session is expired. Please login again.'));
         }
-
+        
         userHelper.getUserByUsername(payload.sub)
         .then(function(user){
             if(user != null){
