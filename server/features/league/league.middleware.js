@@ -62,9 +62,9 @@ function leagueMiddleware(){
             }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_034 --> Fatal server error on checking league ' + id + ' exists.');
+            log.logSeparator(console.error, 'FATAL - FAT_034 --> Fatal error on checking league ' + id + ' exists.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_034', 'FATAL --> Fatal server error on checking league ' + id + ' exists. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_034', 'FATAL --> Fatal error on checking league ' + id + ' exists. Check immediately console and logs.'));
         });
     }
 

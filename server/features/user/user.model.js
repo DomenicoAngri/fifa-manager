@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        minlength: 8,
         maxlength: 128,
         unique: false,
         required: true
@@ -55,9 +54,14 @@ const userSchema = new mongoose.Schema({
         ref: 'team',
         unique: true,
         required: false
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+        required: true
     }
 
-    // TODO - Add profile trophies.
+    // TODOPOST - Add profile trophies.
 
 });
 

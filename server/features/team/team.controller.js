@@ -29,9 +29,9 @@ function teamController(){
             response.status(200).send(team);
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_036 --> Fatal error on getting team ' + id + ' from DB.');
+            log.logSeparator(console.error, 'FATAL - FAT_037 --> Fatal error on getting team ' + id + ' from DB.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_036', 'FATAL --> Fatal error on getting team ' + id + ' from DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_037', 'FATAL --> Fatal error on getting team ' + id + ' from DB. Check immediately console and logs.'));
         });
     }
 
@@ -43,9 +43,9 @@ function teamController(){
             response.status(200).send(teams);
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_037 --> Fatal error on getting teams from DB.');
+            log.logSeparator(console.error, 'FATAL - FAT_038 --> Fatal error on getting all teams from DB.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_037', 'FATAL --> Fatal error on getting teams from DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_038', 'FATAL --> Fatal error on getting all teams from DB. Check immediately console and logs.'));
         });
     }
 
@@ -59,9 +59,9 @@ function teamController(){
             response.status(200).send(team);
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_038 --> Fatal error on getting ' + username + '\'s team from DB.');
+            log.logSeparator(console.error, 'FATAL - FAT_039 --> Fatal error on getting ' + username + '\'s team from DB.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_038', 'FATAL --> Fatal error on getting ' + username + '\'s team from DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_039', 'FATAL --> Fatal error on getting ' + username + '\'s team from DB. Check immediately console and logs.'));
         });
     }
 
@@ -75,9 +75,9 @@ function teamController(){
             response.status(200).send(new responseMessage('INFO', 'INFO --> Team ' + teamName + ' saved correctly!'));
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_039 --> Fatal error on saving team ' + teamName + ' on DB.');
+            log.logSeparator(console.error, 'FATAL - FAT_040 --> Fatal error on saving team ' + teamName + ' on DB.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_039', 'FATAL --> Fatal error on saving team ' + teamName + ' on DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_040', 'FATAL --> Fatal error on saving team ' + teamName + ' on DB. Check immediately console and logs.'));
         });
     }
 
@@ -92,9 +92,9 @@ function teamController(){
             response.status(200).send(new responseMessage('INFO', 'INFO --> Team ' + teamName + ' updated correctly!'));
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_040 --> Fatal error on updating team ' + teamName + '.');
+            log.logSeparator(console.error, 'FATAL - FAT_041 --> Fatal error on updating team ' + teamName + '.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_040', 'FATAL --> Fatal error on updating team ' + teamName + ' on DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_041', 'FATAL --> Fatal error on updating team ' + teamName + ' on DB. Check immediately console and logs.'));
         });
     }
 
@@ -111,7 +111,7 @@ function teamController(){
             response.status(200).send(new responseMessage('INFO', 'INFO --> Team ' + id + ' deleted correctly!'));
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_042 --> Fatal error on deleting team ' + id + 'from DB.');
+            log.logSeparator(console.error, 'FATAL - FAT_042 --> Fatal error on deleting team ' + id + ' from DB.');
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_042', 'FATAL --> Fatal error on deleting team ' + id + ' from DB. Check immediately console and logs.'));
         });

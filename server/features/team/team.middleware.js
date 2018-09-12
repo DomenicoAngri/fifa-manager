@@ -71,9 +71,9 @@ function teamMiddleware(){
             }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_035 --> Fatal error on checking team ' + id + ' not exists.');
+            log.logSeparator(console.error, 'FATAL - FAT_036 --> Fatal error on checking team ' + id + ' not exists.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_035', 'FATAL --> Fatal error on checking team ' + id + '  not exists. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_036', 'FATAL --> Fatal error on checking team ' + id + '  not exists. Check immediately console and logs.'));
         });
     }
 

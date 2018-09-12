@@ -3,7 +3,7 @@ function logger(){
 
     logger.logSeparator = logSeparator;
 
-    // TODO - Capire come effettuare polimorfismo qualora si possa fare.
+    // TODOPOST - Capire come effettuare polimorfismo qualora si possa fare.
     // function logSeparator(){
     //     console.log('--------------------------------------------------');
     // }
