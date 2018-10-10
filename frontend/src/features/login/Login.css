@@ -8,7 +8,7 @@
     background-size: cover;
     top: 0;
     left: 0;
-    text-align: center;
+    
     color: white;
 }
 
@@ -22,15 +22,17 @@
     background-color: rgb(84, 110, 122, 0.9);
 }
 
-.login-form{
+.login-container{
     background-color: #303030;
     border-radius: 15px;
+}
 
-    position: absolute;
-    
+.login-form{
+    margin: 1%;
 }
 
 .header-form{
+    text-align: center;
     margin: 2%;
 }
 
@@ -42,94 +44,49 @@
     font-size: 1.5em;
 }
 
-/* Smartphone grandi dimensioni */
+.button-form{
+    margin-right: 3%;
+    margin-bottom: 3%;
+}
+
+/* Smartphone XS screen */
+@media (min-width: 300px){
+    .login-container{
+        margin-top: 10%;
+    }
+}
+
+/* Smartphone screen */
+@media (min-width: 350px){
+    .login-container{
+        margin-top: 25%;
+    }
+}
+
+/* Smartphone XL screen */
 @media (min-width: 481px){
-    .login-form{
-        height: 481px;
+    .login-container{
+        margin-top: 20%;
     }
 }
 
-/* Tablet */
+/* Tablet sreen */
 @media (min-width: 768px){
-    .login-form{
-        height: 768px;
+    .login-container{
+        margin-top: 10%;
     }
 }
 
-/* Desktop */
+/* Desktop screen */
 @media (min-width: 992px){
-    .login-form{
-        height: 992px;
+    .login-container{
+        margin-top: 15%;
     }
 }
 
-/* Grandi Desktop */
+/* XL screen*/
 @media (min-width: 1200px){
-    .login-form{
-        height: 1200px;
+    .login-container{
+        margin-top: 10%;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-/* .Login-logo{
-    height: 100px;
-}
-
-.Login-header{
-    background-color: #222;
-    height: 20%;
-    padding: 20px;
-    color: white;
-}
-
-.Login-title{
-    font-size: 1.5em;
-}
-
-.Login-intro{
-    font-size: large;
-}
-
-Smartphone grandi dimensioni
-@media (min-width: 481px){
-    .App{
-        height: 481px;
-    }
-}
-
-Tablet
-@media (min-width: 768px){
-    .App{
-        height: 768px;
-    }
-}
-
-Desktop
-@media (min-width: 992px){
-    .App{
-        height: 992px;
-    }
-}
-
-Grandi Desktop
-@media (min-width: 1200px){
-    .App{
-        height: 100%;
-    }
-} */

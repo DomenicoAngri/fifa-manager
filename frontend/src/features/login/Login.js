@@ -11,22 +11,35 @@ class LoginPage extends Component{
         return(
             <div className="login">
 
-                <div className="login-form">
+                <div className="container">
+                    <div className="row">
+                        <div className="login-container col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-10 offset-1">
+                            <header className="header-form">
+                                <img src={Logo} className="login-logo" alt="Fifa Manager Logo"/>
+                                <h1 className="login-title">Fifa Manager</h1>
+                            </header>
+                            
+                            <p>
+                                Benvenuto, se non hai un account, registrati.<br />
+                                Per partecipare al torneo, dovrai essere autorizzato da un amministratore.
+                            </p>
 
-                    <header className="header-form">
-                        <img src={Logo} className="login-logo" alt="Fifa Manager Logo"/>
-                        <h1 className="login-title">Fifa Manager</h1>
-                        <p>
-                            Benvenuto, se non hai un account, registrati.<br />
-                            Per partecipare al torneo, dovrai essere autorizzato da un amministratore.
-                        </p>
-                    </header>
-                    
-                    <input type="text"/>
-                    <input type="password"/>
-                    <input type="button" value="Login"/>
-                    <input type="button" value="Registrati"/>
+                            <form className="login-form">
+                                <div className="form-group">
+                                    <label for="usernameInput">Inserisci il tuo username:</label>
+                                    <input type="email" class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="passwordInput">Password:</label>
+                                    <input type="password" class="form-control" id="passwordInput" placeholder="Password"/>
+                                </div>
+                                <input type="button" value="Login" className="btn btn-primary button-form"/>
+                                <input type="button" value="Registrati" className="btn btn-primary button-form"/>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+
 
 
 
