@@ -1,32 +1,3 @@
-.login{
-    position: absolute;
-    background-image: url(../../assets/images/fifa-manager-login.jpg);
-    width: 100%;
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    top: 0;
-    left: 0;
-    
-    color: white;
-}
-
-.login::before{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    content: "";
-    background-color: rgb(84, 110, 122, 0.9);
-}
-
-.login-container{
-    background-color: #303030;
-    border-radius: 15px;
-}
-
 .login-form{
     margin: 1%;
 }
@@ -34,14 +5,6 @@
 .header-form{
     text-align: center;
     margin: 2%;
-}
-
-.login-logo{
-    height: 100px;
-}
-
-.login-title{
-    font-size: 1.5em;
 }
 
 .button-form{
