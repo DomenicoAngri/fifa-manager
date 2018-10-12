@@ -12,7 +12,7 @@ class LoginPage extends Component{
                 <div className="container">
                     <div className="row">
                         <div className="form-container login-container col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-10 offset-1">
-                            <Header classes="header-form"/>
+                            <Header classes="header-login-form"/>
                             
                             <p>
                                 Benvenuto, se non hai un account, registrati.<br />
@@ -28,9 +28,9 @@ class LoginPage extends Component{
                                     <label for="passwordInput">Password:</label>
                                     <input type="password" class="form-control" id="passwordInput" placeholder="Password"/>
                                 </div>
-                                <input type="button" value="Login" className="btn btn-primary button-form"/>
+                                <input type="button" value="Login" className="btn btn-primary button-login-form"/>
                                 <NavLink to="/registration">
-                                    <input type="button" value="Registrati" className="btn btn-primary button-form"/>
+                                    <input type="button" value="Registrati" className="btn btn-primary button-login-form"/>
                                 </NavLink>
                             </form>
                         </div>
