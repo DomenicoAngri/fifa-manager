@@ -21,12 +21,12 @@ class LoginPage extends Component{
 
                             <form className="login-form">
                                 <div className="form-group">
-                                    <label for="usernameInput">Inserisci il tuo username:</label>
-                                    <input type="email" class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username"/>
+                                    <label htmlFor="usernameInput">Inserisci il tuo username:</label>
+                                    <input type="email" className="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username"/>
                                 </div>
-                                <div class="form-group">
-                                    <label for="passwordInput">Password:</label>
-                                    <input type="password" class="form-control" id="passwordInput" placeholder="Password"/>
+                                <div className="form-group">
+                                    <label htmlFor="passwordInput">Password:</label>
+                                    <input type="password" className="form-control" id="passwordInput" placeholder="Password"/>
                                 </div>
                                 <input type="button" value="Login" className="btn btn-primary button-login-form"/>
                                 <NavLink to="/registration">

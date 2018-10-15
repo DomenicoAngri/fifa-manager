@@ -5,33 +5,32 @@ import Header from '../../components/UI/Header/Header';
 import '../../common/css/common.css';
 import './Registration.css';
 
-
-
 import fake from './fakeMock';
 
 class Registration extends Component{
 
-    state = {
-        username: '',
-        password: '',
-        submitted: false,
-        error: false
-    };
+    constructor(props){
+        super(props);
 
-    checkUsernameExists(event){
-        event.preventDefault();
-
-        console.log(this.state);
-        console.log(event);
+        this.state = {
+            username: '',
+            password: '',
+            submitted: false,
+            error: false
+        };
     }
 
+    
 
+    checkUsernameExists = (event) => {
+        event.preventDefault();
 
+        console.log(event);
+        console.log('Test --> ' + event);
+        console.log();
 
-
-
-
-
+        return 'ciao';
+    }
 
     render(){
         return(
@@ -46,19 +45,19 @@ class Registration extends Component{
                             </p>
 
                             <form className="registration-form">
-                                <div class="form-group">
-                                    <label for="usernameInput">Username:</label>
-                                    <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username" onChange={}/>
+                                <div className="form-group">
+                                    <label htmlFor="usernameInput">Username:</label>
+                                    <input type="text" className="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username" onChange={(event) => this.checkUsernameExists(event)}/>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="passwordInput">Password:</label>
-                                    <input type="password" class="form-control" id="passwordInput" aria-describedby="passwordHelp" placeholder="Password"/>
+                                <div className="form-group">
+                                    <label htmlFor="passwordInput">Password:</label>
+                                    <input type="password" className="form-control" id="passwordInput" aria-describedby="passwordHelp" placeholder="Password"/>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="passwordConfirmInput">Conferma password:</label>
-                                    <input type="password" class="form-control" id="passwordConfirmInput" aria-describedby="passwordConfirmHelp" placeholder="Password"/>
+                                <div className="form-group">
+                                    <label htmlFor="passwordConfirmInput">Conferma password:</label>
+                                    <input type="password" className="form-control" id="passwordConfirmInput" aria-describedby="passwordConfirmHelp" placeholder="Password"/>
                                 </div>
 
                                 <input type="button" value="Registrati" className="btn btn-primary button-registration-form"/>
@@ -72,6 +71,7 @@ class Registration extends Component{
             </div>
         );
     }
+
 }
 
 export default Registration;
