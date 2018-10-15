@@ -5,7 +5,34 @@ import Header from '../../components/UI/Header/Header';
 import '../../common/css/common.css';
 import './Registration.css';
 
+
+
+import fake from './fakeMock';
+
 class Registration extends Component{
+
+    state = {
+        username: '',
+        password: '',
+        submitted: false,
+        error: false
+    };
+
+    checkUsernameExists(event){
+        event.preventDefault();
+
+        console.log(this.state);
+        console.log(event);
+    }
+
+
+
+
+
+
+
+
+
     render(){
         return(
             <div className="background-image">
@@ -21,7 +48,7 @@ class Registration extends Component{
                             <form className="registration-form">
                                 <div class="form-group">
                                     <label for="usernameInput">Username:</label>
-                                    <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username"/>
+                                    <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username" onChange={}/>
                                 </div>
 
                                 <div class="form-group">
