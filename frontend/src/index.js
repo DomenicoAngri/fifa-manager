@@ -7,13 +7,13 @@ import thunk from 'redux-thunk';
 import App from './App';
 import loginReducer from './store/reducers/loginReducer';
 import logoutReducer from './store/reducers/logoutReducer';
-import registrationReducer from './store/reducers/registrationReducer';
+import {registrationReducer} from './store/reducers/registrationReducer';
 import registerServiceWorker from './services/registerServiceWorker';
 
 const rootReducer = combineReducers({
-    login: loginReducer,
-    registration: registrationReducer,
-    logout: logoutReducer
+    //login: loginReducer,
+    registration: registrationReducer
+    //logout: logoutReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

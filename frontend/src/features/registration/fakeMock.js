@@ -1,9 +1,9 @@
-class FakeMock{
+const FAKE_USERNAME = 'testUser';
 
-    checkUsernameExists(){
-        
+export function checkUsernameExists(username){
+    if(username == FAKE_USERNAME){
+        return true;
     }
 
+    return false;
 }
-
-export default FakeMock;
