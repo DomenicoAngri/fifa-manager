@@ -7,29 +7,25 @@ import {registrationActions} from '../../store/actions/registration.actions';
 
 import '../../common/css/common.css';
 import './Registration.css';
+import { throws } from 'assert';
 
 class Registration extends Component{
     state = {
         username: '',
         password: '',
         submitted: false,
-        error: false
+        error: false,
+        confirmedPassword: false
     };
 
     checkUsernameExists(event){
         event.preventDefault();
-        this.props.checkUsernameExists(event.target.value);
+        const usernameInserted = event.target.value;
+        console.log(usernameInserted);
+        this.props.checkUsernameExists(usernameInserted);
     }
-
+    
     render(){
-        {
-            /*
-                DIV username success or error:
-                <div class="valid-feedback">Success! You've done it.</div>
-                <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
-            */
-        }
-
         return(
             <div className="background-image">
                 <div className="container">
@@ -42,27 +38,40 @@ class Registration extends Component{
                             </p>
 
                             <form className="registration-form">
-                                <div className={'form-group ' + (this.props.isUsernameUsed ? 'has-danger' : 'has-success')}>
+                                <div className={"form-group " + (this.props.isUsernameUsed ? "has-danger" : "")}>
                                     <label htmlFor="usernameInput">Username:</label>
                                     <input
                                         type="text"
-                                        className={'form-control ' + (this.props.isUsernameUsed ? 'is-invalid' : 'is-valid')}
+                                        className={"form-control " + (this.props.isUsernameUsed ? "is-invalid" : "")}
                                         id="usernameInput"
                                         aria-describedby="usernameHelp"
                                         placeholder="Username"
                                         onChange={(event) => this.checkUsernameExists(event)}
                                     />
-                                    <small class="invalid-feedback">Sorry, that username's taken. Try another?</small>
+                                    <div className="invalid-feedback">Questo username è gia utilizzato!</div>
                                 </div>
 
-                                <div className="form-group">
+                                <div className={"form-group " + (this.state.confirmedPassword ? "has-danger" : "")}>
                                     <label htmlFor="passwordInput">Password:</label>
-                                    <input type="password" className="form-control" id="passwordInput" aria-describedby="passwordHelp" placeholder="Password"/>
+                                    <input
+                                        type="password"
+                                        className={"form-control " + (this.state.confirmedPassword ? "is-invalid" : "")}
+                                        id="passwordInput"
+                                        aria-describedby="passwordHelp"
+                                        placeholder="Password"
+                                    />
                                 </div>
 
-                                <div className="form-group">
+                                <div className={"form-group " + (this.state.confirmedPassword ? "has-danger" : "")}>
                                     <label htmlFor="passwordConfirmInput">Conferma password:</label>
-                                    <input type="password" className="form-control" id="passwordConfirmInput" aria-describedby="passwordConfirmHelp" placeholder="Password"/>
+                                    <input
+                                        type="password"
+                                        className={"form-control " + (this.state.confirmedPassword ? "is-invalid" : "")}
+                                        id="passwordConfirmInput"
+                                        aria-describedby="passwordConfirmHelp"
+                                        placeholder="Password"
+                                    />
+                                    <div className="invalid-feedback">Le due password non sono uguali!</div>
                                 </div>
 
                                 <input type="button" value="Registrati" className="btn btn-primary button-registration-form"/>
