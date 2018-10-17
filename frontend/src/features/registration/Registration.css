@@ -15,6 +15,7 @@
 /* Smartphone XS screen */
 @media (min-width: 300px){
     .registration-container{
+        font-size: 14px;
         margin-top: 5%;
     }
 }

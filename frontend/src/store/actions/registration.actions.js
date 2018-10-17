@@ -5,7 +5,7 @@ export const registrationActions = {
 };
 
 function checkUserExists(username){
-    return(dispatch) => {
+    return (dispatch) => {
         if(checkUsernameExists(username)){
             console.log('exists');
             dispatch(usernameExists('username already exists.'));

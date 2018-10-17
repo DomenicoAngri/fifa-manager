@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {NavLink} from 'react-router-dom';
+
 import Header from '../../components/UI/Header/Header';
 import {registrationActions} from '../../store/actions/registration.actions';
 
@@ -17,41 +18,17 @@ class Registration extends Component{
 
     checkUsernameExists(event){
         event.preventDefault();
-
-        this.setState({
-            ...this.state,
-            username: event.target.value
-        });
-
         this.props.checkUsernameExists(event.target.value);
     }
 
     render(){
-
-
-
         {
             /*
-
-            <div class="form-group has-success">
-  <label class="form-control-label" for="inputSuccess1">Valid input</label>
-  <input type="text" value="correct value" class="form-control is-valid" id="inputValid">
-  <div class="valid-feedback">Success! You've done it.</div>
-</div>
-
-<div class="form-group has-danger">
-  <label class="form-control-label" for="inputDanger1">Invalid input</label>
-  <input type="text" value="wrong value" class="form-control is-invalid" id="inputInvalid">
-  <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
-</div>
-            
-            
+                DIV username success or error:
+                <div class="valid-feedback">Success! You've done it.</div>
+                <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
             */
         }
-        
-
-
-
 
         return(
             <div className="background-image">
@@ -65,16 +42,17 @@ class Registration extends Component{
                             </p>
 
                             <form className="registration-form">
-                                <div className="form-group">
+                                <div className={'form-group ' + (this.props.isUsernameUsed ? 'has-danger' : 'has-success')}>
                                     <label htmlFor="usernameInput">Username:</label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className={'form-control ' + (this.props.isUsernameUsed ? 'is-invalid' : 'is-valid')}
                                         id="usernameInput"
                                         aria-describedby="usernameHelp"
                                         placeholder="Username"
                                         onChange={(event) => this.checkUsernameExists(event)}
                                     />
+                                    <small class="invalid-feedback">Sorry, that username's taken. Try another?</small>
                                 </div>
 
                                 <div className="form-group">
@@ -102,7 +80,7 @@ class Registration extends Component{
 
 const mapStateToProps = state => {
     return{
-        registering: state.registering
+        isUsernameUsed: state.registration.isUsernameUsed
     };
 };
 
