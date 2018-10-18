@@ -8,7 +8,7 @@ const ObjectId = mongoose.Schema.ObjectId;
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
-        minlength: 2,
+        minlength: 3,
         maxlength: 50,
         unique: true,
         lowercase: true,
@@ -30,14 +30,14 @@ const userSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        minlength: 2,
+        minlength: 3,
         maxlength: 50,
         unique: false,
         required: false
     },
     surname: {
         type: String,
-        minlength: 2,
+        minlength: 3,
         maxlength: 50,
         unique: false,
         required: false

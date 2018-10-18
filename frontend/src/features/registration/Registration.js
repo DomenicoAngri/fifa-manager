@@ -3,28 +3,118 @@ import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 
 import Header from '../../components/UI/Header/Header';
-import {registrationActions} from '../../store/actions/registration.actions';
+import {registrationActionCreators} from './registration.actionCreators';
 
 import '../../common/css/common.css';
 import './Registration.css';
-import { throws } from 'assert';
 
 class Registration extends Component{
     state = {
         username: '',
         password: '',
-        submitted: false,
-        error: false,
-        confirmedPassword: false
+        passwordConfirm: '',
+        usernameInputError: false,
+        usernameInputErrorMessage: '',
+        passwordInputError: false,
+        passwordInputErrorMessage: '',
+        passwordConfirmInputError: false,
+        passwordConfirmInputErrorMessage: ''
     };
 
-    checkUsernameExists(event){
-        event.preventDefault();
-        const usernameInserted = event.target.value;
-        console.log(usernameInserted);
-        this.props.checkUsernameExists(usernameInserted);
+    resetErrorsForm(){
+        const initialErrorsForm = {
+            usernameInputError: false,
+            passwordInputError: false,
+            passwordConfirmInputError: false
+        }
+
+        this.setState(initialErrorsForm);
     }
-    
+
+    onUsernameInputChange(event){
+        event.preventDefault();
+        const usernameInput = event.target.value;
+        this.setState({username: usernameInput});
+    }
+
+    onPasswordInputChange(event){
+        event.preventDefault();
+        const passwordInput = event.target.value;
+        this.setState({password: passwordInput});
+    }
+
+    onPasswordConfirmedInputChange(event){
+        event.preventDefault();
+        const passwordConfirmedInput = event.target.value;
+        this.setState({passwordConfirm: passwordConfirmedInput});
+    }
+
+    onSubmitForm(event){
+        event.preventDefault();
+        this.resetErrorsForm();
+
+        const username = this.state.username;
+        const password = this.state.password;
+        const passwordConfirm = this.state.passwordConfirm;
+        const whiteSpaceValidation = RegExp('^ *$');
+        const usernameValidation = RegExp('^\\w+$');
+        const passwordValidation = RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$');
+
+        if(!username || whiteSpaceValidation.test(username)){
+            this.setState({
+                usernameInputError: true,
+                usernameInputErrorMessage: 'Inserisci l\'username!',
+            });
+        }
+        else if(username.length < 3){
+            this.setState({
+                usernameInputError: true,
+                usernameInputErrorMessage: 'L\'username è minore di 3 caratteri!',
+            });
+        }
+        else if(username.length > 50){
+            this.setState({
+                usernameInputError: true,
+                usernameInputErrorMessage: 'L\'username è maggiore di 50 caratteri!',
+            });
+        }
+        else if(!usernameValidation.test(username)){
+            this.setState({
+                usernameInputError: true,
+                usernameInputErrorMessage: 'L\'username può contenere solo numeri lettere ed underscore!',
+            });
+        }
+        else if(!password || whiteSpaceValidation.test(password)){
+            this.setState({
+                passwordInputError: true,
+                passwordInputErrorMessage: 'Inserisci la password!',
+            });
+        }
+        else if(!passwordValidation.test(password)){
+            this.setState({
+                passwordInputError: true,
+                passwordInputErrorMessage: 'La password deve avere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero, ed un carattere speciale.',
+            });
+        }
+        else if(!passwordConfirm || whiteSpaceValidation.test(passwordConfirm)){
+            this.setState({
+                passwordConfirmInputError: true,
+                passwordConfirmInputErrorMessage: 'Inserisci la password!'
+            });
+        }
+        else if(password !== passwordConfirm){
+            this.setState({
+                passwordConfirmInputError: true,
+                passwordConfirmInputErrorMessage: 'Le password sono diverse!'
+            });
+        }
+
+        // TODO - change function name;
+        this.props.checkUsernameExists(username);
+
+        // TODO - Check if username already exists.
+    }
+
     render(){
         return(
             <div className="background-image">
@@ -37,44 +127,47 @@ class Registration extends Component{
                                 Per registrarti, inserisci semplicemente un username ed una password.
                             </p>
 
-                            <form className="registration-form">
-                                <div className={"form-group " + (this.props.isUsernameUsed ? "has-danger" : "")}>
+                            <form className="registration-form" onSubmit={(event) => this.onSubmitForm(event)}>
+                                <div className={"form-group " + (this.state.usernameInputError ? "has-danger" : "")}>
                                     <label htmlFor="usernameInput">Username:</label>
                                     <input
                                         type="text"
-                                        className={"form-control " + (this.props.isUsernameUsed ? "is-invalid" : "")}
+                                        className={"form-control " + (this.state.usernameInputError ? "is-invalid" : "")}
                                         id="usernameInput"
                                         aria-describedby="usernameHelp"
                                         placeholder="Username"
-                                        onChange={(event) => this.checkUsernameExists(event)}
+                                        onChange={(event) => this.onUsernameInputChange(event)}
                                     />
-                                    <div className="invalid-feedback">Questo username è gia utilizzato!</div>
+                                    <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>
                                 </div>
 
-                                <div className={"form-group " + (this.state.confirmedPassword ? "has-danger" : "")}>
+                                <div className={"form-group " + (this.state.passwordInputError ? "has-danger" : "")}>
                                     <label htmlFor="passwordInput">Password:</label>
                                     <input
                                         type="password"
-                                        className={"form-control " + (this.state.confirmedPassword ? "is-invalid" : "")}
+                                        className={"form-control " + (this.state.passwordInputError ? "is-invalid" : "")}
                                         id="passwordInput"
                                         aria-describedby="passwordHelp"
                                         placeholder="Password"
+                                        onChange={(event) => this.onPasswordInputChange(event)}
                                     />
+                                    <div className="invalid-feedback">{this.state.passwordInputErrorMessage}</div>
                                 </div>
 
-                                <div className={"form-group " + (this.state.confirmedPassword ? "has-danger" : "")}>
+                                <div className={"form-group " + (this.state.passwordConfirmInputError ? "has-danger" : "")}>
                                     <label htmlFor="passwordConfirmInput">Conferma password:</label>
                                     <input
                                         type="password"
-                                        className={"form-control " + (this.state.confirmedPassword ? "is-invalid" : "")}
+                                        className={"form-control " + (this.state.passwordConfirmInputError ? "is-invalid" : "")}
                                         id="passwordConfirmInput"
                                         aria-describedby="passwordConfirmHelp"
                                         placeholder="Password"
+                                        onChange={(event) => this.onPasswordConfirmedInputChange(event)}
                                     />
-                                    <div className="invalid-feedback">Le due password non sono uguali!</div>
+                                    <div className="invalid-feedback">{this.state.passwordConfirmInputErrorMessage}</div>
                                 </div>
 
-                                <input type="button" value="Registrati" className="btn btn-primary button-registration-form"/>
+                                <button className="btn btn-primary button-registration-form">Registrati</button>
                                 <NavLink to="/login">
                                     <input type="button" value="Login" className="btn btn-primary button-registration-form"/>
                                 </NavLink>
@@ -95,7 +188,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        checkUsernameExists: (username) => dispatch(registrationActions.checkUserExists(username))
+        checkUsernameExists: (username) => dispatch(registrationActionCreators.checkUserExists(username))
     };
 };
 

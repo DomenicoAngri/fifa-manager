@@ -5,9 +5,9 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
 import thunk from 'redux-thunk';
 import App from './App';
-import loginReducer from './store/reducers/loginReducer';
-import logoutReducer from './store/reducers/logoutReducer';
-import {registrationReducer} from './store/reducers/registrationReducer';
+import loginReducer from './features/login/login.reducer';
+import logoutReducer from './features/logout/logout.reducer';
+import {registrationReducer} from './features/registration/registration.reducer';
 import registerServiceWorker from './services/registerServiceWorker';
 
 const rootReducer = combineReducers({
