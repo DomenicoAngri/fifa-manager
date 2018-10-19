@@ -16,39 +16,52 @@ const router = express.Router();
 // TODO - Develop admin permission for method.
 // TODOPOST - Check lowercase fields.
 // TODOPOST - Add other get type, like name, surname, team, ecc..
+// TODOPOST - Check log for production.
+// TODOPOST - Set error boolean in response message.
+
+router.get('/checkUsernameExists/:username',
+        userController.checkUsernameExists
+);
 
 router.get('/:username',
         auth.authentication,
         userMiddleware.checkUserExists,
-        userController.getUserByUsername);
+        userController.getUserByUsername
+);
 
 router.get('/',
         auth.authentication,
-        userController.getAllUsers);
+        userController.getAllUsers
+);
 
 router.post('/',
         userMiddleware.checkMandatoryFields,
         userMiddleware.checkUserNotExists,
-        userController.insertNewUser);
+        userController.insertNewUser
+);
 
 router.post('/login',
         auth.checkMandatoryFields,
-        userController.login);
+        userController.login
+);
 
 router.put('/:username',
         auth.authentication,
         userMiddleware.checkUserExists,
-        userController.updateUser);
+        userController.updateUser
+);
 
 // TODO - Develop this method correctly.
 router.put('/userteam/:username/:teamId',
         auth.authentication,
         userMiddleware.checkUserExists,
-        userController.setUserTeam);
+        userController.setUserTeam
+);
 
 router.delete('/:username',
         auth.authentication,
         userMiddleware.checkUserExists,
-        userController.deleteUser);
+        userController.deleteUser
+);
 
 module.exports = router;

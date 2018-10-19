@@ -5,14 +5,14 @@ export const registrationActions = {
     usernameNotExists
 };
 
-function usernameExists(result){
+function usernameExists(){
     return{
         type: registrationConstants.USERNAME_EXISTS,
-        result
+        isUser
     }
 }
 
-function usernameNotExists(result){
+function usernameNotExists(){
     return{
         type: registrationConstants.USERNAME_NOT_EXISTS,
         result

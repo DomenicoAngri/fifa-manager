@@ -12,6 +12,7 @@ function userController(){
     let userController = this;
 
     userController.getUserByUsername = getUserByUsername;
+    userController.checkUsernameExists = checkUsernameExists;
     userController.getAllUsers = getAllUsers;
     userController.insertNewUser = insertNewUser;
     userController.updateUser = updateUser;
@@ -40,6 +41,29 @@ function userController(){
             log.logSeparator(console.error, 'FATAL - FAT_023 --> Fatal error on getting user ' + username + ' from DB.');
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_023', 'FATAL --> Fatal error on getting user ' + username + ' from DB. Check immediately console and logs.'));
+        });
+    }
+
+    function checkUsernameExists(request, response){
+        const username = request.params.username;
+
+        log.logSeparator(console.info, 'INFO --> Checking username ' + username + ' exists..');
+        helper.getUserByUsername(username)
+        .then(function(user){
+            if(user != null){
+                log.logSeparator(console.warn, 'WARN - WARN_027 --> User ' + username + ' found!');
+                log.logSeparator(console.debug, user);
+                response.status(200).send({isUsernameExists: true});
+            }
+            else{
+                log.logSeparator(console.warn, 'INFO --> Good! Username ' + username + ' not exists!');
+                response.status(200).send({isUsernameExists: false});
+            }
+        })
+        .catch(function(error){
+            log.logSeparator(console.error, 'FATAL - FAT_047 --> Fatal error on checking username ' + username + ' from DB.');
+            log.logSeparator(console.error, error);
+            response.status(500).send(new responseMessage('FAT_047', 'FATAL --> Fatal error on checking username ' + username + ' from DB. Check immediately console and logs.'));
         });
     }
 

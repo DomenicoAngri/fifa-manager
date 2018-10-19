@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const router = require('./server/configs/routes');
+const cors = require('cors');
 
 // TODOPOST - Add documentations on every functions
 
@@ -21,11 +22,13 @@ else{
  ********************************/
 const app = express();
 
+app.use(cors());
+
 // Middleware for initialize bodyParser for JSON.
 app.use(bodyParser.json());
 
 // This router will take all request, get and post, for every addresses.
-app.use('/', router);
+app.use('/api', router);
 
 /*******************************
  * Others

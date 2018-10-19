@@ -84,33 +84,35 @@ class Registration extends Component{
                 usernameInputErrorMessage: 'L\'username può contenere solo numeri lettere ed underscore!',
             });
         }
-        else if(!password || whiteSpaceValidation.test(password)){
-            this.setState({
-                passwordInputError: true,
-                passwordInputErrorMessage: 'Inserisci la password!',
-            });
-        }
-        else if(!passwordValidation.test(password)){
-            this.setState({
-                passwordInputError: true,
-                passwordInputErrorMessage: 'La password deve avere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero, ed un carattere speciale.',
-            });
-        }
-        else if(!passwordConfirm || whiteSpaceValidation.test(passwordConfirm)){
-            this.setState({
-                passwordConfirmInputError: true,
-                passwordConfirmInputErrorMessage: 'Inserisci la password!'
-            });
-        }
-        else if(password !== passwordConfirm){
-            this.setState({
-                passwordConfirmInputError: true,
-                passwordConfirmInputErrorMessage: 'Le password sono diverse!'
-            });
-        }
+        // else if(!password || whiteSpaceValidation.test(password)){
+        //     this.setState({
+        //         passwordInputError: true,
+        //         passwordInputErrorMessage: 'Inserisci la password!',
+        //     });
+        // }
+        // else if(!passwordValidation.test(password)){
+        //     this.setState({
+        //         passwordInputError: true,
+        //         passwordInputErrorMessage: 'La password deve avere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero, ed un carattere speciale.',
+        //     });
+        // }
+        // else if(!passwordConfirm || whiteSpaceValidation.test(passwordConfirm)){
+        //     this.setState({
+        //         passwordConfirmInputError: true,
+        //         passwordConfirmInputErrorMessage: 'Inserisci la password!'
+        //     });
+        // }
+        // else if(password !== passwordConfirm){
+        //     this.setState({
+        //         passwordConfirmInputError: true,
+        //         passwordConfirmInputErrorMessage: 'Le password sono diverse!'
+        //     });
+        // }
+        else if(
+            // TODO - change function name;
+            this.props.checkUsernameExists(username)){
 
-        // TODO - change function name;
-        this.props.checkUsernameExists(username);
+        }
 
         // TODO - Check if username already exists.
     }

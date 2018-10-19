@@ -53,7 +53,7 @@ function userHelper(){
             user.surname = userBody.surname;
             user.telephoneNumber = userBody.telephoneNumber;
             user.team = userBody.team;
-
+            
             user.save()
             .then(function(userSaved){
                 resolve(userSaved);

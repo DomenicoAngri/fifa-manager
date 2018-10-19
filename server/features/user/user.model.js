@@ -53,7 +53,8 @@ const userSchema = new mongoose.Schema({
         type: ObjectId,
         ref: 'team',
         unique: true,
-        required: false
+        required: false,
+        sparse: true
     },
     isAdmin: {
         type: Boolean,
