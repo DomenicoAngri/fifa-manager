@@ -7,14 +7,12 @@ export const registrationActions = {
 
 function usernameExists(){
     return{
-        type: registrationConstants.USERNAME_EXISTS,
-        isUser
+        type: registrationConstants.USERNAME_EXISTS
     }
 }
 
 function usernameNotExists(){
     return{
-        type: registrationConstants.USERNAME_NOT_EXISTS,
-        result
+        type: registrationConstants.USERNAME_NOT_EXISTS
     }
 }

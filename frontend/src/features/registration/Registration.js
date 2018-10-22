@@ -18,14 +18,22 @@ class Registration extends Component{
         passwordInputError: false,
         passwordInputErrorMessage: '',
         passwordConfirmInputError: false,
-        passwordConfirmInputErrorMessage: ''
+        passwordConfirmInputErrorMessage: '',
+
+        prova: false
     };
 
     resetErrorsForm(){
         const initialErrorsForm = {
             usernameInputError: false,
             passwordInputError: false,
-            passwordConfirmInputError: false
+            passwordConfirmInputError: false,
+
+            // TODO - capire se va bene pulire anche messaggi.
+
+            usernameInputErrorMessage: '',
+            passwordInputErrorMessage: '',
+            passwordConfirmInputErrorMessage: ''
         }
 
         this.setState(initialErrorsForm);
@@ -84,40 +92,45 @@ class Registration extends Component{
                 usernameInputErrorMessage: 'L\'username può contenere solo numeri lettere ed underscore!',
             });
         }
-        // else if(!password || whiteSpaceValidation.test(password)){
-        //     this.setState({
-        //         passwordInputError: true,
-        //         passwordInputErrorMessage: 'Inserisci la password!',
-        //     });
-        // }
-        // else if(!passwordValidation.test(password)){
-        //     this.setState({
-        //         passwordInputError: true,
-        //         passwordInputErrorMessage: 'La password deve avere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero, ed un carattere speciale.',
-        //     });
-        // }
-        // else if(!passwordConfirm || whiteSpaceValidation.test(passwordConfirm)){
-        //     this.setState({
-        //         passwordConfirmInputError: true,
-        //         passwordConfirmInputErrorMessage: 'Inserisci la password!'
-        //     });
-        // }
-        // else if(password !== passwordConfirm){
-        //     this.setState({
-        //         passwordConfirmInputError: true,
-        //         passwordConfirmInputErrorMessage: 'Le password sono diverse!'
-        //     });
-        // }
-        else if(
-            // TODO - change function name;
-            this.props.checkUsernameExists(username)){
-
+        else if(!password || whiteSpaceValidation.test(password)){
+            this.setState({
+                passwordInputError: true,
+                passwordInputErrorMessage: 'Inserisci la password!',
+            });
         }
-
-        // TODO - Check if username already exists.
+        else if(!passwordValidation.test(password)){
+            this.setState({
+                passwordInputError: true,
+                passwordInputErrorMessage: 'La password deve avere almeno 8 caratteri, una lettera maiuscola, una minuscola, un numero, ed un carattere speciale.',
+            });
+        }
+        else if(!passwordConfirm || whiteSpaceValidation.test(passwordConfirm)){
+            this.setState({
+                passwordConfirmInputError: true,
+                passwordConfirmInputErrorMessage: 'Inserisci la password!'
+            });
+        }
+        else if(password !== passwordConfirm){
+            this.setState({
+                passwordConfirmInputError: true,
+                passwordConfirmInputErrorMessage: 'Le password sono diverse!'
+            });
+        }
+        else{
+            this.props.userRegistration(username, password);
+        }
     }
 
     render(){
+        let usernameInvalidFeedback = null;
+
+        if(this.state.usernameInputError){
+            usernameInvalidFeedback = <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>;
+        }
+        else if(this.props.isUsernameUsed){
+            usernameInvalidFeedback = <div className="invalid-feedback">L'username inserito è già utilizzato!'</div>;
+        }
+
         return(
             <div className="background-image">
                 <div className="container">
@@ -130,17 +143,17 @@ class Registration extends Component{
                             </p>
 
                             <form className="registration-form" onSubmit={(event) => this.onSubmitForm(event)}>
-                                <div className={"form-group " + (this.state.usernameInputError ? "has-danger" : "")}>
+                                <div className={"form-group " + (this.state.usernameInputError || this.props.isUsernameUsed ? "has-danger" : "")}>
                                     <label htmlFor="usernameInput">Username:</label>
                                     <input
                                         type="text"
-                                        className={"form-control " + (this.state.usernameInputError ? "is-invalid" : "")}
+                                        className={"form-control " + (this.state.usernameInputError || this.props.isUsernameUsed ? "is-invalid" : "")}
                                         id="usernameInput"
                                         aria-describedby="usernameHelp"
                                         placeholder="Username"
                                         onChange={(event) => this.onUsernameInputChange(event)}
                                     />
-                                    <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>
+                                    {usernameInvalidFeedback}
                                 </div>
 
                                 <div className={"form-group " + (this.state.passwordInputError ? "has-danger" : "")}>
@@ -190,7 +203,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        checkUsernameExists: (username) => dispatch(registrationActionCreators.checkUserExists(username))
+        userRegistration: (username, password) => dispatch(registrationActionCreators.userRegistration(username, password))
     };
 };
 

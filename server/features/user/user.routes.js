@@ -20,7 +20,7 @@ const router = express.Router();
 // TODOPOST - Set error boolean in response message.
 
 router.get('/checkUsernameExists/:username',
-        userController.checkUsernameExists
+        userController.checkIfUsernameIsUsed
 );
 
 router.get('/:username',

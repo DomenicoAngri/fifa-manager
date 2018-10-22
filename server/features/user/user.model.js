@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,
         match: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-        required: false
+        required: false,
+        sparse: true
     },
     password: {
         type: String,
@@ -47,7 +48,8 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         maxlength: 16,
         unique: true,
-        required: false
+        required: false,
+        sparse: true
     },
     team: {
         type: ObjectId,

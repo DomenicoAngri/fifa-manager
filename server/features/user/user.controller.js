@@ -12,7 +12,7 @@ function userController(){
     let userController = this;
 
     userController.getUserByUsername = getUserByUsername;
-    userController.checkUsernameExists = checkUsernameExists;
+    userController.checkIfUsernameIsUsed = checkIfUsernameIsUsed;
     userController.getAllUsers = getAllUsers;
     userController.insertNewUser = insertNewUser;
     userController.updateUser = updateUser;
@@ -44,26 +44,26 @@ function userController(){
         });
     }
 
-    function checkUsernameExists(request, response){
+    function checkIfUsernameIsUsed(request, response){
         const username = request.params.username;
 
-        log.logSeparator(console.info, 'INFO --> Checking username ' + username + ' exists..');
+        log.logSeparator(console.info, 'INFO --> Checking username ' + username + ' is used..');
         helper.getUserByUsername(username)
         .then(function(user){
             if(user != null){
                 log.logSeparator(console.warn, 'WARN - WARN_027 --> User ' + username + ' found!');
                 log.logSeparator(console.debug, user);
-                response.status(200).send({isUsernameExists: true});
+                response.status(200).send({isUsernameUsed: true});
             }
             else{
-                log.logSeparator(console.warn, 'INFO --> Good! Username ' + username + ' not exists!');
-                response.status(200).send({isUsernameExists: false});
+                log.logSeparator(console.warn, 'INFO --> Good! Username ' + username + ' is not used!');
+                response.status(200).send({isUsernameUsed: false});
             }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_047 --> Fatal error on checking username ' + username + ' from DB.');
+            log.logSeparator(console.error, 'FATAL - FAT_047 --> Fatal error on checking if username ' + username + ' is used.');
             log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_047', 'FATAL --> Fatal error on checking username ' + username + ' from DB. Check immediately console and logs.'));
+            response.status(500).send(new responseMessage('FAT_047', 'FATAL --> Fatal error on checking if username ' + username + ' is used. Check immediately console and logs.'));
         });
     }
 
