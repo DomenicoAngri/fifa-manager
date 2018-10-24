@@ -140,7 +140,7 @@ class Registration extends Component{
                             <Header classes="header-registration-form"/>
 
                             <p>
-                                Per registrarti, inserisci semplicemente un username ed una password.
+                                Inserisci un username ed una password per registrarti.
                             </p>
 
                             <form className="registration-form" onSubmit={(event) => this.onSubmitForm(event)}>
