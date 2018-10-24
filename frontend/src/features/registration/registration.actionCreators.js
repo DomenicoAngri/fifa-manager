@@ -2,7 +2,8 @@ import request from 'axios';
 import {registrationActions} from './registration.actions';
 
 export const registrationActionCreators = {
-    userRegistration
+    userRegistration,
+    resetUsernameErrorState
 };
 
 function userRegistration(username, password){
@@ -40,4 +41,10 @@ function userRegistration(username, password){
             console.log('Response in catch --> ' + error);
         });
     };
+}
+
+function resetUsernameErrorState(){
+    return (dispatch) => {
+        dispatch(registrationActions.resetUsernameErrorState());
+    }
 }

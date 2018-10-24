@@ -18,6 +18,9 @@ export function registrationReducer(state = initialState, action){
         case actionType.USERNAME_NOT_EXISTS:
             return updateObject(state, {isUsernameUsed: false});
 
+        case actionType.RESET_USERNAME_ERROR_STATE:
+            return updateObject(state, {isUsernameUsed: false});
+
         default:
             return state;
     }

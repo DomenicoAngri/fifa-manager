@@ -60,6 +60,7 @@ class Registration extends Component{
     onSubmitForm(event){
         event.preventDefault();
         this.resetErrorsForm();
+        this.props.resetUsernameErrorState();
 
         const username = this.state.username;
         const password = this.state.password;
@@ -128,7 +129,7 @@ class Registration extends Component{
             usernameInvalidFeedback = <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>;
         }
         else if(this.props.isUsernameUsed){
-            usernameInvalidFeedback = <div className="invalid-feedback">L'username inserito è già utilizzato!'</div>;
+            usernameInvalidFeedback = <div className="invalid-feedback">L'username inserito è già utilizzato!</div>;
         }
 
         return(
@@ -203,7 +204,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        userRegistration: (username, password) => dispatch(registrationActionCreators.userRegistration(username, password))
+        userRegistration: (username, password) => dispatch(registrationActionCreators.userRegistration(username, password)),
+        resetUsernameErrorState: () => dispatch(registrationActionCreators.resetUsernameErrorState())
     };
 };
 
