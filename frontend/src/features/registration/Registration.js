@@ -18,23 +18,18 @@ class Registration extends Component{
         passwordInputError: false,
         passwordInputErrorMessage: '',
         passwordConfirmInputError: false,
-        passwordConfirmInputErrorMessage: '',
-
-        prova: false
+        passwordConfirmInputErrorMessage: ''
     };
 
     resetErrorsForm(){
         const initialErrorsForm = {
             usernameInputError: false,
-            passwordInputError: false,
-            passwordConfirmInputError: false,
-
-            // TODO - capire se va bene pulire anche messaggi.
-
             usernameInputErrorMessage: '',
+            passwordInputError: false,
             passwordInputErrorMessage: '',
+            passwordConfirmInputError: false,
             passwordConfirmInputErrorMessage: ''
-        }
+        };
 
         this.setState(initialErrorsForm);
     }

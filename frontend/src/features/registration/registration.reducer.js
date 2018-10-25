@@ -2,10 +2,6 @@ import {updateObject} from '../../common/utilities/utilities';
 import {registrationConstants as actionType} from './registration.constants';
 
 const initialState = {
-    username: '',
-    password: '',
-    submitted: false,
-    error: false,
     isUsernameUsed: false
 };
 

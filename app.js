@@ -22,6 +22,7 @@ else{
  ********************************/
 const app = express();
 
+// TODO - Config cors for future production environment.
 app.use(cors());
 
 // Middleware for initialize bodyParser for JSON.

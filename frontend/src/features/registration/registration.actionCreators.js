@@ -20,6 +20,7 @@ function userRegistration(username, password){
                 const userRegistrationBody = {
                     username: username,
                     password: password,
+                    // TODO - delete this is admin
                     isAdmin: false
                 };
 
@@ -28,7 +29,7 @@ function userRegistration(username, password){
                     dispatch(registrationActions.usernameNotExists());
                 })
                 .catch(function(error){
-                    // TODO capire che fare con errore.
+                    // TODO - capire che fare con errore.
                     console.log('Response in catch --> ' + error);
                 });                
             }
@@ -37,7 +38,7 @@ function userRegistration(username, password){
             }
         })
         .catch(function(error){
-            // TODO capire che fare con errore.
+            // TODO - capire che fare con errore.
             console.log('Response in catch --> ' + error);
         });
     };
