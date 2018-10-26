@@ -70,14 +70,7 @@ class Login extends Component{
         }
         else{
             this.props.login(username, password);
-        }
-
-
-
-
-
-
-
+        }       
     }
     
     render(){
@@ -94,13 +87,26 @@ class Login extends Component{
                             </p>
 
                             <form className="login-form" onSubmit={(event) => this.onSubmitForm(event)}>
-                                <div className="form-group">
+                                <div className={"form-group " + (this.state.usernameInputError ? "has-danger" : "")}>
                                     <label htmlFor="usernameInput">Inserisci il tuo username:</label>
-                                    <input type="text" className="form-control" id="usernameInput" aria-describedby="usernameHelp" placeholder="Username"/>
+                                    <input
+                                        type="text"
+                                        className={"form-control " + this.state.usernameInputError ? "is-invalid" : ""}
+                                        id="usernameInput"
+                                        aria-describedby="usernameHelp"
+                                        placeholder="Username"
+                                    />
+                                    <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={"form-group " + (this.state.passwordInputError ? "has-danger" : "")}>
                                     <label htmlFor="passwordInput">Password:</label>
-                                    <input type="password" className="form-control" id="passwordInput" placeholder="Password"/>
+                                    <input
+                                        type="password"
+                                        className={"form-control " + this.state.passwordInputError ? "is-invalid" : ""}
+                                        id="passwordInput"
+                                        placeholder="Password"
+                                    />
+                                    <div className="invalid-feedback">{this.state.passwordInputErrorMessage}</div>
                                 </div>
 
                                 <button className="btn btn-primary button-login-form">Login</button>

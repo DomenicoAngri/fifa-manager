@@ -9,6 +9,10 @@ import '../../common/css/common.css';
 import './Registration.css';
 
 class Registration extends Component{
+    //
+    // TODO - Togliere assolutamente gli onChange.
+    //
+
     state = {
         username: '',
         password: '',
