@@ -91,7 +91,7 @@ class Login extends Component{
                                     <label htmlFor="usernameInput">Inserisci il tuo username:</label>
                                     <input
                                         type="text"
-                                        className={"form-control " + this.state.usernameInputError ? "is-invalid" : ""}
+                                        className={"form-control " + (this.state.usernameInputError ? "is-invalid" : "")}
                                         id="usernameInput"
                                         aria-describedby="usernameHelp"
                                         placeholder="Username"
@@ -102,7 +102,7 @@ class Login extends Component{
                                     <label htmlFor="passwordInput">Password:</label>
                                     <input
                                         type="password"
-                                        className={"form-control " + this.state.passwordInputError ? "is-invalid" : ""}
+                                        className={"form-control " + (this.state.passwordInputError ? "is-invalid" : "")}
                                         id="passwordInput"
                                         placeholder="Password"
                                     />
