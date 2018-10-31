@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-
+import {loginActionCreators} from './login.actionCreators';
 import Header from '../../components/UI/Header/Header';
-
 import './Login.css';
 import '../../common/css/common.css';
-import { loginActionCreators } from './login.actionCreators';
 
 class Login extends Component{
     state = {

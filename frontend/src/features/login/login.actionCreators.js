@@ -27,6 +27,7 @@ function login(username, password){
         .catch(function(error){
             // TODO - capire errore che fare
             console.log('ERRORE nel catch della login..');
+            console.log('ERORRE in logignn --> ' + error);
         });
     };
 }
