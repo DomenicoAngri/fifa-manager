@@ -9,6 +9,31 @@ export const registrationActionCreators = {
 function userRegistration(username, password){
     return (dispatch) => {
 
+        const baseUrlConfig = {
+            baseURL: 'http://localhost:7100'
+        };
+
+        const userRegistrationUrl = '/api/user';
+
+        const userRegistrationBody = {
+            username: username,
+            password: password,
+
+            // TODO - delete this is admin
+            isAdmin: false
+        };
+
+        request.post(userRegistrationUrl, userRegistrationBody, baseUrlConfig)
+        .then(function(result){
+            console.log('Utente correttamente registrato --> ' + result);
+        })
+        .catch(function(error){
+            // TODO - capire che fare con errore.
+            console.log('Registration user, error in catch --> ' + error);
+        });
+
+
+
 
 
 
