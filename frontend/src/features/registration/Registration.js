@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-
 import Header from '../../components/UI/Header/Header';
 import {registrationActionCreators} from './registration.actionCreators';
+import getMessage from '../../common/utilities/messages';
 
 import '../../common/css/common.css';
 import './Registration.css';
@@ -128,7 +128,7 @@ class Registration extends Component{
             usernameInvalidFeedback = <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>;
         }
         else if(this.props.isUsernameUsed){
-            usernameInvalidFeedback = <div className="invalid-feedback">L'username inserito è già utilizzato!</div>;
+            usernameInvalidFeedback = <div className="invalid-feedback">{getMessage(this.props.registrationErrorCode)}</div>;
         }
 
         return(
@@ -197,7 +197,8 @@ class Registration extends Component{
 
 const mapStateToProps = state => {
     return{
-        isUsernameUsed: state.registration.isUsernameUsed
+        isUsernameUsed: state.registration.isUsernameUsed,
+        registrationErrorCode: state.registration.registrationErrorCode
     };
 };
 

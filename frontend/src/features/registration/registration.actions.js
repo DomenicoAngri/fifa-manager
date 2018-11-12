@@ -6,9 +6,10 @@ export const registrationActions = {
     resetUsernameErrorState
 };
 
-function usernameExists(){
+function usernameExists(registrationErrorCode){
     return{
-        type: registrationConstants.USERNAME_EXISTS
+        type: registrationConstants.USERNAME_EXISTS,
+        registrationErrorCode: registrationErrorCode
     }
 }
 

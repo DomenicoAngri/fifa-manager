@@ -25,11 +25,11 @@ function userRegistration(username, password){
 
         request.post(userRegistrationUrl, userRegistrationBody, baseUrlConfig)
         .then(function(result){
-            console.log('Utente correttamente registrato --> ' + result);
+            dispatch(registrationActions.usernameNotExists());
         })
         .catch(function(error){
-            // TODO - capire che fare con errore.
-            console.log('Registration user, error in catch --> ' + error);
+            // TODO - Capire se mettere messaggio in console.
+            dispatch(registrationActions.usernameExists(error.response.data.code));
         });
 
 
