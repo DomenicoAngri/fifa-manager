@@ -3,7 +3,8 @@ import {registrationConstants as actionType} from './registration.constants';
 
 const initialState = {
     isUsernameUsed: false,
-    registrationErrorCode: null
+    registrationErrorCode: null,
+    generalError: false
 };
 
 export function registrationReducer(state = initialState, action){
@@ -23,6 +24,13 @@ export function registrationReducer(state = initialState, action){
                 isUsernameUsed: false,
                 registrationErrorCode: null
             });
+
+        case actionType.GENERAL_ERROR:
+            return updateObject(state, {
+                registrationErrorCode: action.registrationErrorCode,
+                generalError: true
+            });
+        
 
         default:
             return state;

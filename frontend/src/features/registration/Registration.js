@@ -198,7 +198,8 @@ class Registration extends Component{
 const mapStateToProps = state => {
     return{
         isUsernameUsed: state.registration.isUsernameUsed,
-        registrationErrorCode: state.registration.registrationErrorCode
+        registrationErrorCode: state.registration.registrationErrorCode,
+        generalError: state.registration.generalError,
     };
 };
 

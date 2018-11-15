@@ -3,7 +3,8 @@ import {registrationConstants} from './registration.constants';
 export const registrationActions = {
     usernameExists,
     usernameNotExists,
-    resetUsernameErrorState
+    resetUsernameErrorState,
+    generalError
 };
 
 function usernameExists(registrationErrorCode){
@@ -22,5 +23,12 @@ function usernameNotExists(){
 function resetUsernameErrorState(){
     return{
         type: registrationConstants.RESET_USERNAME_ERROR_STATE
+    }
+}
+
+function generalError(registrationErrorCode){
+    return{
+        type: registrationConstants.GENERAL_ERROR,
+        registrationErrorCode: registrationErrorCode
     }
 }

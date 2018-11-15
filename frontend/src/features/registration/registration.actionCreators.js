@@ -29,7 +29,19 @@ function userRegistration(username, password){
         })
         .catch(function(error){
             // TODO - Capire se mettere messaggio in console.
-            dispatch(registrationActions.usernameExists(error.response.data.code));
+            // TODO - mettere popup di errore quando ci sono error fatali.
+
+            switch(error.response.status){
+                case 409:
+                    // Username already exists.
+                    dispatch(registrationActions.usernameExists(error.response.data.code));
+                    break;
+
+                default:
+                    // Null fields, blank fields or Fatal error.
+                    dispatch(registrationActions.usernameExists(error.response.data.code));
+                    break;
+            }
         });
 
 

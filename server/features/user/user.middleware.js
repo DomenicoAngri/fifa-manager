@@ -27,6 +27,9 @@ function userMiddleware(){
             log.logSeparator(console.error, 'ERROR - ERR_020 --> Username cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_020', 'ERROR --> Username cannot be empty or null!'));
         }
+
+
+        // TODO - WHAT A FUCK?!?!?! QUESTO NON DEVE ESSERCI AUSHDUAUHSDUAS
         else if(emailValidation.test(body.email)){
             log.logSeparator(console.error, 'ERROR - ERR_021 --> Wrong email format! Email: ' + body.email + '.');
             response.status(400).send(new responseMessage('ERR_021', 'ERROR --> Wrong email format!'));
@@ -35,6 +38,8 @@ function userMiddleware(){
             log.logSeparator(console.error, 'ERROR - ERR_022 --> Password cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_022', 'ERROR --> Password cannot be empty or null!'));
         }
+
+        // TODO - TOGLIERE STA ROBA DELL'ADMIN.
         else if(body.isAdmin == null){
             log.logSeparator(console.error, 'ERROR - ERR_040 --> It is must necessary specify if user is an admin.');
             response.status(400).send(new responseMessage('ERR_040', 'ERROR --> It is must necessary specify if user is an admin.'));
