@@ -13,7 +13,8 @@ export function loginReducer(state = initialState, action){
         case actionType.LOGIN:
             return updateObject(state, {
                 username: action.username,
-                token: action.token
+                token: action.token,
+                isUserAuthenticated: true
             });
 
         case actionType.USER_AUTHENTICATED:

@@ -50,6 +50,7 @@ function authenticationMiddleware(){
         if(!token){
             log.logSeparator(console.error, 'ERROR - ERR_037 --> You are not authorized. Please login first.');
             response.status(401).send(new responseMessage('ERR_037', 'ERROR --> You are not authorized. Please login first.'));
+            return;
         }
 
         let payload = tokenDecode(token);
@@ -57,6 +58,7 @@ function authenticationMiddleware(){
         if(!payload){
             log.logSeparator(console.error, 'ERROR - ERR_038 --> Your session is expired. Please login again.');
             response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Your session is expired. Please login again.'));
+            return;
         }
         
         userHelper.getUserByUsername(payload.sub)
@@ -85,6 +87,7 @@ function authenticationMiddleware(){
         if(!token){
             log.logSeparator(console.error, 'ERROR - ERR_037 --> You are not authorized. Please login first.');
             response.status(401).send(new responseMessage('ERR_037', 'ERROR --> You are not authorized. Please login first.'));
+            return;
         }
 
         let payload = tokenDecode(token);
