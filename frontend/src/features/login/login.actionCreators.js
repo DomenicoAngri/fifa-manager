@@ -2,7 +2,8 @@ import request from 'axios';
 import {loginActions} from './login.actions';
 
 export const loginActionCreators = {
-    login
+    login,
+    checkLoginStatus
 };
 
 function login(username, password){
@@ -11,6 +12,7 @@ function login(username, password){
             baseURL: 'http://localhost:7100'
         };
 
+        // TODO - Perchè si chiama checkusernameurl?
         const checkUsernameUrl = '/api/user/login';
 
         const loginBody = {
@@ -31,3 +33,27 @@ function login(username, password){
         });
     };
 }
+
+function checkLoginStatus(){
+    return (dispatch) => {
+        const baseUrlConfig = {
+            baseURL: 'http://localhost:7100'
+        };
+
+        const checkLoginStatusUrl = '/api/user/checkLoginStatus';
+
+        request.get(checkLoginStatusUrl, baseUrlConfig)
+        .then(function(result){
+            dispatch(loginActions.userAuthenticated());
+        })
+        .catch(function(error){
+            // TODO - loggare qualcosa?
+            dispatch(loginActions.userNotAuthenticated());
+        });
+    };
+}
+
+
+
+
+

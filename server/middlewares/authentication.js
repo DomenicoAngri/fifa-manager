@@ -4,7 +4,6 @@
 
 const log = require('../utils/logger');
 const jwt = require('jwt-simple');
-const moment = require('moment');
 const responseMessage = require('../utils/responseMessage');
 const userHelper = require('../features/user/user.helper');
 
@@ -13,6 +12,7 @@ function authenticationMiddleware(){
 
     authenticationMiddleware.authentication = authentication;
     authenticationMiddleware.checkMandatoryFields = checkMandatoryFields;
+    authenticationMiddleware.checkLoginStatus = checkLoginStatus;
 
     return authenticationMiddleware;
 
@@ -34,6 +34,15 @@ function authenticationMiddleware(){
         }
     }
 
+    function tokenDecode(token){
+        try{
+            return jwt.decode(token, process.env.SECRET_JWT_TOKEN);
+        }
+        catch{
+            return null;
+        }
+    }
+
     function authentication(request, response, next){
         let token = request.header('auth');
         log.logSeparator(console.debug, 'token --> ' + token);
@@ -43,11 +52,9 @@ function authenticationMiddleware(){
             response.status(401).send(new responseMessage('ERR_037', 'ERROR --> You are not authorized. Please login first.'));
         }
 
-        let payload;
-        try{
-            payload = jwt.decode(token, process.env.SECRET_JWT_TOKEN);
-        }
-        catch{
+        let payload = tokenDecode(token);
+
+        if(!payload){
             log.logSeparator(console.error, 'ERROR - ERR_038 --> Your session is expired. Please login again.');
             response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Your session is expired. Please login again.'));
         }
@@ -69,6 +76,26 @@ function authenticationMiddleware(){
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_046', 'FATAL --> Fatal error on authentication user ' + payload.sub + '. Check immediately console and logs.'));
         });
+    }
+
+    function checkLoginStatus(request, response){
+        let token = request.header('auth');
+        log.logSeparator(console.debug, 'token --> ' + token);
+
+        if(!token){
+            log.logSeparator(console.error, 'ERROR - ERR_037 --> You are not authorized. Please login first.');
+            response.status(401).send(new responseMessage('ERR_037', 'ERROR --> You are not authorized. Please login first.'));
+        }
+
+        let payload = tokenDecode(token);
+
+        if(payload){
+            response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + payload.sub + ' is correctly logged!'));
+        }
+        else{
+            log.logSeparator(console.error, 'ERROR - ERR_038 --> Your session is expired. Please login again.');
+            response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Your session is expired. Please login again.'));
+        }
     }
 
 }

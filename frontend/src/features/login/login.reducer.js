@@ -3,7 +3,8 @@ import {loginConstants as actionType} from './login.constants';
 
 const initialState = {
     username: '',
-    token: ''
+    token: '',
+    isUserAuthenticated: false
 };
 
 export function loginReducer(state = initialState, action){
@@ -13,6 +14,16 @@ export function loginReducer(state = initialState, action){
             return updateObject(state, {
                 username: action.username,
                 token: action.token
+            });
+
+        case actionType.USER_AUTHENTICATED:
+            return updateObject(state, {
+                isUserAuthenticated: true
+            });
+
+        case actionType.USER_NOT_AUTHENTICATED:
+            return updateObject(state, {
+                isUserAuthenticated: false
             });
 
         // case actionType.LOGOUT:

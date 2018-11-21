@@ -159,7 +159,7 @@ function userController(){
 
         helper.login(username)
         .then(function(user){
-            if(password == user.password){
+            if(password === user.password){
                 const userInfoWithToken = {
                     token: createJWTToken(user),
                     user: user
