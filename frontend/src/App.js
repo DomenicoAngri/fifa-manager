@@ -7,6 +7,11 @@ import Registration from './features/registration/Registration';
 import Dashboard from './features/dashboard/Dashboard';
 
 class App extends Component{
+
+    state = {
+        isUserAuthenticated: false
+    }
+
     componentDidMount(){
         this.props.checkLoginStatus();
     }
@@ -41,7 +46,7 @@ class App extends Component{
 
 const mapStateToProps = state => {
     return{
-        isUserAuthenticated: state.login.token !== null
+        isUserAuthenticated: false
     };
 };
 

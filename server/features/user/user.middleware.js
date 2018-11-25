@@ -70,6 +70,8 @@ function userMiddleware(){
     }
 
     function checkUserNotExists(request, response, next){
+        log.logSeparator(console.info, 'Function user.middleware.checkUserNotExists(): start.');
+
         username = request.params.username != null ? request.params.username : request.body.username;
 
         userHelper.getUserByUsername(username)
@@ -81,12 +83,14 @@ function userMiddleware(){
                 log.logSeparator(console.warn, 'WARN - WARN_022 --> WARN --> User ' + username + ' exists!');
                 log.logSeparator(console.debug, user);
                 response.status(409).send(new responseMessage('WARN_022', 'WARN --> User ' + username + ' exists!'));
+                return;
             }
         })
         .catch(function(error){
             log.logSeparator(console.error, 'FATAL - FAT_025 --> Fatal error on checking user ' + username + ' not exists.');
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_025', 'FATAL --> Fatal error on checking user ' + username + ' not exists. Check immediately console and logs.'));
+            return;
         });
     }
 

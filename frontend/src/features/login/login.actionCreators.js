@@ -8,28 +8,58 @@ export const loginActionCreators = {
 
 function login(username, password){
     return (dispatch) => {
+
+        // TODO - mettere indirizzo con il file env.
         const baseUrlConfig = {
             baseURL: 'http://localhost:7100'
         };
 
         // TODO - Perchè si chiama checkusernameurl?
-        const checkUsernameUrl = '/api/user/login';
+        const loginUrl = '/api/user/login';
 
         const loginBody = {
             username: username,
             password: password
         };
 
-        request.post(checkUsernameUrl, loginBody, baseUrlConfig)
-        .then(function(userResult){
-            localStorage.setItem('token', userResult.token);
-            localStorage.setItem('username', userResult.username);
-            dispatch(loginActions.login(userResult));
+        request.post(loginUrl, loginBody, baseUrlConfig)
+        .then(function(userInfoWithToken){
+            localStorage.setItem('token', userInfoWithToken.token);
+            localStorage.setItem('username', userInfoWithToken.user.username);
+            dispatch(loginActions.login(userInfoWithToken));
         })
         .catch(function(error){
-            // TODO - capire errore che fare
-            console.log('ERRORE nel catch della login..');
-            console.log('ERORRE in logignn --> ' + error);
+
+            switch(error.response.status){
+                case 400:
+                    // Username and password are blank in the backend, check why.
+                    break;
+
+                case 401:
+                    // Password is incorrect.
+                    break;
+
+                case 404:
+                    // User not found.
+                    break;
+
+                case 500:
+                    // Internal server error, check why
+                    break;
+
+                default: ?
+            }
+
+            // 400 error, username or password blank
+
+            // status 200 tutt appost
+
+            // 401 password incorrect
+
+            // 404 user not found
+
+            // 500 internal server erro
+
         });
     };
 }

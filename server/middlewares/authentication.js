@@ -17,6 +17,8 @@ function authenticationMiddleware(){
     return authenticationMiddleware;
 
     function checkMandatoryFields(request, response, next){
+        log.logSeparator(console.info, 'Function authentication.checkMandatoryFields() start.');
+
         const username = request.body.username;
         const password = request.body.password;
         const whiteSpaceValidation = RegExp('^ *$');
@@ -24,10 +26,12 @@ function authenticationMiddleware(){
         if(!username || whiteSpaceValidation.test(username)){
             log.logSeparator(console.error, 'ERROR - ERR_020 --> Username cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_020', 'ERROR --> Username cannot be empty or null!'));
+            return;
         }
         else if(!password || whiteSpaceValidation.test(password)){
             log.logSeparator(console.error, 'ERROR - ERR_022 --> Password cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_022', 'ERROR --> Password cannot be empty or null!'));
+            return;
         }
         else{
             next();
@@ -71,16 +75,20 @@ function authenticationMiddleware(){
             else{
                 log.logSeparator(console.error, 'ERROR - ERR_039 --> Username stored in session not found. Please login again.');
                 response.status(401).send(new responseMessage('ERR_039', 'ERROR --> Username stored in session not found. Please login again.'))
+                return;
             }
         })
         .catch(function(error){
             log.logSeparator(console.error, 'FATAL - FAT_046 --> Fatal error on authentication user ' + payload.sub + '.');
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_046', 'FATAL --> Fatal error on authentication user ' + payload.sub + '. Check immediately console and logs.'));
+            return;
         });
     }
 
     function checkLoginStatus(request, response){
+        log.logSeparator(console.info, 'Function authentication.checkLoginStatus start.');
+        
         let token = request.header('auth');
         log.logSeparator(console.debug, 'token --> ' + token);
 
@@ -94,10 +102,12 @@ function authenticationMiddleware(){
 
         if(payload){
             response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + payload.sub + ' is correctly logged!'));
+            return;
         }
         else{
             log.logSeparator(console.error, 'ERROR - ERR_038 --> Your session is expired. Please login again.');
             response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Your session is expired. Please login again.'));
+            return;
         }
     }
 
