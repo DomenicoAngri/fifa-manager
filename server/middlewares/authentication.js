@@ -17,7 +17,7 @@ function authenticationMiddleware(){
     return authenticationMiddleware;
 
     function checkMandatoryFields(request, response, next){
-        log.logSeparator(console.info, 'Function authentication.checkMandatoryFields() start.');
+        log.logSeparator(console.info, 'Function authentication --> checkMandatoryFields() start.');
 
         const username = request.body.username;
         const password = request.body.password;

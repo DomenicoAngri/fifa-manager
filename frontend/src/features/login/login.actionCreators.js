@@ -14,7 +14,6 @@ function login(username, password){
             baseURL: 'http://localhost:7100'
         };
 
-        // TODO - Perchè si chiama checkusernameurl?
         const loginUrl = '/api/user/login';
 
         const loginBody = {
@@ -29,25 +28,24 @@ function login(username, password){
             dispatch(loginActions.login(userInfoWithToken));
         })
         .catch(function(error){
-
             switch(error.response.status){
                 case 400:
-                    // Username and password are blank in the backend, check why.
+                    dispatch(loginActions.backendCredentialNull(error.response.data.code));
                     break;
 
                 case 401:
-                    // Password is incorrect.
+                    dispatch(loginActions.incorrectPassword(error.response.data.code));
                     break;
 
                 case 404:
-                    // User not found.
+                    dispatch(loginActions.userNotFound(error.response.data.code));
                     break;
 
-                case 500:
+                    // TODO - I'm here, sto finendo di scrivere gli errori provenienti dal BE e poi devo farli vedere a FE.
+
+                default:
                     // Internal server error, check why
                     break;
-
-                default: ?
             }
 
             // 400 error, username or password blank

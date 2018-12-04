@@ -37,6 +37,7 @@ function userRegistration(username, password){
                     break;
 
                 default:
+                    // TODO-FE: vedere per general error, non username exsits
                     // Null fields, blank fields or Fatal error.
                     dispatch(registrationActions.usernameExists(error.response.data.code));
                     break;
