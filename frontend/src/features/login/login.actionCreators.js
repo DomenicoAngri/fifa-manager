@@ -25,39 +25,22 @@ function login(username, password){
         .then(function(userInfoWithToken){
             localStorage.setItem('token', userInfoWithToken.token);
             localStorage.setItem('username', userInfoWithToken.user.username);
-            dispatch(loginActions.login(userInfoWithToken));
+            dispatch(loginActions.userAuthenticated(userInfoWithToken));
         })
         .catch(function(error){
             switch(error.response.status){
-                case 400:
-                    dispatch(loginActions.backendCredentialNull(error.response.data.code));
-                    break;
-
                 case 401:
-                    dispatch(loginActions.incorrectPassword(error.response.data.code));
+                    dispatch(loginActions.incorrectUserPassword(error.response.data.code));
                     break;
 
                 case 404:
                     dispatch(loginActions.userNotFound(error.response.data.code));
                     break;
 
-                    // TODO - I'm here, sto finendo di scrivere gli errori provenienti dal BE e poi devo farli vedere a FE.
-
                 default:
-                    // Internal server error, check why
+                    dispatch(loginActions.generalError(error.response.data.code));
                     break;
             }
-
-            // 400 error, username or password blank
-
-            // status 200 tutt appost
-
-            // 401 password incorrect
-
-            // 404 user not found
-
-            // 500 internal server erro
-
         });
     };
 }

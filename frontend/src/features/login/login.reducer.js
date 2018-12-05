@@ -2,11 +2,9 @@ import {updateObject} from '../../common/utilities/utilities';
 import {loginConstants as actionType} from './login.constants';
 
 const initialState = {
-    username: '',
-    token: '',
     isUserAuthenticated: false,
     userNotFound: false,
-    incorrectPassword: false,
+    incorrectUserPassword: false,
     modalMessage: false
 };
 
@@ -15,36 +13,27 @@ export function loginReducer(state = initialState, action){
     // TODO-FE: fare revisione se tutto corretto e se sono usati tutti gli stati.
 
     switch(action.type){
-        case actionType.LOGIN:
-            return updateObject(state, {
-                isUserAuthenticated: true,
-                username: action.username,
-                token: action.token
-            });
-
         case actionType.USER_AUTHENTICATED:
             return updateObject(state, {
-                isUserAuthenticated: true
-            });
-
-        case actionType.USER_NOT_AUTHENTICATED:
-            return updateObject(state, {
-                isUserAuthenticated: false
+                isUserAuthenticated: true,
+                userInfoWithToken: action.userInfoWithToken
             });
 
         case actionType.USER_NOT_FOUND:
             return updateObject(state, {
                 isUserAuthenticated: false,
-                userNotFound: false
+                loginErrorCode: action.loginErrorCode,
+                userNotFound: true
             });
 
         case actionType.INCORRECT_USER_PASSWORD:
             return updateObject(state, {
                 isUserAuthenticated: false,
-                incorrectPassword: true
+                loginErrorCode: action.loginErrorCode,
+                incorrectUserPassword: true
             });
 
-        case actionType.BACKEND_CREDENTIAL_NULL:
+        case actionType.GENERAL_ERROR:
             return updateObject(state, {
                 isUserAuthenticated: false,
                 loginErrorCode: action.loginErrorCode,

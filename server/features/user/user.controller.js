@@ -171,7 +171,7 @@ function userController(){
     }
 
     function login(request, response){
-        log.logSeparator(console.info, 'Function user.controller.login: start.');
+        log.logSeparator(console.info, 'Function user.controller --> login start.');
 
         const username = request.body.username;
         const password = request.body.password;
@@ -210,6 +210,8 @@ function userController(){
     }
 
     function createJWTToken(user){
+        log.logSeparator(console.info, 'Function user.controller --> createJWTToken start.');
+
         const payload = {
             sub : user.username,
             iat : moment().unix(),

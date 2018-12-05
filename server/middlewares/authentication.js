@@ -17,7 +17,7 @@ function authenticationMiddleware(){
     return authenticationMiddleware;
 
     function checkMandatoryFields(request, response, next){
-        log.logSeparator(console.info, 'Function authentication --> checkMandatoryFields() start.');
+        log.logSeparator(console.info, 'Function authentication --> checkMandatoryFields start.');
 
         const username = request.body.username;
         const password = request.body.password;
@@ -39,6 +39,8 @@ function authenticationMiddleware(){
     }
 
     function tokenDecode(token){
+        log.logSeparator(console.info, 'Function authentication --> tokenDecode(token) start.');
+
         try{
             return jwt.decode(token, process.env.SECRET_JWT_TOKEN);
         }

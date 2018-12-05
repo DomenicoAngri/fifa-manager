@@ -68,7 +68,7 @@ class Login extends Component{
         }
         else{
             this.props.login(username, password);
-        }       
+        }
     }
     
     render(){
@@ -96,6 +96,7 @@ class Login extends Component{
                                     />
                                     <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>
                                 </div>
+                                
                                 <div className={"form-group " + (this.state.passwordInputError ? "has-danger" : "")}>
                                     <label htmlFor="passwordInput">Password:</label>
                                     <input
@@ -122,7 +123,10 @@ class Login extends Component{
 
 const mapStateToProps = state => {
     return{
-        isUserAuthenticated: state.login.token !== null
+        isUserAuthenticated: state.login.isUserAuthenticated,
+        userNotFound: state.login.userNotFound,
+        incorrectUserPassword: state.login.incorrectUserPassword,
+        modalMessage: state.login.modalMessage
     };
 };
 
