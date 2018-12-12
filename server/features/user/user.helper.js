@@ -13,7 +13,6 @@ function userHelper(){
     userHelper.updateUser = updateUser;
     userHelper.deleteUser = deleteUser;
     userHelper.setUserTeam = setUserTeam;
-    userHelper.login = login;
 
     return userHelper;
 
@@ -53,7 +52,7 @@ function userHelper(){
             user.surname = userBody.surname;
             user.telephoneNumber = userBody.telephoneNumber;
             user.team = userBody.team;
-
+            
             user.save()
             .then(function(userSaved){
                 resolve(userSaved);
@@ -101,18 +100,6 @@ function userHelper(){
             )
             .then(function(userUpdated){
                 resolve(userUpdated);
-            })
-            .catch(function(error){
-                reject(error);
-            });
-        });
-    }
-
-    function login(username){
-        return new Promise(function(resolve, reject){
-            userModel.findOne({username: username})
-            .then(function(user){
-                resolve(user);
             })
             .catch(function(error){
                 reject(error);

@@ -8,7 +8,7 @@ const ObjectId = mongoose.Schema.ObjectId;
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
-        minlength: 2,
+        minlength: 3,
         maxlength: 50,
         unique: true,
         lowercase: true,
@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,
         match: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-        required: false
+        required: false,
+        sparse: true
     },
     password: {
         type: String,
@@ -30,14 +31,14 @@ const userSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        minlength: 2,
+        minlength: 3,
         maxlength: 50,
         unique: false,
         required: false
     },
     surname: {
         type: String,
-        minlength: 2,
+        minlength: 3,
         maxlength: 50,
         unique: false,
         required: false
@@ -47,13 +48,15 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         maxlength: 16,
         unique: true,
-        required: false
+        required: false,
+        sparse: true
     },
     team: {
         type: ObjectId,
         ref: 'team',
         unique: true,
-        required: false
+        required: false,
+        sparse: true
     },
     isAdmin: {
         type: Boolean,

@@ -1,0 +1,56 @@
+.header-registration-form{
+    text-align: center;
+    margin: 2%;
+}
+
+.registration-form{
+    margin: 1%;
+}
+
+.button-registration-form{
+    margin-right: 3%;
+    margin-bottom: 3%;
+}
+
+/* Smartphone XS screen */
+@media (min-width: 300px){
+    .registration-container{
+        font-size: 14px;
+        margin-top: 5%;
+    }
+}
+
+/* Smartphone screen */
+@media (min-width: 350px){
+    .registration-container{
+        margin-top: 25%;
+    }
+}
+
+/* Smartphone XL screen */
+@media (min-width: 481px){
+    .registration-container{
+        margin-top: 20%;
+    }
+}
+
+/* Tablet sreen */
+@media (min-width: 768px){
+    .registration-container{
+        margin-top: 5%;
+    }
+}
+
+/* Desktop screen */
+@media (min-width: 992px){
+    .registration-container{
+        margin-top: 10%;
+    }
+}
+
+/* XL screen*/
+@media (min-width: 1200px){
+    .registration-container{
+        margin-top: 10%;
+    }
+}
