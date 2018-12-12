@@ -2,16 +2,24 @@ import {loginConstants} from './login.constants';
 
 export const loginActions = {
     userAuthenticated,
+    userNotAuthenticated,
     incorrectUserPassword,
     userNotFound,
-    generalError
+    generalError,
+    resetLoginErrorStates
     // logout
 };
 
-function userAuthenticated(userInfoWithToken){
+function userAuthenticated(){
     return{
-        type: loginConstants.USER_AUTHENTICATED,
-        userInfoWithToken: userInfoWithToken
+        type: loginConstants.USER_AUTHENTICATED
+    }
+}
+
+function userNotAuthenticated(loginErrorCode){
+    return{
+        type: loginConstants.USER_NOT_AUTHENTICATED,
+        loginErrorCode: loginErrorCode
     }
 }
 
@@ -33,6 +41,12 @@ function generalError(loginErrorCode){
     return{
         type: loginConstants.GENERAL_ERROR,
         loginErrorCode: loginErrorCode
+    }
+}
+
+function resetLoginErrorStates(){
+    return{
+        type: loginConstants.RESET_LOGIN_ERROR_STATES
     }
 }
 

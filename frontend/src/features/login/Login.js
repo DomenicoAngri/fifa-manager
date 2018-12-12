@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import {loginActionCreators} from './login.actionCreators';
 import Header from '../../components/UI/Header/Header';
+import getMessage from '../../common/utilities/messages';
 import './Login.css';
 import '../../common/css/common.css';
 
@@ -30,6 +31,7 @@ class Login extends Component{
     onSubmitForm(event){
         event.preventDefault();
         this.resetErrorsFrom();
+        this.props.resetLoginErrorStates();
 
         const username = event.target.usernameInput.value;
         const password = event.target.passwordInput.value;
@@ -72,6 +74,23 @@ class Login extends Component{
     }
     
     render(){
+        let usernameInvalidFeedback = null;
+        let passwordInvalidFeedback = null;
+
+        if(this.state.usernameInputError){
+            usernameInvalidFeedback = <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>;
+        }
+        else if(this.props.userNotFound){
+            usernameInvalidFeedback = <div className="invalid-feedback">{getMessage(this.props.loginErrorCode)}</div>;
+        }
+
+        if(this.state.passwordInputError){
+            passwordInvalidFeedback = <div className="invalid-feedback">{this.state.passwordInputErrorMessage}</div>;
+        }
+        else if(this.props.incorrectUserPassword){
+            passwordInvalidFeedback = <div className="invalid-feedback">{getMessage(this.props.loginErrorCode)}</div>;
+        }
+
         return(
             <div className="background-image">
                 <div className="container">
@@ -85,27 +104,27 @@ class Login extends Component{
                             </p>
 
                             <form className="login-form" onSubmit={(event) => this.onSubmitForm(event)}>
-                                <div className={"form-group " + (this.state.usernameInputError ? "has-danger" : "")}>
+                                <div className={"form-group " + (this.state.usernameInputError || this.props.userNotFound ? "has-danger" : "")}>
                                     <label htmlFor="usernameInput">Inserisci il tuo username:</label>
                                     <input
                                         type="text"
-                                        className={"form-control " + (this.state.usernameInputError ? "is-invalid" : "")}
+                                        className={"form-control " + (this.state.usernameInputError || this.props.userNotFound ? "is-invalid" : "")}
                                         id="usernameInput"
                                         aria-describedby="usernameHelp"
                                         placeholder="Username"
                                     />
-                                    <div className="invalid-feedback">{this.state.usernameInputErrorMessage}</div>
+                                    {usernameInvalidFeedback}
                                 </div>
                                 
-                                <div className={"form-group " + (this.state.passwordInputError ? "has-danger" : "")}>
+                                <div className={"form-group " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "has-danger" : "")}>
                                     <label htmlFor="passwordInput">Password:</label>
                                     <input
                                         type="password"
-                                        className={"form-control " + (this.state.passwordInputError ? "is-invalid" : "")}
+                                        className={"form-control " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "is-invalid" : "")}
                                         id="passwordInput"
                                         placeholder="Password"
                                     />
-                                    <div className="invalid-feedback">{this.state.passwordInputErrorMessage}</div>
+                                    {passwordInvalidFeedback}
                                 </div>
 
                                 <button className="btn btn-primary button-login-form">Login</button>
@@ -123,16 +142,17 @@ class Login extends Component{
 
 const mapStateToProps = state => {
     return{
-        isUserAuthenticated: state.login.isUserAuthenticated,
         userNotFound: state.login.userNotFound,
         incorrectUserPassword: state.login.incorrectUserPassword,
-        modalMessage: state.login.modalMessage
+        modalMessage: state.login.modalMessage,
+        loginErrorCode: state.login.loginErrorCode
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return{
-        login: (username, password) => dispatch(loginActionCreators.login(username, password))
+        login: (username, password) => dispatch(loginActionCreators.login(username, password)),
+        resetLoginErrorStates: () => dispatch(loginActionCreators.resetLoginErrorStates())
     };
 };
 

@@ -3,7 +3,8 @@ import {loginActions} from './login.actions';
 
 export const loginActionCreators = {
     login,
-    checkLoginStatus
+    checkLoginStatus,
+    resetLoginErrorStates
 };
 
 function login(username, password){
@@ -23,9 +24,9 @@ function login(username, password){
 
         request.post(loginUrl, loginBody, baseUrlConfig)
         .then(function(userInfoWithToken){
-            localStorage.setItem('token', userInfoWithToken.token);
-            localStorage.setItem('username', userInfoWithToken.user.username);
-            dispatch(loginActions.userAuthenticated(userInfoWithToken));
+            localStorage.setItem('token', userInfoWithToken.data.token);
+            localStorage.setItem('username', userInfoWithToken.data.user.username);
+            dispatch(loginActions.userAuthenticated());
         })
         .catch(function(error){
             switch(error.response.status){
@@ -45,7 +46,7 @@ function login(username, password){
     };
 }
 
-function checkLoginStatus(){
+function checkLoginStatus(token){
     return (dispatch) => {
         const baseUrlConfig = {
             baseURL: 'http://localhost:7100'
@@ -53,18 +54,30 @@ function checkLoginStatus(){
 
         const checkLoginStatusUrl = '/api/user/checkLoginStatus';
 
-        request.get(checkLoginStatusUrl, baseUrlConfig)
+        const loginStatusBody = {
+            token: token
+        };  
+
+        request.post(checkLoginStatusUrl, loginStatusBody, baseUrlConfig)
         .then(function(result){
             dispatch(loginActions.userAuthenticated());
         })
         .catch(function(error){
-            // TODO - loggare qualcosa?
-            dispatch(loginActions.userNotAuthenticated());
+            switch(error.response.status){
+                case 401:
+                    dispatch(loginActions.userNotAuthenticated(error.response.data.code));
+                    break;
+
+                default:
+                    dispatch(loginActions.generalError(error.response.data.code));
+                    break;
+            }
         });
     };
 }
 
-
-
-
-
+function resetLoginErrorStates(){
+    return (dispatch) => {
+        dispatch(loginActions.resetLoginErrorStates());
+    }
+}

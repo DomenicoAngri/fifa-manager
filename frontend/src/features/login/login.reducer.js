@@ -5,6 +5,7 @@ const initialState = {
     isUserAuthenticated: false,
     userNotFound: false,
     incorrectUserPassword: false,
+    loginErrorCode: '',
     modalMessage: false
 };
 
@@ -15,8 +16,12 @@ export function loginReducer(state = initialState, action){
     switch(action.type){
         case actionType.USER_AUTHENTICATED:
             return updateObject(state, {
-                isUserAuthenticated: true,
-                userInfoWithToken: action.userInfoWithToken
+                isUserAuthenticated: true
+            });
+
+        case actionType.USER_NOT_AUTHENTICATED:
+            return updateObject(state, {
+                isUserAuthenticated: false
             });
 
         case actionType.USER_NOT_FOUND:
@@ -40,6 +45,13 @@ export function loginReducer(state = initialState, action){
                 modalMessage: true
             });
 
+        case actionType.RESET_LOGIN_ERROR_STATES:
+            return updateObject(state, {
+                userNotFound: false,
+                incorrectUserPassword: false,
+                loginErrorCode: '',
+                modalMessage: false
+            });
 
         // case actionType.LOGOUT:
         //     return updateObject(state, {isUsernameUsed: false});

@@ -7,13 +7,9 @@ import Registration from './features/registration/Registration';
 import Dashboard from './features/dashboard/Dashboard';
 
 class App extends Component{
-
-    state = {
-        isUserAuthenticated: false
-    }
-
     componentDidMount(){
-        this.props.checkLoginStatus();
+        const token = localStorage.getItem('token');
+        this.props.checkLoginStatus(token);
     }
 
     render(){
@@ -52,7 +48,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        checkLoginStatus: () => dispatch(loginActionCreators.checkLoginStatus())
+        checkLoginStatus: (token) => dispatch(loginActionCreators.checkLoginStatus(token))
     };
 };
 

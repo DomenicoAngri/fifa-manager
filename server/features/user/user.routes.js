@@ -23,7 +23,7 @@ router.get('/checkUsernameExists/:username',
         userController.checkIfUsernameIsUsed
 );
 
-router.get('/checkLoginStatus',
+router.post('/checkLoginStatus',
         auth.checkLoginStatus
 );
 
