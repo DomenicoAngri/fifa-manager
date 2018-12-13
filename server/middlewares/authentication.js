@@ -41,6 +41,7 @@ function authenticationMiddleware(){
     function tokenDecode(token){
         log.logSeparator(console.info, 'Function authentication --> tokenDecode start.');
 
+        // TODO - Controllare sta roba che va in eccezione quando il payload non esiste. gestirla.
         try{
             return jwt.decode(token, process.env.SECRET_JWT_TOKEN);
         }
