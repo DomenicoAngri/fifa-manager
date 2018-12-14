@@ -96,7 +96,10 @@ class Login extends Component{
 
         return(
             <Auxiliary>
-                <Modal modalType="DANGER"/>
+                <Modal
+                    modalType="DANGER"
+                    modalMessage="FAT_032 - Fatal error on updating league lega son DB."
+                />
 
                 <div className="background-image">
                     <div className="container">

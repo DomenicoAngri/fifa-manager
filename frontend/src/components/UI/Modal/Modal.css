@@ -1,5 +1,6 @@
 .modal-message{
     z-index: 2;
+    vertical-align: middle;
 }
 
 .modal-appear{
@@ -8,4 +9,47 @@
 
 .modal-disappear{
 
+}
+
+
+/* Smartphone XS screen */
+@media (min-width: 300px){
+    .modal-message{
+        margin-top: 60%;
+    }
+}
+
+/* Smartphone screen */
+@media (min-width: 350px){
+    .modal-message{
+        margin-top: 55%;
+    }
+}
+
+/* Smartphone XL screen */
+@media (min-width: 481px){
+    .modal-message{
+        margin-top: 40%;
+    }
+}
+
+/* Tablet sreen */
+@media (min-width: 768px){
+    .modal-message{
+        margin-top: 25%;
+    }
+}
+
+/* Desktop screen */
+@media (min-width: 992px){
+    .modal-message{
+        margin-top: 25%;
+    }
+}
+
+/* XL screen*/
+@media (min-width: 1200px){
+    .modal-message{
+        margin-top: 30%;
+    }
 }

@@ -7,7 +7,7 @@ import './Modal.css';
 
 const modal = (props) => {
     const modalType = props.modalType;
-    let modalStyle = 'alert alert-dismissible modal-message '; 
+    let modalStyle = 'col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-8 offset-2 alert alert-dismissible modal-message '; 
 
     switch(modalType.toLowerCase()){
         case 'danger':
@@ -27,16 +27,14 @@ const modal = (props) => {
             break;
     }
 
-    // TODO sono qua e devo vedere come far apparire e scomparire o caaaaaazzz
-
+    // TODO sono qua e devo modificare la grafica
     return(
         <Auxiliary>
             <Backdrop show="true"/>
 
             <div className={modalStyle}>
                 <button type="button" className="close">&times;</button>
-                <strong>TEST ERROR!</strong>
-                <p>ATTENZIONE! Qui abbiamo un bel modal test error!</p>
+                <strong>{props.modalMessage}</strong>
             </div>
         </Auxiliary>
     );
