@@ -1,16 +1,14 @@
 .modal-message{
     z-index: 2;
-    vertical-align: middle;
 }
 
 .modal-appear{
-
+    visibility: visible;
 }
 
 .modal-disappear{
-
+    visibility: hidden;
 }
-
 
 /* Smartphone XS screen */
 @media (min-width: 300px){
@@ -29,7 +27,7 @@
 /* Smartphone XL screen */
 @media (min-width: 481px){
     .modal-message{
-        margin-top: 40%;
+        margin-top: 35%;
     }
 }
 
@@ -50,6 +48,6 @@
 /* XL screen*/
 @media (min-width: 1200px){
     .modal-message{
-        margin-top: 30%;
+        margin-top: 20%;
     }
 }

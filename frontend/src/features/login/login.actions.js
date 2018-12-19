@@ -5,8 +5,10 @@ export const loginActions = {
     userNotAuthenticated,
     incorrectUserPassword,
     userNotFound,
-    generalError,
-    resetLoginErrorStates
+    showModalMessage,
+    resetLoginErrorStates,
+    hideModalMessage
+
     // logout
 };
 
@@ -37,10 +39,16 @@ function incorrectUserPassword(loginErrorCode){
     }
 }
 
-function generalError(loginErrorCode){
+function showModalMessage(loginErrorCode){
     return{
-        type: loginConstants.GENERAL_ERROR,
+        type: loginConstants.SHOW_MODAL_MESSAGE,
         loginErrorCode: loginErrorCode
+    }
+}
+
+function hideModalMessage(){
+    return{
+        type: loginConstants.HIDE_MODAL_MESSAGE
     }
 }
 

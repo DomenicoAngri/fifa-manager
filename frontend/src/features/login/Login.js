@@ -5,7 +5,8 @@ import {loginActionCreators} from './login.actionCreators';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Header from '../../components/UI/Header/Header';
 import getMessage from '../../common/utilities/messages';
-import Modal from '../../components/UI/Modal/Modal';
+import ModalMessage from '../../components/UI/Modal/ModalMessage';
+import {commonActionCreators} from '../../common/actions/common.actions.actionCreators';
 
 import './Login.css';
 import '../../common/css/common.css';
@@ -75,6 +76,10 @@ class Login extends Component{
             this.props.login(username, password);
         }
     }
+
+    hideModalMessage = () => {
+        this.props.hideModalMessage();
+    }
     
     render(){
         let usernameInvalidFeedback = null;
@@ -96,10 +101,12 @@ class Login extends Component{
 
         return(
             <Auxiliary>
-                <Modal
+                <ModalMessage
                     modalType="DANGER"
-                    modalMessage="FAT_032 - Fatal error on updating league lega son DB."
-                />
+                    modalMessage={this.props.messageModalBody}
+                    showModalMessage={this.props.showModalMessage}
+                    clicked={this.hideModalMessage}
+                />;
 
                 <div className="background-image">
                     <div className="container">
@@ -135,7 +142,7 @@ class Login extends Component{
                                         />
                                         {passwordInvalidFeedback}
                                     </div>
-
+                                    
                                     <button className="btn btn-primary button-login-form">Login</button>
                                     <NavLink to="/registration">
                                         <input type="button" value="Registrati" className="btn btn-primary button-login-form"/>
@@ -154,15 +161,17 @@ const mapStateToProps = state => {
     return{
         userNotFound: state.login.userNotFound,
         incorrectUserPassword: state.login.incorrectUserPassword,
-        modalMessage: state.login.modalMessage,
-        loginErrorCode: state.login.loginErrorCode
+        loginErrorCode: state.login.loginErrorCode,
+        showModalMessage: state.common.showModalMessage,
+        messageModalBody: state.common.messageBody
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return{
         login: (username, password) => dispatch(loginActionCreators.login(username, password)),
-        resetLoginErrorStates: () => dispatch(loginActionCreators.resetLoginErrorStates())
+        resetLoginErrorStates: () => dispatch(loginActionCreators.resetLoginErrorStates()),
+        hideModalMessage: () => dispatch(commonActionCreators.hideModalMessage())
     };
 };
 
