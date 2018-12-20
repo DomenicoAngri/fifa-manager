@@ -1,10 +1,13 @@
 import request from 'axios';
 import {loginActions} from './login.actions';
+import {commonActions} from '../../common/actions/common.actions.actions';
+import getMessage from '../../common/utilities/messages';
 
 export const loginActionCreators = {
     login,
     checkLoginStatus,
-    resetLoginErrorStates
+    resetLoginErrorStates,
+    hideModalMessage
 };
 
 function login(username, password){
@@ -29,18 +32,17 @@ function login(username, password){
             dispatch(loginActions.userAuthenticated());
         })
         .catch(function(error){
-            switch(error.response.status){
-                case 401:
-                    dispatch(loginActions.incorrectUserPassword(error.response.data.code));
-                    break;
-
-                case 404:
-                    dispatch(loginActions.userNotFound(error.response.data.code));
-                    break;
-
-                default:
-                    dispatch(loginActions.generalError(error.response.data.code));
-                    break;
+            if(error.response == null){
+                dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
+            }
+            else if(error.response.status === 401){
+                dispatch(loginActions.incorrectUserPassword(error.response.data.code));
+            }
+            else if(error.response.status === 404){
+                dispatch(loginActions.userNotFound(error.response.data.code));
+            }
+            else{
+                dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
             }
         });
     };
@@ -63,14 +65,14 @@ function checkLoginStatus(token){
             dispatch(loginActions.userAuthenticated());
         })
         .catch(function(error){
-            switch(error.response.status){
-                case 401:
-                    dispatch(loginActions.userNotAuthenticated(error.response.data.code));
-                    break;
-
-                default:
-                    dispatch(loginActions.generalError(error.response.data.code));
-                    break;
+            if(error.response == null){
+                dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
+            }
+            else if(error.response.status === 401){
+                dispatch(loginActions.userNotAuthenticated(error.response.data.code));
+            }
+            else{
+                dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
             }
         });
     };
@@ -79,5 +81,11 @@ function checkLoginStatus(token){
 function resetLoginErrorStates(){
     return (dispatch) => {
         dispatch(loginActions.resetLoginErrorStates());
+    }
+}
+
+function hideModalMessage(){
+    return (dispatch) => {
+        dispatch(commonActions.hideModalMessage());
     }
 }

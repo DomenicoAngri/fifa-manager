@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import {loginActionCreators} from './login.actionCreators';
+import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Header from '../../components/UI/Header/Header';
 import getMessage from '../../common/utilities/messages';
+import ModalMessage from '../../components/UI/Modal/ModalMessage';
+import {commonActionCreators} from '../../common/actions/common.actions.actionCreators';
+
 import './Login.css';
 import '../../common/css/common.css';
 
@@ -72,6 +76,10 @@ class Login extends Component{
             this.props.login(username, password);
         }
     }
+
+    hideModalMessage = () => {
+        this.props.hideModalMessage();
+    }
     
     render(){
         let usernameInvalidFeedback = null;
@@ -92,50 +100,59 @@ class Login extends Component{
         }
 
         return(
-            <div className="background-image">
-                <div className="container">
-                    <div className="row">
-                        <div className="form-container login-container col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-10 offset-1">
-                            <Header classes="header-login-form"/>
-                            
-                            <p>
-                                Benvenuto, se non hai un account, registrati.<br />
-                                Per partecipare al torneo, dovrai essere autorizzato da un amministratore.
-                            </p>
+            <Auxiliary>
+                <ModalMessage
+                    modalType="DANGER"
+                    modalMessage={this.props.modalMessageBody}
+                    showModalMessage={this.props.showModalMessage}
+                    clicked={this.hideModalMessage}
+                />
 
-                            <form className="login-form" onSubmit={(event) => this.onSubmitForm(event)}>
-                                <div className={"form-group " + (this.state.usernameInputError || this.props.userNotFound ? "has-danger" : "")}>
-                                    <label htmlFor="usernameInput">Inserisci il tuo username:</label>
-                                    <input
-                                        type="text"
-                                        className={"form-control " + (this.state.usernameInputError || this.props.userNotFound ? "is-invalid" : "")}
-                                        id="usernameInput"
-                                        aria-describedby="usernameHelp"
-                                        placeholder="Username"
-                                    />
-                                    {usernameInvalidFeedback}
-                                </div>
+                <div className="background-image">
+                    <div className="container">
+                        <div className="row">
+                            <div className="form-container login-container col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-10 offset-1">
+                                <Header classes="header-login-form"/>
                                 
-                                <div className={"form-group " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "has-danger" : "")}>
-                                    <label htmlFor="passwordInput">Password:</label>
-                                    <input
-                                        type="password"
-                                        className={"form-control " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "is-invalid" : "")}
-                                        id="passwordInput"
-                                        placeholder="Password"
-                                    />
-                                    {passwordInvalidFeedback}
-                                </div>
+                                <p>
+                                    Benvenuto, se non hai un account, registrati.<br />
+                                    Per partecipare al torneo, dovrai essere autorizzato da un amministratore.
+                                </p>
 
-                                <button className="btn btn-primary button-login-form">Login</button>
-                                <NavLink to="/registration">
-                                    <input type="button" value="Registrati" className="btn btn-primary button-login-form"/>
-                                </NavLink>
-                            </form>
+                                <form className="login-form" onSubmit={(event) => this.onSubmitForm(event)}>
+                                    <div className={"form-group " + (this.state.usernameInputError || this.props.userNotFound ? "has-danger" : "")}>
+                                        <label htmlFor="usernameInput">Inserisci il tuo username:</label>
+                                        <input
+                                            type="text"
+                                            className={"form-control " + (this.state.usernameInputError || this.props.userNotFound ? "is-invalid" : "")}
+                                            id="usernameInput"
+                                            aria-describedby="usernameHelp"
+                                            placeholder="Username"
+                                        />
+                                        {usernameInvalidFeedback}
+                                    </div>
+                                    
+                                    <div className={"form-group " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "has-danger" : "")}>
+                                        <label htmlFor="passwordInput">Password:</label>
+                                        <input
+                                            type="password"
+                                            className={"form-control " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "is-invalid" : "")}
+                                            id="passwordInput"
+                                            placeholder="Password"
+                                        />
+                                        {passwordInvalidFeedback}
+                                    </div>
+                                    
+                                    <button className="btn btn-primary button-login-form">Login</button>
+                                    <NavLink to="/registration">
+                                        <input type="button" value="Registrati" className="btn btn-primary button-login-form"/>
+                                    </NavLink>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Auxiliary>
         );
     }
 }
@@ -144,15 +161,17 @@ const mapStateToProps = state => {
     return{
         userNotFound: state.login.userNotFound,
         incorrectUserPassword: state.login.incorrectUserPassword,
-        modalMessage: state.login.modalMessage,
-        loginErrorCode: state.login.loginErrorCode
+        loginErrorCode: state.login.loginErrorCode,
+        showModalMessage: state.common.showModalMessage,
+        modalMessageBody: state.common.messageBody
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return{
         login: (username, password) => dispatch(loginActionCreators.login(username, password)),
-        resetLoginErrorStates: () => dispatch(loginActionCreators.resetLoginErrorStates())
+        resetLoginErrorStates: () => dispatch(loginActionCreators.resetLoginErrorStates()),
+        hideModalMessage: () => dispatch(commonActionCreators.hideModalMessage())
     };
 };
 

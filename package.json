@@ -1,6 +1,6 @@
 {
   "name": "fifa-manager",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "description": "Fifa manager italian tournament web app.",
   "main": "app.js",
   "dependencies": {
