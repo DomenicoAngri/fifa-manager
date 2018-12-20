@@ -1,5 +1,7 @@
 import request from 'axios';
 import {registrationActions} from './registration.actions';
+import {commonActions} from '../../common/actions/common.actions.actions';
+import getMessage from '../../common/utilities/messages';
 
 export const registrationActionCreators = {
     userRegistration,
@@ -28,19 +30,17 @@ function userRegistration(username, password){
         })
         .catch(function(error){
             // TODO - Capire se mettere messaggio in console.
-            // TODO - mettere popup di errore quando ci sono error fatali.
 
-            switch(error.response.status){
-                case 409:
-                    // Username already exists.
-                    dispatch(registrationActions.usernameExists(error.response.data.code));
-                    break;
-
-                default:
-                    // TODO-FE: vedere per general error, non username exsits
-                    // Null fields, blank fields or Fatal error.
-                    dispatch(registrationActions.usernameExists(error.response.data.code));
-                    break;
+            if(error.response == null){
+                // Server not available.
+                dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
+            }
+            else if(error.response.status == 409){
+                // Username already exists.
+                dispatch(registrationActions.usernameExists(error.response.data.code));
+            }
+            else{
+                dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
             }
         });        
     };

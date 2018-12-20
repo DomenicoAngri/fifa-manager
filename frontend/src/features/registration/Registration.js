@@ -4,6 +4,9 @@ import {NavLink} from 'react-router-dom';
 import Header from '../../components/UI/Header/Header';
 import {registrationActionCreators} from './registration.actionCreators';
 import getMessage from '../../common/utilities/messages';
+import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
+import ModalMessage from '../../components/UI/Modal/ModalMessage';
+import {commonActionCreators} from '../../common/actions/common.actions.actionCreators';
 
 import '../../common/css/common.css';
 import './Registration.css';
@@ -121,6 +124,10 @@ class Registration extends Component{
         }
     }
 
+    hideModalMessage = () => {
+        this.props.hideModalMessage();
+    }
+
     render(){
         let usernameInvalidFeedback = null;
 
@@ -132,65 +139,74 @@ class Registration extends Component{
         }
 
         return(
-            <div className="background-image">
-                <div className="container">
-                    <div className="row">
-                        <div className="form-container registration-container col-xl-4 offset-xl-4 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
-                            <Header classes="header-registration-form"/>
+            <Auxiliary>
+                <ModalMessage
+                    modalType="DANGER"
+                    modalMessage={this.props.modalMessageBody}
+                    showModalMessage={this.props.showModalMessage}
+                    clicked={this.hideModalMessage}
+                />
 
-                            <p>
-                                Inserisci un username ed una password per registrarti.
-                            </p>
+                <div className="background-image">
+                    <div className="container">
+                        <div className="row">
+                            <div className="form-container registration-container col-xl-4 offset-xl-4 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
+                                <Header classes="header-registration-form"/>
 
-                            <form className="registration-form" onSubmit={(event) => this.onSubmitForm(event)}>
-                                <div className={"form-group " + (this.state.usernameInputError || this.props.isUsernameUsed ? "has-danger" : "")}>
-                                    <label htmlFor="usernameInput">Username:</label>
-                                    <input
-                                        type="text"
-                                        className={"form-control " + (this.state.usernameInputError || this.props.isUsernameUsed ? "is-invalid" : "")}
-                                        id="usernameInput"
-                                        aria-describedby="usernameHelp"
-                                        placeholder="Username"
-                                        onChange={(event) => this.onUsernameInputChange(event)}
-                                    />
-                                    {usernameInvalidFeedback}
-                                </div>
+                                <p>
+                                    Inserisci un username ed una password per registrarti.
+                                </p>
 
-                                <div className={"form-group " + (this.state.passwordInputError ? "has-danger" : "")}>
-                                    <label htmlFor="passwordInput">Password:</label>
-                                    <input
-                                        type="password"
-                                        className={"form-control " + (this.state.passwordInputError ? "is-invalid" : "")}
-                                        id="passwordInput"
-                                        aria-describedby="passwordHelp"
-                                        placeholder="Password"
-                                        onChange={(event) => this.onPasswordInputChange(event)}
-                                    />
-                                    <div className="invalid-feedback">{this.state.passwordInputErrorMessage}</div>
-                                </div>
+                                <form className="registration-form" onSubmit={(event) => this.onSubmitForm(event)}>
+                                    <div className={"form-group " + (this.state.usernameInputError || this.props.isUsernameUsed ? "has-danger" : "")}>
+                                        <label htmlFor="usernameInput">Username:</label>
+                                        <input
+                                            type="text"
+                                            className={"form-control " + (this.state.usernameInputError || this.props.isUsernameUsed ? "is-invalid" : "")}
+                                            id="usernameInput"
+                                            aria-describedby="usernameHelp"
+                                            placeholder="Username"
+                                            onChange={(event) => this.onUsernameInputChange(event)}
+                                        />
+                                        {usernameInvalidFeedback}
+                                    </div>
 
-                                <div className={"form-group " + (this.state.passwordConfirmInputError ? "has-danger" : "")}>
-                                    <label htmlFor="passwordConfirmInput">Conferma password:</label>
-                                    <input
-                                        type="password"
-                                        className={"form-control " + (this.state.passwordConfirmInputError ? "is-invalid" : "")}
-                                        id="passwordConfirmInput"
-                                        aria-describedby="passwordConfirmHelp"
-                                        placeholder="Password"
-                                        onChange={(event) => this.onPasswordConfirmedInputChange(event)}
-                                    />
-                                    <div className="invalid-feedback">{this.state.passwordConfirmInputErrorMessage}</div>
-                                </div>
+                                    <div className={"form-group " + (this.state.passwordInputError ? "has-danger" : "")}>
+                                        <label htmlFor="passwordInput">Password:</label>
+                                        <input
+                                            type="password"
+                                            className={"form-control " + (this.state.passwordInputError ? "is-invalid" : "")}
+                                            id="passwordInput"
+                                            aria-describedby="passwordHelp"
+                                            placeholder="Password"
+                                            onChange={(event) => this.onPasswordInputChange(event)}
+                                        />
+                                        <div className="invalid-feedback">{this.state.passwordInputErrorMessage}</div>
+                                    </div>
 
-                                <button className="btn btn-primary button-registration-form">Registrati</button>
-                                <NavLink to="/login">
-                                    <input type="button" value="Login" className="btn btn-primary button-registration-form"/>
-                                </NavLink>
-                            </form>
+                                    <div className={"form-group " + (this.state.passwordConfirmInputError ? "has-danger" : "")}>
+                                        <label htmlFor="passwordConfirmInput">Conferma password:</label>
+                                        <input
+                                            type="password"
+                                            className={"form-control " + (this.state.passwordConfirmInputError ? "is-invalid" : "")}
+                                            id="passwordConfirmInput"
+                                            aria-describedby="passwordConfirmHelp"
+                                            placeholder="Password"
+                                            onChange={(event) => this.onPasswordConfirmedInputChange(event)}
+                                        />
+                                        <div className="invalid-feedback">{this.state.passwordConfirmInputErrorMessage}</div>
+                                    </div>
+
+                                    <button className="btn btn-primary button-registration-form">Registrati</button>
+                                    <NavLink to="/login">
+                                        <input type="button" value="Login" className="btn btn-primary button-registration-form"/>
+                                    </NavLink>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Auxiliary>
         );
     }
 }
@@ -200,13 +216,16 @@ const mapStateToProps = state => {
         isUsernameUsed: state.registration.isUsernameUsed,
         registrationErrorCode: state.registration.registrationErrorCode,
         generalError: state.registration.generalError,
+        showModalMessage: state.common.showModalMessage,
+        modalMessageBody: state.common.messageBody
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return{
         userRegistration: (username, password) => dispatch(registrationActionCreators.userRegistration(username, password)),
-        resetUsernameErrorState: () => dispatch(registrationActionCreators.resetUsernameErrorState())
+        resetUsernameErrorState: () => dispatch(registrationActionCreators.resetUsernameErrorState()),
+        hideModalMessage: () => dispatch(commonActionCreators.hideModalMessage())
     };
 };
 

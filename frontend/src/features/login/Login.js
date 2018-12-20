@@ -103,10 +103,10 @@ class Login extends Component{
             <Auxiliary>
                 <ModalMessage
                     modalType="DANGER"
-                    modalMessage={this.props.messageModalBody}
+                    modalMessage={this.props.modalMessageBody}
                     showModalMessage={this.props.showModalMessage}
                     clicked={this.hideModalMessage}
-                />;
+                />
 
                 <div className="background-image">
                     <div className="container">
@@ -163,7 +163,7 @@ const mapStateToProps = state => {
         incorrectUserPassword: state.login.incorrectUserPassword,
         loginErrorCode: state.login.loginErrorCode,
         showModalMessage: state.common.showModalMessage,
-        messageModalBody: state.common.messageBody
+        modalMessageBody: state.common.messageBody
     };
 };
 

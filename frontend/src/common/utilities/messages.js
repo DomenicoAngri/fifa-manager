@@ -13,10 +13,10 @@ export default function getMessage(messageCode){
          * Error messages
          * ******************** */
         case 'ERR_020':
-            return 'Il campo username è vuoto o nullo, inseriscilo!';
+            return 'L\'username è arrivato nullo o vuoto al server, riprova! Codice errore: ERR_020';
 
         case 'ERR_022':
-            return 'Il campo della password è vuoto o nullo, inseriscila!';
+            return 'La password è arrivata nulla o vuota al server, riprova! Codice errore: ERR_022';
 
         case 'ERR_036':
             return 'La password non è corretta, ricontrolla!';
