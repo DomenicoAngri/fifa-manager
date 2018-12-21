@@ -18,10 +18,7 @@ function userRegistration(username, password){
 
         const userRegistrationBody = {
             username: username,
-            password: password,
-
-            // TODO - delete this is admin
-            isAdmin: false
+            password: password
         };
 
         request.post(userRegistrationUrl, userRegistrationBody, baseUrlConfig)
@@ -35,7 +32,7 @@ function userRegistration(username, password){
                 // Server not available.
                 dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
             }
-            else if(error.response.status == 409){
+            else if(error.response.status === 409){
                 // Username already exists.
                 dispatch(registrationActions.usernameExists(error.response.data.code));
             }

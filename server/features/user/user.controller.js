@@ -7,6 +7,7 @@ const responseMessage = require('../../utils/responseMessage');
 const log = require('../../utils/logger');
 const jwt = require('jwt-simple');
 const moment = require('moment');
+const bcrypt = require('bcrypt');
 
 function userController(){
     let userController = this;
@@ -99,8 +100,31 @@ function userController(){
 
     function insertNewUser(request, response){
         const username = request.body.username;
+        const password = request.body.password;
 
-        helper.insertNewUser(request.body)
+        let newUser = {
+            username: username,
+            password: bcrypt.hashSync(password, 16)
+        };
+
+        // // TODO hashsync
+        // bcrypt.hash(password, BCRYPT_SALT_ROUNDS)
+        // .then(function(hashedPassword){
+        //     log.logSeparator(console.info, 'INFO --> ' + username + '\'s passoword hashed correctly!');
+
+        //     newUser = {
+        //         username: username,
+        //         password: hashedPassword
+        //     }
+        // })
+        // .catch(function(error){
+        //     log.logSeparator(console.error, 'FATAL - FAT_049 --> Fatal error during hashing ' + username + '\'s password.');
+        //     log.logSeparator(console.error, error);
+        //     response.status(500).send(new responseMessage('FAT_049', 'FATAL --> Fatal error during hashing ' + username + '\'s password. Check immediately console and logs.'));
+        //     return;
+        // });
+
+        helper.insertNewUser(newUser)
         .then(function(userSaved){
             log.logSeparator(console.info, 'INFO --> User ' + username + ' registered!');
             log.logSeparator(console.debug, userSaved);
@@ -176,17 +200,17 @@ function userController(){
         const username = request.body.username;
         const password = request.body.password;
 
-        helper.getUserByUsername(username)
+        helper.getUserWithPasswordByUsername(username)
         .then(function(user){
             if(user !== null){
-                if(password === user.password){
-                    const userInfoWithToken = {
+                if(bcrypt.compareSync(password, user.password)){
+                    const userWithToken = {
                         token: createJWTToken(user),
-                        user: user
+                        user: user.username
                     };
 
-                    log.logSeparator(console.debug, 'userInfoWithToken = ' + userInfoWithToken);
-                    response.status(200).send(userInfoWithToken);
+                    log.logSeparator(console.debug, 'userWithToken = ' + userWithToken);
+                    response.status(200).send(userWithToken);
                     return;
                 }
                 else{

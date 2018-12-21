@@ -26,9 +26,9 @@ function login(username, password){
         };
 
         request.post(loginUrl, loginBody, baseUrlConfig)
-        .then(function(userInfoWithToken){
-            localStorage.setItem('token', userInfoWithToken.data.token);
-            localStorage.setItem('username', userInfoWithToken.data.user.username);
+        .then(function(userWithToken){
+            localStorage.setItem('token', userWithToken.data.token);
+            localStorage.setItem('username', userWithToken.data.user.username);
             dispatch(loginActions.userAuthenticated());
         })
         .catch(function(error){

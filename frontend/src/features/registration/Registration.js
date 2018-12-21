@@ -12,10 +12,6 @@ import '../../common/css/common.css';
 import './Registration.css';
 
 class Registration extends Component{
-    //
-    // TODO - Togliere assolutamente gli onChange.
-    //
-
     state = {
         username: '',
         password: '',
@@ -41,32 +37,14 @@ class Registration extends Component{
         this.setState(initialErrorsForm);
     }
 
-    onUsernameInputChange(event){
-        event.preventDefault();
-        const usernameInput = event.target.value;
-        this.setState({username: usernameInput});
-    }
-
-    onPasswordInputChange(event){
-        event.preventDefault();
-        const passwordInput = event.target.value;
-        this.setState({password: passwordInput});
-    }
-
-    onPasswordConfirmedInputChange(event){
-        event.preventDefault();
-        const passwordConfirmedInput = event.target.value;
-        this.setState({passwordConfirm: passwordConfirmedInput});
-    }
-
     onSubmitForm(event){
         event.preventDefault();
         this.resetErrorsForm();
         this.props.resetUsernameErrorState();
 
-        const username = this.state.username;
-        const password = this.state.password;
-        const passwordConfirm = this.state.passwordConfirm;
+        const username = event.target.usernameInput.value;
+        const password = event.target.passwordInput.value;
+        const passwordConfirm = event.target.passwordConfirmInput.value;
         const whiteSpaceValidation = RegExp('^ *$');
         const usernameValidation = RegExp('^\\w+$');
         const passwordValidation = RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$');
@@ -150,7 +128,7 @@ class Registration extends Component{
                 <div className="background-image">
                     <div className="container">
                         <div className="row">
-                            <div className="form-container registration-container col-xl-4 offset-xl-4 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
+                            <div className="form-container registration-container col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-10 offset-1">
                                 <Header classes="header-registration-form"/>
 
                                 <p>
@@ -166,7 +144,6 @@ class Registration extends Component{
                                             id="usernameInput"
                                             aria-describedby="usernameHelp"
                                             placeholder="Username"
-                                            onChange={(event) => this.onUsernameInputChange(event)}
                                         />
                                         {usernameInvalidFeedback}
                                     </div>
@@ -179,7 +156,6 @@ class Registration extends Component{
                                             id="passwordInput"
                                             aria-describedby="passwordHelp"
                                             placeholder="Password"
-                                            onChange={(event) => this.onPasswordInputChange(event)}
                                         />
                                         <div className="invalid-feedback">{this.state.passwordInputErrorMessage}</div>
                                     </div>
@@ -192,7 +168,6 @@ class Registration extends Component{
                                             id="passwordConfirmInput"
                                             aria-describedby="passwordConfirmHelp"
                                             placeholder="Password"
-                                            onChange={(event) => this.onPasswordConfirmedInputChange(event)}
                                         />
                                         <div className="invalid-feedback">{this.state.passwordConfirmInputErrorMessage}</div>
                                     </div>

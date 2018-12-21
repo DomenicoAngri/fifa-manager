@@ -32,5 +32,11 @@ export default function getMessage(messageCode){
         
         case 'FAT_025':
             return 'Errore fatale accaduto durante il controllo dell\'esistenza dell\'username. Codice errore: FAT_025.';
+
+        /* ********************
+         * Default message
+         * ******************** */
+        default:
+            return 'Sinceramente, non so che errore sia capitato, probabilmente il server a breve scoppierà. Prova a contattare Gandalf il Bianco. Fuggite.. Sciocchi! Codice errore: EVIL_666.';
     }
 }
