@@ -145,7 +145,7 @@ class Login extends Component{
                                     
                                     <button className="btn btn-primary button-login-form">Login</button>
                                     <NavLink to="/registration">
-                                        <input type="button" value="Registrati" className="btn btn-primary button-login-form"/>
+                                        <input type="button" value="Registrati!" className="btn btn-warning button-login-form"/>
                                     </NavLink>
                                 </form>
                             </div>

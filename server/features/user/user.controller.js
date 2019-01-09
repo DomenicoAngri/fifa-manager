@@ -99,36 +99,27 @@ function userController(){
     }
 
     function insertNewUser(request, response){
+        log.logSeparator(console.info, 'Function user.controller --> insertNewUser start.');
+
         const username = request.body.username;
         const password = request.body.password;
+        log.logSeparator(console.debug, 'Username = ' + username);
 
         let newUser = {
             username: username,
             password: bcrypt.hashSync(password, 16)
         };
 
-        // // TODO hashsync
-        // bcrypt.hash(password, BCRYPT_SALT_ROUNDS)
-        // .then(function(hashedPassword){
-        //     log.logSeparator(console.info, 'INFO --> ' + username + '\'s passoword hashed correctly!');
-
-        //     newUser = {
-        //         username: username,
-        //         password: hashedPassword
-        //     }
-        // })
-        // .catch(function(error){
-        //     log.logSeparator(console.error, 'FATAL - FAT_049 --> Fatal error during hashing ' + username + '\'s password.');
-        //     log.logSeparator(console.error, error);
-        //     response.status(500).send(new responseMessage('FAT_049', 'FATAL --> Fatal error during hashing ' + username + '\'s password. Check immediately console and logs.'));
-        //     return;
-        // });
-
+        log.logSeparator(console.info, 'Creating new user ' + username + '...');
         helper.insertNewUser(newUser)
         .then(function(userSaved){
             log.logSeparator(console.info, 'INFO --> User ' + username + ' registered!');
-            log.logSeparator(console.debug, userSaved);
-            response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + username + ' saved correctly!'));
+            
+            log.logSeparator(console.info, 'Creating token for new user ' + username + '...');
+            const userWithToken = createJWTToken(userSaved);
+            log.logSeparator(console.info, 'Token for ' + username + ' created!');
+
+            response.status(200).send(userWithToken);
             return;
         })
         .catch(function(error){
@@ -154,7 +145,7 @@ function userController(){
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_024', 'FATAL --> Fatal error on updating user ' + username + '. Check immediately console and logs.'));
             return;
-        });
+        }); 
     }
 
     function deleteUser(request, response){
@@ -204,12 +195,10 @@ function userController(){
         .then(function(user){
             if(user !== null){
                 if(bcrypt.compareSync(password, user.password)){
-                    const userWithToken = {
-                        token: createJWTToken(user),
-                        user: user.username
-                    };
+                    const userWithToken = createJWTToken(user);
 
-                    log.logSeparator(console.debug, 'userWithToken = ' + userWithToken);
+                    log.logSeparator(console.info, 'Token and information created!');
+
                     response.status(200).send(userWithToken);
                     return;
                 }
@@ -240,10 +229,14 @@ function userController(){
             sub : user.username,
             iat : moment().unix(),
             exp : moment().add(1, 'days').unix()
-            //exp : moment().add(10, 'seconds').unix()
+            // exp : moment().add(10, 'seconds').unix()
         }
 
-        return jwt.encode(payload, process.env.SECRET_JWT_TOKEN);
+        return {
+            token: jwt.encode(payload, process.env.SECRET_JWT_TOKEN),
+            username: payload.sub,
+            expirationDate: payload.exp
+        };
     }
 
 }

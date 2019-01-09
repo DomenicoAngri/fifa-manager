@@ -8,8 +8,7 @@ import Dashboard from './features/dashboard/Dashboard';
 
 class App extends Component{
     componentDidMount(){
-        const token = localStorage.getItem('token');
-        this.props.checkLoginStatus(token);
+        this.props.checkLoginStatus();
     }
 
     render(){
@@ -20,7 +19,7 @@ class App extends Component{
                 <Redirect to="/login"/>
             </Switch>
         );
-
+        
         if(this.props.isUserAuthenticated){
             routes = (
                 <Switch>
@@ -42,13 +41,13 @@ class App extends Component{
 
 const mapStateToProps = state => {
     return{
-        isUserAuthenticated: false
+        isUserAuthenticated: state.login.isUserAuthenticated
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return{
-        checkLoginStatus: (token) => dispatch(loginActionCreators.checkLoginStatus(token))
+        checkLoginStatus: () => dispatch(loginActionCreators.checkLoginStatus())
     };
 };
 

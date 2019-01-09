@@ -14,10 +14,6 @@ const router = express.Router();
 // Routes.
 
 // TODO - Develop admin permission for method.
-// TODOPOST - Check lowercase fields.
-// TODOPOST - Add other get type, like name, surname, team, ecc..
-// TODOPOST - Check log for production.
-// TODOPOST - Set error boolean in response message.
 // TODOPOST - Total errors and warns review.
 
 router.get('/checkUsernameExists/:username',

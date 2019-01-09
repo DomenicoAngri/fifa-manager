@@ -2,6 +2,7 @@ import request from 'axios';
 import {loginActions} from './login.actions';
 import {commonActions} from '../../common/actions/common.actions.actions';
 import getMessage from '../../common/utilities/messages';
+import history from '../../common/utilities/history';
 
 export const loginActionCreators = {
     login,
@@ -13,7 +14,7 @@ export const loginActionCreators = {
 function login(username, password){
     return (dispatch) => {
 
-        // TODO - mettere indirizzo con il file env.
+        // TODO - Set address with file env.
         const baseUrlConfig = {
             baseURL: 'http://localhost:7100'
         };
@@ -28,8 +29,10 @@ function login(username, password){
         request.post(loginUrl, loginBody, baseUrlConfig)
         .then(function(userWithToken){
             localStorage.setItem('token', userWithToken.data.token);
-            localStorage.setItem('username', userWithToken.data.user.username);
+            localStorage.setItem('username', userWithToken.data.username);
+
             dispatch(loginActions.userAuthenticated());
+            history.push('/dashboard');
         })
         .catch(function(error){
             if(error.response == null){
@@ -48,8 +51,10 @@ function login(username, password){
     };
 }
 
-function checkLoginStatus(token){
+function checkLoginStatus(){
     return (dispatch) => {
+        const token = localStorage.getItem('token');
+
         const baseUrlConfig = {
             baseURL: 'http://localhost:7100'
         };
@@ -63,6 +68,7 @@ function checkLoginStatus(token){
         request.post(checkLoginStatusUrl, loginStatusBody, baseUrlConfig)
         .then(function(result){
             dispatch(loginActions.userAuthenticated());
+            history.push('/dashboard');
         })
         .catch(function(error){
             if(error.response == null){
