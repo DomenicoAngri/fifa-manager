@@ -8,6 +8,7 @@ function userHelper(){
     let userHelper = this;
 
     userHelper.getUserByUsername = getUserByUsername;
+    userHelper.getUserWithPasswordByUsername = getUserWithPasswordByUsername;
     userHelper.getAllUsers = getAllUsers;
     userHelper.insertNewUser = insertNewUser;
     userHelper.updateUser = updateUser;
@@ -20,6 +21,19 @@ function userHelper(){
         return new Promise(function(resolve, reject){
             userModel.findOne({username: username})
             .populate('team')
+            .then(function(user){
+                resolve(user);
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        });
+    }
+
+    function getUserWithPasswordByUsername(username){
+        return new Promise(function(resolve, reject){
+            userModel.findOne({username: username})
+            .select('+password')
             .then(function(user){
                 resolve(user);
             })
@@ -46,12 +60,13 @@ function userHelper(){
             let user = new userModel();
 
             user.username = userBody.username;
-            user.email = userBody.email;
             user.password = userBody.password;
-            user.name = userBody.name;
-            user.surname = userBody.surname;
-            user.telephoneNumber = userBody.telephoneNumber;
-            user.team = userBody.team;
+
+            // user.email = userBody.email;
+            // user.name = userBody.name;
+            // user.surname = userBody.surname;
+            // user.telephoneNumber = userBody.telephoneNumber;
+            // user.team = userBody.team;
             
             user.save()
             .then(function(userSaved){

@@ -2,6 +2,8 @@ import request from 'axios';
 import {registrationActions} from './registration.actions';
 import {commonActions} from '../../common/actions/common.actions.actions';
 import getMessage from '../../common/utilities/messages';
+import history from '../../common/utilities/history';
+import {loginActions} from '../login/login.actions';
 
 export const registrationActionCreators = {
     userRegistration,
@@ -18,24 +20,23 @@ function userRegistration(username, password){
 
         const userRegistrationBody = {
             username: username,
-            password: password,
-
-            // TODO - delete this is admin
-            isAdmin: false
+            password: password
         };
 
         request.post(userRegistrationUrl, userRegistrationBody, baseUrlConfig)
-        .then(function(result){
-            dispatch(registrationActions.usernameNotExists());
+        .then(function(userWithToken){
+            localStorage.setItem('token', userWithToken.data.token);
+            localStorage.setItem('username', userWithToken.data.username);
+
+            dispatch(loginActions.userAuthenticated());
+            history.push('/dashboard');
         })
         .catch(function(error){
-            // TODO - Capire se mettere messaggio in console.
-
             if(error.response == null){
                 // Server not available.
                 dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
             }
-            else if(error.response.status == 409){
+            else if(error.response.status === 409){
                 // Username already exists.
                 dispatch(registrationActions.usernameExists(error.response.data.code));
             }

@@ -15,7 +15,7 @@ function teamHelper(){
     // teamHelper.setUserTeam = setUserTeam;
     teamHelper.deleteTeam = deleteTeam;
 
-    // TODOPOST
+    // TODO
     // deleteteam by user?
     // updateteam by user?
 

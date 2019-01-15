@@ -7,7 +7,10 @@ const bodyParser = require('body-parser');
 const router = require('./server/configs/routes');
 const cors = require('cors');
 
-// TODOPOST - Add documentations on every functions
+// TODOPOST - Add documentations on every functions.
+// TODOPOST - Review all console log for clear events description.
+
+// TODO - Capire perchè al refresh, in qualsiasi pagina mi trovi, torna alla login e poi se loggati, alla dashboard.
 
 // Dotenv current environment.
 if(process.env.ENV === 'production'){
@@ -34,8 +37,6 @@ app.use('/api', router);
 /*******************************
  * Others
  ********************************/
-
-// TODOPOST - Check if create a db file configuration.
 
 // DB connection.
 if(process.env.ENV === 'local'){

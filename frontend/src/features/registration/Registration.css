@@ -15,8 +15,7 @@
 /* Smartphone XS screen */
 @media (min-width: 300px){
     .registration-container{
-        font-size: 14px;
-        margin-top: 5%;
+        margin-top: 10%;
     }
 }
 
@@ -37,7 +36,7 @@
 /* Tablet sreen */
 @media (min-width: 768px){
     .registration-container{
-        margin-top: 5%;
+        margin-top: 10%;
     }
 }
 

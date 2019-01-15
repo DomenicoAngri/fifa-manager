@@ -27,12 +27,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         maxlength: 128,
         unique: false,
-        required: true
+        required: true,
+        select: false
     },
     name: {
         type: String,
         minlength: 3,
         maxlength: 50,
+        lowercase: true,
         unique: false,
         required: false
     },
@@ -40,6 +42,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         minlength: 3,
         maxlength: 50,
+        lowercase: true,
         unique: false,
         required: false
     },
@@ -61,7 +64,7 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false,
-        required: true
+        required: false
     }
 
     // TODOPOST - Add profile trophies.

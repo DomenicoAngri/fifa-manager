@@ -7,6 +7,7 @@ const responseMessage = require('../../utils/responseMessage');
 const log = require('../../utils/logger');
 const jwt = require('jwt-simple');
 const moment = require('moment');
+const bcrypt = require('bcrypt');
 
 function userController(){
     let userController = this;
@@ -98,13 +99,27 @@ function userController(){
     }
 
     function insertNewUser(request, response){
-        const username = request.body.username;
+        log.logSeparator(console.info, 'Function user.controller --> insertNewUser start.');
 
-        helper.insertNewUser(request.body)
+        const username = request.body.username;
+        const password = request.body.password;
+        log.logSeparator(console.debug, 'Username = ' + username);
+
+        let newUser = {
+            username: username,
+            password: bcrypt.hashSync(password, 16)
+        };
+
+        log.logSeparator(console.info, 'Creating new user ' + username + '...');
+        helper.insertNewUser(newUser)
         .then(function(userSaved){
             log.logSeparator(console.info, 'INFO --> User ' + username + ' registered!');
-            log.logSeparator(console.debug, userSaved);
-            response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + username + ' saved correctly!'));
+            
+            log.logSeparator(console.info, 'Creating token for new user ' + username + '...');
+            const userWithToken = createJWTToken(userSaved);
+            log.logSeparator(console.info, 'Token for ' + username + ' created!');
+
+            response.status(200).send(userWithToken);
             return;
         })
         .catch(function(error){
@@ -130,7 +145,7 @@ function userController(){
             log.logSeparator(console.error, error);
             response.status(500).send(new responseMessage('FAT_024', 'FATAL --> Fatal error on updating user ' + username + '. Check immediately console and logs.'));
             return;
-        });
+        }); 
     }
 
     function deleteUser(request, response){
@@ -176,17 +191,15 @@ function userController(){
         const username = request.body.username;
         const password = request.body.password;
 
-        helper.getUserByUsername(username)
+        helper.getUserWithPasswordByUsername(username)
         .then(function(user){
             if(user !== null){
-                if(password === user.password){
-                    const userInfoWithToken = {
-                        token: createJWTToken(user),
-                        user: user
-                    };
+                if(bcrypt.compareSync(password, user.password)){
+                    const userWithToken = createJWTToken(user);
 
-                    log.logSeparator(console.debug, 'userInfoWithToken = ' + userInfoWithToken);
-                    response.status(200).send(userInfoWithToken);
+                    log.logSeparator(console.info, 'Token and information created!');
+
+                    response.status(200).send(userWithToken);
                     return;
                 }
                 else{
@@ -216,10 +229,14 @@ function userController(){
             sub : user.username,
             iat : moment().unix(),
             exp : moment().add(1, 'days').unix()
-            //exp : moment().add(10, 'seconds').unix()
+            // exp : moment().add(10, 'seconds').unix()
         }
 
-        return jwt.encode(payload, process.env.SECRET_JWT_TOKEN);
+        return {
+            token: jwt.encode(payload, process.env.SECRET_JWT_TOKEN),
+            username: payload.sub,
+            expirationDate: payload.exp
+        };
     }
 
 }

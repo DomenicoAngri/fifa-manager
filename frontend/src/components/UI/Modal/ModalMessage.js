@@ -8,7 +8,14 @@ import './ModalMessage.css';
 const modalMessage = (props) => {
     const modalType = props.modalType;
     const baseModalStyle = 'col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-8 offset-2 alert alert-dismissible modal-message ';
-    let modalStyle = props.showModalMessage ? modalStyle = 'animated fadeIn faster modal-appear ' + baseModalStyle : modalStyle = 'animated fadeOut faster modal-disappear ' + baseModalStyle;
+    let modalStyle = 'animated faster ';
+
+    if(props.showModalMessage){
+        modalStyle += 'fadeIn modal-appear ' + baseModalStyle;
+    }
+    else{
+        modalStyle += 'fateOut modal-disappear ' + baseModalStyle;
+    }
 
     switch(modalType.toLowerCase()){
         case 'danger':

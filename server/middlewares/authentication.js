@@ -38,28 +38,15 @@ function authenticationMiddleware(){
         }
     }
 
-    function tokenDecode(token){
-        log.logSeparator(console.info, 'Function authentication --> tokenDecode start.');
-
-        // TODO - Controllare sta roba che va in eccezione quando il payload non esiste. gestirla.
-        try{
-            return jwt.decode(token, process.env.SECRET_JWT_TOKEN);
-        }
-        catch{
-            return null;
-        }
-    }
-
+    // TODO - Capire come usare questa auth, ok per proteggere le risorse, ma vedere anche se gli utenti possono.
     function authentication(request, response, next){
         log.logSeparator(console.info, 'Function authentication --> authentication start.');
 
-        let token = request.body.token;
-        log.logSeparator(console.debug, 'token --> ' + token);
+        const token = request.body.token;
+        log.logSeparator(console.debug, 'Token --> ' + token);
 
-        if(!isTokenValid(token)){
-            response.status(401).send(new responseMessage('ERR_037', 'ERROR --> You are not authorized. Please login first.'));
-            return;
-        }
+        const payload = isTokenValid(token);
+        log.logSeparator(console.debug, 'Payload --> ' + payload);
         
         userHelper.getUserByUsername(payload.sub)
         .then(function(user){
@@ -84,53 +71,67 @@ function authenticationMiddleware(){
 
     function checkLoginStatus(request, response){
         log.logSeparator(console.info, 'Function authentication --> checkLoginStatus start.');
-        
-        let token = request.body.token;
-        log.logSeparator(console.debug, 'token --> ' + token);
 
-        if(!isTokenValid(token)){
-            response.status(401).send(new responseMessage('ERR_037', 'ERROR --> You are not authorized. Please login first.'));
+        const payload = isTokenValid(request.body.token);
+
+        if(payload){
+            response.status(200).send(new responseMessage('INFO', 'INFO --> Token is valid! You are authorized.'));
+            return;
+        }
+        else{
+            response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Token is not valid, your session is expired. Please login again'))
             return;
         }
 
-        userHelper.getUserByUsername(payload.sub)
-        .then(function(user){
-            if(user !== null){
-                log.logSeparator(console.info, 'User ' + payload.sub + ' stored in token, found!')
-                log.logSeparator(console.debug, user);
-                response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + payload.sub + ' stored in token, found!'));
-                return;
-            }
-            else{
-                log.logSeparator(console.error, 'ERROR - ERR_039 --> Username stored in session not found. Please login again.');
-                response.status(401).send(new responseMessage('ERR_039', 'ERROR --> Username stored in session not found. Please login again.'))
-                return;
-            }
-        })
-        .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_048 --> Fatal error on checking login status.');
-            log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_048', 'FATAL --> Fatal error on checking login status.'));
-            return;
-        });
+        // TODOPOST - This validation is very usefull for user validation, but in this moment is not our goal.
+        // userHelper.getUserByUsername(payload.sub)
+        // .then(function(user){
+        //     if(user !== null){
+        //         log.logSeparator(console.info, 'User ' + payload.sub + ' stored in token, found!')
+        //         log.logSeparator(console.debug, user);
+        //         response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + payload.sub + ' stored in token, found!'));
+        //         return;
+        //     }
+        //     else{
+        //         log.logSeparator(console.error, 'ERROR - ERR_039 --> Username stored in session not found. Please login again.');
+        //         response.status(401).send(new responseMessage('ERR_039', 'ERROR --> Username stored in session not found. Please login again.'))
+        //         return;
+        //     }
+        // })
+        // .catch(function(error){
+        //     log.logSeparator(console.error, 'FATAL - FAT_048 --> Fatal error on checking login status.');
+        //     log.logSeparator(console.error, error);
+        //     response.status(500).send(new responseMessage('FAT_048', 'FATAL --> Fatal error on checking login status.'));
+        //     return;
+        // });
     }
-
+    
     function isTokenValid(token){
         log.logSeparator(console.info, 'Function authentication --> isTokenValid start.');
 
         if(!token){
-            log.logSeparator(console.error, 'ERROR - ERR_037 --> You are not authorized. Please login first.');
-            return false;
+            log.logSeparator(console.error, 'ERROR - ERR_037 --> Token is null or empty, you are not authorized. Please login first.');
+            return null;
         }
 
-        let payload = tokenDecode(token);
+        log.logSeparator(console.debug, 'Token --> ' + token);
 
-        if(!payload){
-            log.logSeparator(console.error, 'ERROR - ERR_038 --> Your session is expired. Please login again.');
-            return false;
+        log.logSeparator(console.info, 'Decoding token...');
+        let payload = null;
+
+        try{
+            payload = jwt.decode(token, process.env.SECRET_JWT_TOKEN);
+        }
+        catch(error){
+            log.logSeparator(console.error, 'ERROR --> ' + error);
+            log.logSeparator(console.error, 'ERROR - ERR_038 --> Token is not valid, your session is expired. Please login again.');
+            return null;
         }
 
-        return true;
+        log.logSeparator(console.info, 'Token is decoded and is valid.');
+        log.logSeparator(console.debug, 'Token username = ' + payload.sub + ' - Token expiration date = ' + payload.exp);
+
+        return payload;
     }
 
 }

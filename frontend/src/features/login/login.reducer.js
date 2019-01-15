@@ -9,9 +9,6 @@ const initialState = {
 };
 
 export function loginReducer(state = initialState, action){
-
-    // TODO-FE: fare revisione se tutto corretto e se sono usati tutti gli stati.
-
     switch(action.type){
         case actionType.USER_AUTHENTICATED:
             return updateObject(state, {
@@ -63,5 +60,4 @@ export function loginReducer(state = initialState, action){
         default:
             return state;
     }
-
 }
