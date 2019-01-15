@@ -10,6 +10,8 @@ const cors = require('cors');
 // TODOPOST - Add documentations on every functions.
 // TODOPOST - Review all console log for clear events description.
 
+// TODO - Capire perchè al refresh, in qualsiasi pagina mi trovi, torna alla login e poi se loggati, alla dashboard.
+
 // Dotenv current environment.
 if(process.env.ENV === 'production'){
     require('dotenv').config({path: '.env.production'});
