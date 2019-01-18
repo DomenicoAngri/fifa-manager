@@ -1,10 +1,15 @@
 .header-registration-form{
     text-align: center;
-    margin: 2%;
+    margin-top: 2%;
 }
 
-.registration-form{
-    margin: 1%;
+.card{
+    border-radius: 15px;
+    box-shadow: 3px 3px 10px #4f4f4f, -3px 0 5px #4f4f4f;
+}
+
+.card-body{
+    padding: 2%;
 }
 
 .button-registration-form{
@@ -14,42 +19,42 @@
 
 /* Smartphone XS screen */
 @media (min-width: 300px){
-    .registration-container{
-        margin-top: 10%;
+    .card-container{
+        margin-top: 30%;
     }
 }
 
 /* Smartphone screen */
 @media (min-width: 350px){
-    .registration-container{
-        margin-top: 25%;
+    .card-container{
+        margin-top: 30%;
     }
 }
 
 /* Smartphone XL screen */
 @media (min-width: 481px){
-    .registration-container{
-        margin-top: 20%;
+    .card-container{
+        margin-top: 30%;
     }
 }
 
 /* Tablet sreen */
 @media (min-width: 768px){
-    .registration-container{
-        margin-top: 10%;
+    .card-container{
+        margin-top: 15%;
     }
 }
 
 /* Desktop screen */
 @media (min-width: 992px){
-    .registration-container{
-        margin-top: 10%;
+    .card-container{
+        margin-top: 15%;
     }
 }
 
 /* XL screen*/
 @media (min-width: 1200px){
-    .registration-container{
-        margin-top: 10%;
+    .card-container{
+        margin-top: 15%;
     }
 }

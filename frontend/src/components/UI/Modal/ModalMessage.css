@@ -1,5 +1,6 @@
 .modal-message{
     z-index: 2;
+    position: absolute;
 }
 
 .modal-appear{

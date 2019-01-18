@@ -6,6 +6,8 @@ import {loginActionCreators} from './features/login/login.actionCreators';
 import Registration from './features/registration/Registration';
 import Dashboard from './features/dashboard/Dashboard';
 
+import './common/css/common.css';
+
 class App extends Component{
     componentDidMount(){
         this.props.checkLoginStatus();
@@ -32,7 +34,7 @@ class App extends Component{
         }
 
         return(
-            <div>
+            <div className="background-image">
                 {routes}
             </div>
         );

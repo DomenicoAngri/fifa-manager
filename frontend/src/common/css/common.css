@@ -21,8 +21,11 @@
     background-color: rgba(84, 110, 122, 0.9);
 }
 
-.form-container{
+.dark-bg{
     background-color: #303030;
-    border-radius: 15px;
-    box-shadow: 3px 3px 10px #4f4f4f, -3px 0 5px #4f4f4f;
+}
+
+.fix-bug-radius-corner-input-group-bs4{
+    border-top-right-radius: 0.25em !important;
+    border-bottom-right-radius: 0.25em !important;
 }
