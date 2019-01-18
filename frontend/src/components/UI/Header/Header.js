@@ -7,7 +7,10 @@ const header = (props) => {
     return(
         <header className={props.classes}>
             <img src={Logo} className="header-logo" alt="Fifa Manager Logo"/>
-            <h1 className="header-title">Fifa Manager</h1>
+            {/*
+                TODO - Capire se fare diversi header.
+                <h1 className="header-title">Fifa Manager</h1>
+            */}
         </header>
     );
 }

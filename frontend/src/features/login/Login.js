@@ -63,7 +63,7 @@ class Login extends Component{
         else if(!usernameValidation.test(username)){
             this.setState({
                 usernameInputError: true,
-                usernameInputErrorMessage: 'L\'username può contenere solo numeri lettere ed underscore!',
+                usernameInputErrorMessage: 'L\'username può contenere solo numeri, lettere ed underscore!',
             });
         }
         else if(!password || whiteSpaceValidation.test(password)){
@@ -108,44 +108,58 @@ class Login extends Component{
                     clicked={this.hideModalMessage}
                 />
 
-                <div className="background-image">
-                    <div className="container">
-                        <div className="row">
-                            <div className="form-container login-container col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-10 offset-1">
-                                <Header classes="header-login-form"/>
-                                
-                                <p>
-                                    Benvenuto, se non hai un account, registrati.<br />
-                                    Per partecipare al torneo, dovrai essere autorizzato da un amministratore.
-                                </p>
+                <div className="container">
+                    <div className="row">
+                        <div className="card card-container dark-bg col-xl-4 offset-xl-4 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
+                            <Header classes="header-login-form"/>
 
-                                <form className="login-form" onSubmit={(event) => this.onSubmitForm(event)}>
-                                    <div className={"form-group " + (this.state.usernameInputError || this.props.userNotFound ? "has-danger" : "")}>
-                                        <label htmlFor="usernameInput">Inserisci il tuo username:</label>
+                            <div className="card-body">
+                                <h5 className="card-title">Login</h5>
+
+                                <form onSubmit={(event) => this.onSubmitForm(event)}>
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-user"/>
+                                            </span>
+                                        </div>
+
                                         <input
                                             type="text"
-                                            className={"form-control " + (this.state.usernameInputError || this.props.userNotFound ? "is-invalid" : "")}
+                                            className={"form-control fix-bug-radius-corner-input-group-bs4 " + (this.state.usernameInputError || this.props.userNotFound ? "is-invalid" : "")}
                                             id="usernameInput"
-                                            aria-describedby="usernameHelp"
                                             placeholder="Username"
                                         />
+
                                         {usernameInvalidFeedback}
                                     </div>
-                                    
-                                    <div className={"form-group " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "has-danger" : "")}>
-                                        <label htmlFor="passwordInput">Password:</label>
+
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-key"/>
+                                            </span>
+                                        </div>
+
                                         <input
                                             type="password"
-                                            className={"form-control " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "is-invalid" : "")}
+                                            className={"form-control fix-bug-radius-corner-input-group-bs4 " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "is-invalid" : "")}
                                             id="passwordInput"
                                             placeholder="Password"
                                         />
+                                        
                                         {passwordInvalidFeedback}
                                     </div>
-                                    
-                                    <button className="btn btn-primary button-login-form">Login</button>
+
+                                    <button className="btn btn-primary button-login-form">
+                                        Login&nbsp;
+                                        <i class="fas fa-sign-in-alt"/>
+                                    </button>
+
                                     <NavLink to="/registration">
-                                        <input type="button" value="Registrati!" className="btn btn-warning button-login-form"/>
+                                        <button type="button" className="btn btn-warning button-login-form">
+                                            <i class="fas fa-user-plus"/>
+                                        </button>
                                     </NavLink>
                                 </form>
                             </div>
