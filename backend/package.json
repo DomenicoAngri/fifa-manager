@@ -1,5 +1,5 @@
 {
-  "name": "fifa-manager",
+  "name": "fifa-manager-backend",
   "version": "0.9.0",
   "description": "Fifa manager italian tournament web app.",
   "main": "app.js",

@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "fifa-manager-frontend",
   "version": "0.9.0",
   "private": true,
   "dependencies": {
