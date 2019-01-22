@@ -55,7 +55,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-bcrypt@^3.0.2:
+bcrypt@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/bcrypt/-/bcrypt-3.0.3.tgz#7d1e9e5d533c5ea060e6ac8834942c004dbffe9c"
   integrity sha512-4EuzUo6K790QC3uq/ogzy9w2Hc7XDIBoEndU5y7l7YaEAwQF8vyFqv6tC30+gOBZvyxk3F632xzKBQoLNz2pjg==
