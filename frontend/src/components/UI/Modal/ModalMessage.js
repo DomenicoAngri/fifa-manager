@@ -5,7 +5,7 @@ import Backdrop from '../Backdrop/Backdrop';
 
 import './ModalMessage.css';
 
-const modalMessage = (props) => {
+const ModalMessage = (props) => {
     const modalType = props.modalType;
     const baseModalStyle = 'col-xl-6 offset-xl-3 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-8 offset-2 alert alert-dismissible modal-message ';
     let modalStyle = 'animated faster ';
@@ -47,4 +47,4 @@ const modalMessage = (props) => {
     );
 }
 
-export default modalMessage;
+export default ModalMessage;

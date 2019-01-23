@@ -12,6 +12,9 @@ import './Login.css';
 import '../../common/css/common.css';
 
 class Login extends Component{
+
+    // TODO far diventare i metodi delle costanti non usare event prevent default.
+    
     state = {
         username: '',
         password: '',
