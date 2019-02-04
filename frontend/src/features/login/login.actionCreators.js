@@ -14,6 +14,8 @@ export const loginActionCreators = {
 function login(username, password){
     return (dispatch) => {
 
+        dispatch(commonActions.showSpinner());
+
         // TODO - Set address with file env.
         const baseUrlConfig = {
             baseURL: 'http://localhost:7100'
@@ -32,19 +34,25 @@ function login(username, password){
             localStorage.setItem('username', userWithToken.data.username);
 
             dispatch(loginActions.userAuthenticated());
+            dispatch(commonActions.hideSpinner());
+
             history.push('/dashboard');
         })
         .catch(function(error){
             if(error.response == null){
+                dispatch(commonActions.hideSpinner());
                 dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
             }
             else if(error.response.status === 401){
+                dispatch(commonActions.hideSpinner());
                 dispatch(loginActions.incorrectUserPassword(error.response.data.code));
             }
             else if(error.response.status === 404){
+                dispatch(commonActions.hideSpinner());
                 dispatch(loginActions.userNotFound(error.response.data.code));
             }
             else{
+                dispatch(commonActions.hideSpinner());
                 dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
             }
         });

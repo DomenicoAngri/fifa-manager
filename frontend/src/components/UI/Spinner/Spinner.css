@@ -3,12 +3,13 @@
 }
 
 .spinner{
+    /* This CSS code center spinner in page. */
     position: absolute;
     margin: auto;
-    top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    
     height: 50px;
     width: 50px;
     box-sizing: border-box;
@@ -16,13 +17,5 @@
     border-top: 2px solid #07d;
     border-right: 2px solid transparent;
     animation: spinner .6s linear infinite;
-    z-index: 2;
-}
-
-.spinner-appear{
-    visibility: visible;
-}
-
-.spinner-disappear{
-    visibility: hidden;
+    z-index: 1001;
 }

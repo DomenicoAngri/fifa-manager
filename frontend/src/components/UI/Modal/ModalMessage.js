@@ -11,10 +11,10 @@ const ModalMessage = (props) => {
     let modalStyle = 'animated faster ';
 
     if(props.showModalMessage){
-        modalStyle += 'fadeIn modal-appear ' + baseModalStyle;
+        modalStyle += 'fadeIn ' + baseModalStyle;
     }
     else{
-        modalStyle += 'fateOut modal-disappear ' + baseModalStyle;
+        modalStyle += 'fateOut ' + baseModalStyle;
     }
 
     switch(modalType.toLowerCase()){

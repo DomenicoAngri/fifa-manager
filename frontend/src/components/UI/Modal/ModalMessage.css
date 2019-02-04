@@ -1,14 +1,6 @@
 .modal-message{
-    z-index: 2;
+    z-index: 1002;
     position: absolute;
-}
-
-.modal-appear{
-    visibility: visible;
-}
-
-.modal-disappear{
-    visibility: hidden;
 }
 
 /* Smartphone XS screen */

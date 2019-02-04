@@ -5,11 +5,11 @@ import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import './Spinner.css';
 
 const Spinner = (props) => {
-    const baseStyle = "spinner animated faster ";
-    let style = baseStyle + "fadeOut spinner-disappear";
+    const baseStyle = props.customStyle + "spinner animated faster ";
+    let style = baseStyle + "fadeOut";
 
     if(props.showSpinner){
-        style = baseStyle + "fadeIn spinner-appear";
+        style = baseStyle + "fadeIn";
     }
 
     return(

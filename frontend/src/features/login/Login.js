@@ -6,15 +6,13 @@ import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Header from '../../components/UI/Header/Header';
 import getMessage from '../../common/utilities/messages';
 import ModalMessage from '../../components/UI/Modal/ModalMessage';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import {commonActionCreators} from '../../common/actions/common.actions.actionCreators';
 
 import './Login.css';
 import '../../common/css/common.css';
 
 class Login extends Component{
-
-    // TODO far diventare i metodi delle costanti non usare event prevent default.
-    
     state = {
         username: '',
         password: '',
@@ -102,14 +100,26 @@ class Login extends Component{
             passwordInvalidFeedback = <div className="invalid-feedback">{getMessage(this.props.loginErrorCode)}</div>;
         }
 
+// TODO - far diventare i metodi delle costanti non usare event prevent default.
+// TODO - Modificare login e registrazione la larghezza, a tutti i livelli di schermo.
+
+// TODO - Togliere il modal message che già comopare, anche da altre parti.
+// TODO - Inserire lo spin in tutte le parti in cui serve e viene effettuata una chiamata che fa attendere.
+
+        let modalMessage = null;
+        if(this.props.showModalMessage){
+            modalMessage = <ModalMessage modalType="DANGER" modalMessage={this.props.modalMessageBody} showModalMessage={true} clicked={this.hideModalMessage}/>;
+        }
+
+        let spinner = null;
+        if(this.props.spinner){
+            spinner = <Spinner customStyle="spinner-height " showSpinner={true}/>;
+        }
+
         return(
             <Auxiliary>
-                <ModalMessage
-                    modalType="DANGER"
-                    modalMessage={this.props.modalMessageBody}
-                    showModalMessage={this.props.showModalMessage}
-                    clicked={this.hideModalMessage}
-                />
+                {modalMessage}
+                {spinner}
 
                 <div className="container">
                     <div className="row">
@@ -122,8 +132,8 @@ class Login extends Component{
                                 <form onSubmit={(event) => this.onSubmitForm(event)}>
                                     <div className="input-group mb-3">
                                         <div className="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="fas fa-user"/>
+                                            <span className="input-group-text">
+                                                <i className="fas fa-user"/>
                                             </span>
                                         </div>
 
@@ -139,8 +149,8 @@ class Login extends Component{
 
                                     <div className="input-group mb-3">
                                         <div className="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="fas fa-key"/>
+                                            <span className="input-group-text">
+                                                <i className="fas fa-key"/>
                                             </span>
                                         </div>
 
@@ -156,12 +166,12 @@ class Login extends Component{
 
                                     <button className="btn btn-primary button-login-form">
                                         Login&nbsp;
-                                        <i class="fas fa-sign-in-alt"/>
+                                        <i className="fas fa-sign-in-alt"/>
                                     </button>
 
                                     <NavLink to="/registration">
                                         <button type="button" className="btn btn-warning button-login-form">
-                                            <i class="fas fa-user-plus"/>
+                                            <i className="fas fa-user-plus"/>
                                         </button>
                                     </NavLink>
                                 </form>
@@ -180,7 +190,8 @@ const mapStateToProps = state => {
         incorrectUserPassword: state.login.incorrectUserPassword,
         loginErrorCode: state.login.loginErrorCode,
         showModalMessage: state.common.showModalMessage,
-        modalMessageBody: state.common.messageBody
+        modalMessageBody: state.common.messageBody,
+        spinner: state.common.showSpinner
     };
 };
 

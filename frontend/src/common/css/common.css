@@ -29,3 +29,50 @@
     border-top-right-radius: 0.25em !important;
     border-bottom-right-radius: 0.25em !important;
 }
+
+/* **************************************************
+ * Common CSS style for all display.
+ * ************************************************** */
+
+/* Smartphone XS screen */
+@media (min-width: 300px){
+    /* CSS for spinner-height when there are forms. */
+    .spinner-height{
+        top: -20%;
+    }
+}
+
+/* Smartphone screen */
+@media (min-width: 350px){
+    .spinner-height{
+        top: -30%;
+    }
+}
+
+/* Smartphone XL screen */
+@media (min-width: 481px){
+    .spinner-height{
+        top: -30%;
+    }
+}
+
+/* Tablet sreen */
+@media (min-width: 768px){
+    .spinner-height{
+        top: -35%;
+    }
+}
+
+/* Desktop screen */
+@media (min-width: 992px){
+    .spinner-height{
+        top: -30%;
+    }
+}
+
+/* XL screen*/
+@media (min-width: 1200px){
+    .spinner-height{
+        top: -25%;
+    }
+}
