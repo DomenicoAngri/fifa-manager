@@ -5,9 +5,9 @@ import Login from './features/login/Login';
 import {loginActionCreators} from './features/login/login.actionCreators';
 import Registration from './features/registration/Registration';
 import Dashboard from './features/dashboard/Dashboard';
+import Auxiliary from './hoc/Auxiliary/Auxiliary';
 
 // import Test from './features/test/Test';
-import Auxiliary from './hoc/Auxiliary/Auxiliary';
 
 import './common/css/common.css';
 
@@ -39,13 +39,9 @@ class App extends Component{
         }
 
         return(
-            <Auxiliary>
+            <div className="container-fluid background-image">
                 {routes}
-
-            </Auxiliary>
-            // <div className="background-image">
-                
-            // </div>
+            </div>
         );
     }
 }

@@ -102,9 +102,11 @@ class Login extends Component{
 
 // TODO - far diventare i metodi delle costanti non usare event prevent default.
 // TODO - Modificare login e registrazione la larghezza, a tutti i livelli di schermo.
-
+// TODO - Fare stili anche per landscape mode.
 // TODO - Togliere il modal message che già comopare, anche da altre parti.
 // TODO - Inserire lo spin in tutte le parti in cui serve e viene effettuata una chiamata che fa attendere.
+
+// IN CORSO - AGGIUSTANDO MISURE E TOP DI LOGIN
 
         let modalMessage = null;
         if(this.props.showModalMessage){
@@ -121,61 +123,59 @@ class Login extends Component{
                 {modalMessage}
                 {spinner}
 
-                <div className="container">
-                    <div className="row">
-                        <div className="card card-container dark-bg col-xl-4 offset-xl-4 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
-                            <Header classes="header-login-form"/>
+                <div className="row">
+                    <div className="card card-height dark-bg col-xl-4 offset-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-10 offset-1">
+                        <Header classes="header-login-form"/>
 
-                            <div className="card-body">
-                                <h5 className="card-title">Login</h5>
+                        <div className="card-body">
+                            <h5 className="card-title">Login</h5>
 
-                                <form onSubmit={(event) => this.onSubmitForm(event)}>
-                                    <div className="input-group mb-3">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fas fa-user"/>
-                                            </span>
-                                        </div>
-
-                                        <input
-                                            type="text"
-                                            className={"form-control fix-bug-radius-corner-input-group-bs4 " + (this.state.usernameInputError || this.props.userNotFound ? "is-invalid" : "")}
-                                            id="usernameInput"
-                                            placeholder="Username"
-                                        />
-
-                                        {usernameInvalidFeedback}
+                            <form onSubmit={(event) => this.onSubmitForm(event)}>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-user"/>
+                                        </span>
                                     </div>
 
-                                    <div className="input-group mb-3">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="fas fa-key"/>
-                                            </span>
-                                        </div>
+                                    <input
+                                        type="text"
+                                        className={"form-control fix-bug-radius-corner-input-group-bs4 " + (this.state.usernameInputError || this.props.userNotFound ? "is-invalid" : "")}
+                                        id="usernameInput"
+                                        placeholder="Username"
+                                    />
 
-                                        <input
-                                            type="password"
-                                            className={"form-control fix-bug-radius-corner-input-group-bs4 " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "is-invalid" : "")}
-                                            id="passwordInput"
-                                            placeholder="Password"
-                                        />
-                                        
-                                        {passwordInvalidFeedback}
+                                    {usernameInvalidFeedback}
+                                </div>
+
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-key"/>
+                                        </span>
                                     </div>
 
-                                    <button className="btn btn-primary button-login-form">
-                                        Login&nbsp;
-                                        <i className="fas fa-sign-in-alt"/>
+                                    <input
+                                        type="password"
+                                        className={"form-control fix-bug-radius-corner-input-group-bs4 " + (this.state.passwordInputError || this.props.incorrectUserPassword ? "is-invalid" : "")}
+                                        id="passwordInput"
+                                        placeholder="Password"
+                                    />
+                                    
+                                    {passwordInvalidFeedback}
+                                </div>
+
+                                <button className="btn btn-primary button-login-form">
+                                    Login&nbsp;
+                                    <i className="fas fa-sign-in-alt"/>
+                                </button>
+
+                                <NavLink to="/registration">
+                                    <button type="button" className="btn btn-warning button-login-form">
+                                        <i className="fas fa-user-plus"/>
                                     </button>
-
-                                    <NavLink to="/registration">
-                                        <button type="button" className="btn btn-warning button-login-form">
-                                            <i className="fas fa-user-plus"/>
-                                        </button>
-                                    </NavLink>
-                                </form>
-                            </div>
+                                </NavLink>
+                            </form>
                         </div>
                     </div>
                 </div>
