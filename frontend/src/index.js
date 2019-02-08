@@ -33,6 +33,7 @@ ReactDOM.render(
             </Router>
         </BrowserRouter>
     </Provider>,
+    
     document.getElementById('root')
 );
 

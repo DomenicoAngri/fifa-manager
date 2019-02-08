@@ -3,7 +3,8 @@ import {commonConstants as actionType} from './common.actions.constants';
 
 const initialState = {
     showModalMessage: false,
-    messageBody: ''
+    messageBody: '',
+    showSpinner: false
 };
 
 export function commonReducer(state = initialState, action){
@@ -17,6 +18,16 @@ export function commonReducer(state = initialState, action){
         case actionType.HIDE_MODAL_MESSAGE:
             return updateObject(state, {
                 showModalMessage: false
+            });
+
+        case actionType.SHOW_SPINNER:
+            return updateObject(state, {
+                showSpinner: true
+            });
+
+        case actionType.HIDE_SPINNER:
+            return updateObject(state, {
+                showSpinner: false
             });
 
         default:

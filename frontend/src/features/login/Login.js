@@ -6,6 +6,7 @@ import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Header from '../../components/UI/Header/Header';
 import getMessage from '../../common/utilities/messages';
 import ModalMessage from '../../components/UI/Modal/ModalMessage';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import {commonActionCreators} from '../../common/actions/common.actions.actionCreators';
 
 import './Login.css';
@@ -99,18 +100,24 @@ class Login extends Component{
             passwordInvalidFeedback = <div className="invalid-feedback">{getMessage(this.props.loginErrorCode)}</div>;
         }
 
+        let modalMessage = null;
+        if(this.props.showModalMessage){
+            modalMessage = <ModalMessage modalType="DANGER" modalMessage={this.props.modalMessageBody} showModalMessage={true} clicked={this.hideModalMessage}/>;
+        }
+
+        let spinner = null;
+        if(this.props.spinner){
+            spinner = <Spinner customStyle="spinner-height " showSpinner={true}/>;
+        }
+
         return(
             <Auxiliary>
-                <ModalMessage
-                    modalType="DANGER"
-                    modalMessage={this.props.modalMessageBody}
-                    showModalMessage={this.props.showModalMessage}
-                    clicked={this.hideModalMessage}
-                />
+                {modalMessage}
+                {spinner}
 
                 <div className="container">
                     <div className="row">
-                        <div className="card card-container dark-bg col-xl-4 offset-xl-4 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
+                        <div className="card card-height dark-bg col-xl-4 offset-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12">
                             <Header classes="header-login-form"/>
 
                             <div className="card-body">
@@ -119,8 +126,8 @@ class Login extends Component{
                                 <form onSubmit={(event) => this.onSubmitForm(event)}>
                                     <div className="input-group mb-3">
                                         <div className="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="fas fa-user"/>
+                                            <span className="input-group-text">
+                                                <i className="fas fa-user"/>
                                             </span>
                                         </div>
 
@@ -136,8 +143,8 @@ class Login extends Component{
 
                                     <div className="input-group mb-3">
                                         <div className="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="fas fa-key"/>
+                                            <span className="input-group-text">
+                                                <i className="fas fa-key"/>
                                             </span>
                                         </div>
 
@@ -153,12 +160,12 @@ class Login extends Component{
 
                                     <button className="btn btn-primary button-login-form">
                                         Login&nbsp;
-                                        <i class="fas fa-sign-in-alt"/>
+                                        <i className="fas fa-sign-in-alt"/>
                                     </button>
 
                                     <NavLink to="/registration">
                                         <button type="button" className="btn btn-warning button-login-form">
-                                            <i class="fas fa-user-plus"/>
+                                            <i className="fas fa-user-plus"/>
                                         </button>
                                     </NavLink>
                                 </form>
@@ -177,7 +184,8 @@ const mapStateToProps = state => {
         incorrectUserPassword: state.login.incorrectUserPassword,
         loginErrorCode: state.login.loginErrorCode,
         showModalMessage: state.common.showModalMessage,
-        modalMessageBody: state.common.messageBody
+        modalMessageBody: state.common.messageBody,
+        spinner: state.common.showSpinner
     };
 };
 

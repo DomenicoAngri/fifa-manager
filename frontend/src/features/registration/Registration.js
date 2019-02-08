@@ -6,6 +6,7 @@ import {registrationActionCreators} from './registration.actionCreators';
 import getMessage from '../../common/utilities/messages';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import ModalMessage from '../../components/UI/Modal/ModalMessage';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import {commonActionCreators} from '../../common/actions/common.actions.actionCreators';
 
 import '../../common/css/common.css';
@@ -116,18 +117,24 @@ class Registration extends Component{
             usernameInvalidFeedback = <div className="invalid-feedback">{getMessage(this.props.registrationErrorCode)}</div>;
         }
 
+        let modalMessage = null;
+        if(this.props.showModalMessage){
+            modalMessage = <ModalMessage modalType="DANGER" modalMessage={this.props.modalMessageBody} showModalMessage={this.props.showModalMessage} clicked={this.hideModalMessage}/>;
+        }
+
+        let spinner = null;
+        if(this.props.spinner){
+            spinner = <Spinner customStyle="spinner-height " showSpinner={true}/>;
+        }
+
         return(
             <Auxiliary>
-                <ModalMessage
-                    modalType="DANGER"
-                    modalMessage={this.props.modalMessageBody}
-                    showModalMessage={this.props.showModalMessage}
-                    clicked={this.hideModalMessage}
-                />
+                {modalMessage}
+                {spinner}
 
                 <div className="container">
                     <div className="row">
-                        <div className="card card-container dark-bg col-xl-4 offset-xl-4 col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
+                        <div className="card card-height dark-bg col-xl-4 offset-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12">
                             <Header classes="header-registration-form"/>
 
                             <div className="card-body">
@@ -192,7 +199,7 @@ class Registration extends Component{
                                     </div>
 
                                     <button className="btn btn-primary button-registration-form">
-                                        Registrati!&nbsp;
+                                        Registrati&nbsp;
                                         <i class="fas fa-user-plus"/>
                                     </button>
 
@@ -217,7 +224,8 @@ const mapStateToProps = state => {
         registrationErrorCode: state.registration.registrationErrorCode,
         generalError: state.registration.generalError,
         showModalMessage: state.common.showModalMessage,
-        modalMessageBody: state.common.messageBody
+        modalMessageBody: state.common.messageBody,
+        spinner: state.common.showSpinner
     };
 };
 

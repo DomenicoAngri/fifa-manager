@@ -6,6 +6,8 @@
 .card{
     border-radius: 15px;
     box-shadow: 3px 3px 10px #4f4f4f, -3px 0 5px #4f4f4f;
+    /* margin-left: 1%;
+    margin-right: 1%; */
 }
 
 .card-body{
@@ -15,46 +17,4 @@
 .button-login-form{
     margin-right: 3%;
     margin-bottom: 3%;
-}
-
-/* Smartphone XS screen */
-@media (min-width: 300px){
-    .card-container{
-        margin-top: 30%;
-    }
-}
-
-/* Smartphone screen */
-@media (min-width: 350px){
-    .card-container{
-        margin-top: 30%;
-    }
-}
-
-/* Smartphone XL screen */
-@media (min-width: 481px){
-    .card-container{
-        margin-top: 30%;
-    }
-}
-
-/* Tablet sreen */
-@media (min-width: 768px){
-    .card-container{
-        margin-top: 15%;
-    }
-}
-
-/* Desktop screen */
-@media (min-width: 992px){
-    .card-container{
-        margin-top: 15%;
-    }
-}
-
-/* XL screen*/
-@media (min-width: 1200px){
-    .card-container{
-        margin-top: 15%;
-    }
 }

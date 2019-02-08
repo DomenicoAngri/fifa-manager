@@ -6,6 +6,8 @@ import {loginActionCreators} from './features/login/login.actionCreators';
 import Registration from './features/registration/Registration';
 import Dashboard from './features/dashboard/Dashboard';
 
+// import Test from './features/test/Test';
+
 import './common/css/common.css';
 
 class App extends Component{
@@ -16,6 +18,7 @@ class App extends Component{
     render(){
         let routes = (
             <Switch>
+                {/* <Route path="/test" component={Test}/> */}
                 <Route path="/login" component={Login}/>
                 <Route path="/registration" component={Registration}/>
                 <Redirect to="/login"/>
@@ -25,6 +28,7 @@ class App extends Component{
         if(this.props.isUserAuthenticated){
             routes = (
                 <Switch>
+                    {/* <Route path="/test" component={Test}/> */}
                     <Route path="/login" component={Login}/>
                     <Route path="/registration" component={Registration}/>
                     <Route path="/dashboard" component={Dashboard}/>
@@ -34,7 +38,7 @@ class App extends Component{
         }
 
         return(
-            <div className="background-image">
+            <div className="container-fluid background-image">
                 {routes}
             </div>
         );
