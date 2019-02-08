@@ -7,11 +7,3 @@
     top: 0;
     background-color: rgba(0, 0, 0, 0.89);
 }
-
-.backdrop-appear{
-    visibility: visible;
-}
-
-.backdrop-disappear{
-    visibility: hidden;
-}

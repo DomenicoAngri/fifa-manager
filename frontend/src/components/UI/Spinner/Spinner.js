@@ -18,7 +18,6 @@ const Spinner = (props) => {
             <div className={style}/>
         </Auxiliary>
     );
-
 }
 
 export default Spinner;

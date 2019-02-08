@@ -6,6 +6,8 @@
 .card{
     border-radius: 15px;
     box-shadow: 3px 3px 10px #4f4f4f, -3px 0 5px #4f4f4f;
+    /* margin-left: 1%;
+    margin-right: 1%; */
 }
 
 .card-body{
