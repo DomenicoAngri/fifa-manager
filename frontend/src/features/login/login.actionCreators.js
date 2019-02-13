@@ -16,7 +16,6 @@ function login(username, password){
 
         dispatch(commonActions.showSpinner());
 
-        // TODO - Set address with file env.
         const baseUrlConfig = {
             baseURL: 'http://localhost:7100'
         };
