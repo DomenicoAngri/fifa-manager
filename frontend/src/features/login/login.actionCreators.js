@@ -17,7 +17,7 @@ function login(username, password){
         dispatch(commonActions.showSpinner());
 
         const baseUrlConfig = {
-            baseURL: 'http://localhost:7100'
+            baseURL: process.env.API_BASE_URL
         };
 
         const loginUrl = '/api/user/login';
@@ -27,7 +27,7 @@ function login(username, password){
             password: password
         };
 
-        request.post(loginUrl, loginBody, baseUrlConfig)
+        request.post(loginUrl, loginBody)
         .then(function(userWithToken){
             localStorage.setItem('token', userWithToken.data.token);
             localStorage.setItem('username', userWithToken.data.username);
@@ -63,7 +63,7 @@ function checkLoginStatus(){
         const token = localStorage.getItem('token');
 
         const baseUrlConfig = {
-            baseURL: 'http://localhost:7100'
+            baseURL: process.env.API_BASE_URL
         };
 
         const checkLoginStatusUrl = '/api/user/checkLoginStatus';

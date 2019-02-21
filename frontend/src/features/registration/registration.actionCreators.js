@@ -13,7 +13,7 @@ export const registrationActionCreators = {
 function userRegistration(username, password){
     return (dispatch) => {
         const baseUrlConfig = {
-            baseURL: 'http://localhost:7100'
+            baseURL: process.env.API_BASE_URL
         };
 
         const userRegistrationUrl = '/api/user';
