@@ -12,6 +12,8 @@ export const registrationActionCreators = {
 
 function userRegistration(username, password){
     return (dispatch) => {
+        dispatch(commonActions.showSpinner());
+
         const baseUrlConfig = {
             baseURL: process.env.API_BASE_URL
         };
@@ -29,18 +31,23 @@ function userRegistration(username, password){
             localStorage.setItem('username', userWithToken.data.username);
 
             dispatch(loginActions.userAuthenticated());
+            dispatch(commonActions.hideSpinner());
+
             history.push('/dashboard');
         })
         .catch(function(error){
             if(error.response == null){
                 // Server not available.
+                dispatch(commonActions.hideSpinner());
                 dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
             }
             else if(error.response.status === 409){
                 // Username already exists.
+                dispatch(commonActions.hideSpinner());
                 dispatch(registrationActions.usernameExists(error.response.data.code));
             }
             else{
+                dispatch(commonActions.hideSpinner());
                 dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
             }
         });        

@@ -13,7 +13,6 @@ export const loginActionCreators = {
 
 function login(username, password){
     return (dispatch) => {
-
         dispatch(commonActions.showSpinner());
 
         const baseUrlConfig = {
