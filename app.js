@@ -66,4 +66,4 @@ app.get("*", (req, res) => {
 });
 
 // Port app listen for CR7.
-app.listen(7100);
+app.listen(provess.env.SERVER_PORT || 3000);
