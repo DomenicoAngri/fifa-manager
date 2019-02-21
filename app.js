@@ -66,4 +66,4 @@ app.get("*", (req, res) => {
 });
 
 // Port app listen for CR7.
-app.listen(process.env.SERVER_PORT || 3000);
+app.listen(process.env.PORT || 3000);
