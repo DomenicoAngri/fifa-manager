@@ -15,6 +15,7 @@ function login(username, password){
     return (dispatch) => {
         dispatch(commonActions.showSpinner());
 
+        // TODO - Delete this baseUrlConfig is not usefull for our case.
         const baseUrlConfig = {
             baseURL: process.env.API_BASE_URL
         };

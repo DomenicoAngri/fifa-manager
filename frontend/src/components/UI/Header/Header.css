@@ -5,3 +5,17 @@
 .header-title{
     font-size: 1.5em;
 }
+
+.navbar{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar-logo{
+    height: 35px;
+    width: 35px;
+}
+
+.navbar-brand{
+    margin-right: 0.5%;
+}
