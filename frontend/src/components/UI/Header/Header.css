@@ -19,3 +19,10 @@
 .navbar-brand{
     margin-right: 0.5%;
 }
+
+.sideNavMenu{
+    position: fixed;
+    height: 100%;
+    width: 70%;
+    z-index: 1001;
+}

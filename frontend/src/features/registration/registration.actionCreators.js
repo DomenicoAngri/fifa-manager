@@ -14,10 +14,6 @@ function userRegistration(username, password){
     return (dispatch) => {
         dispatch(commonActions.showSpinner());
 
-        const baseUrlConfig = {
-            baseURL: process.env.API_BASE_URL
-        };
-
         const userRegistrationUrl = '/api/user';
 
         const userRegistrationBody = {
@@ -25,7 +21,7 @@ function userRegistration(username, password){
             password: password
         };
 
-        request.post(userRegistrationUrl, userRegistrationBody, baseUrlConfig)
+        request.post(userRegistrationUrl, userRegistrationBody)
         .then(function(userWithToken){
             localStorage.setItem('token', userWithToken.data.token);
             localStorage.setItem('username', userWithToken.data.username);
