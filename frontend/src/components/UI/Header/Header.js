@@ -6,10 +6,11 @@ import Backdrop from '../Backdrop/Backdrop';
 import './Header.css';
 import '../../../common/css/common.css';
 import Logo from '../../../assets/images/fifa-manager-logo.png';
+import userSample from '../../../assets/images/user-sample.png';
 
 class Header extends Component{
     state = {
-        hideMenuComponent: true
+        hideMenuComponent: null
     };
 
     showMenuComponent = () => {
@@ -24,10 +25,12 @@ class Header extends Component{
         });
     }
 
-    
+    // TODO - fare signature con altro colore come se non fosse cliccabile.
+    // TODO - fare funzionalità logout
+    // TODO - aggiustare con mediaquery il menu a tutte le dimensioni
 
     render(){
-
+        /* Header component types */
         let headerComponent = 
             <nav className="navbar dark-bg fixed-top navbar-dark">
                 <a className="navbar-brand" onClick={this.showMenuComponent}>
@@ -36,7 +39,7 @@ class Header extends Component{
 
                 <NavLink to="/dashboard" className="navbar-brand my-2 my-lg-0">
                     Fifa Manager&nbsp;
-                    <img src={Logo} className="navbar-logo" alt="Fifa Manager Logo"/>  
+                    <img src={Logo} className="navbar-logo" alt="Fifa Manager Logo"/>
                 </NavLink>
             </nav>;
 
@@ -47,65 +50,93 @@ class Header extends Component{
                 </header>;
         }
 
-        /* ***************************** */
+        /* User information */
+        const username = localStorage.getItem("username");
 
-        let userMenuComponent = null;
+        let userSection = 
+            <NavLink to="/profile">
+                <div className="user-section">
+                    <div className="d-flex justify-content-center">
+                        <img src={userSample} className="rounded-circle user-image" alt="Fifa Manager Logo"/>
+                    </div>
 
-        if(!this.state.hideMenuComponent){
-            userMenuComponent = 
+                    <div className="d-flex justify-content-center">
+                        {/* TODO - Da togliere, solo per test. */}
+                        <span>
+                            {username + "DomenicoAngri"}
+                        </span>
+                    </div>
+                </div>
+            </NavLink>
+
+        /* Menu user types */
+        let userMenu =
+            <ul>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i class="fas fa-trophy"/>&nbsp;
+                        Le mie leghe
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i class="fas fa-search"/>&nbsp;
+                        Cerca una lega
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i class="fas fa-gamepad"/>&nbsp;
+                        Cerca un player
+                    </NavLink>
+                </li>
+                <li className="li-footer">
+                    <i class="fas fa-sign-out-alt"/>&nbsp;
+                    Logout
+
+                    {/* TODO - vedere come mettere il process.env qui. */}
+                    <p className="signature">
+                        Fifa Manager v. 1.0.1
+                    </p>
+                    <p className="signature">
+                        Developed with <i class="fas fa-heart"/> By Domenico Angri
+                    </p>
+                </li>
+            </ul>;
+
+        // TODO - After for administrator user.
+        // let adminMenu = null;
+
+        /* Sidenav menu */
+        let sideNavMenu = null;
+
+        if(this.state.hideMenuComponent === false){
+            sideNavMenu = 
                 <Auxiliary>
-                    <Backdrop show={true} clicked={this.hideMenuComponent}/>
-
-                    <nav className="dark-bg sideNavMenu animated slideInLeft faster">
-                        <ul>
-                            <li>
-                                <NavLink to="/dashboard">
-                                    Test1
-                                </NavLink>
-                            </li>
-
-                            <li>
-                                <NavLink to="/dashboard">
-                                    Test2
-                                </NavLink>
-                            </li>
-                            
-                            <li>
-                                <NavLink to="/dashboard">
-                                    Test3
-                                </NavLink>
-                            </li>
-
-                            <li>
-                                <NavLink to="/dashboard">
-                                    Test4
-                                </NavLink>
-                            </li>
-                        </ul>
+                    <Backdrop show={true} backdropStyle="backdropStyle " clicked={this.hideMenuComponent}/>
+                    <nav className="dark-bg sideNavMenu sideNavMenuOpened animated slideInLeft faster">
+                        {userSection}
+                        {userMenu}
                     </nav>
-                </Auxiliary>
-                
+                </Auxiliary>;
         }
-            
-
-
-
-
-
-
-
-        
-
+        else if(this.state.hideMenuComponent === true){
+            sideNavMenu = 
+                <Auxiliary>
+                    <nav className="dark-bg sideNavMenu animated slideOutLeft faster sideNavMenuClosed">
+                        {userSection}
+                        {userMenu}
+                    </nav>
+                </Auxiliary>;
+        }
 
         return(
             <Auxiliary>
                 {headerComponent}
-                {userMenuComponent}
+                {sideNavMenu}
             </Auxiliary>
         );
-
     }
-
 }
 
 export default Header;
