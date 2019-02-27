@@ -13,6 +13,14 @@ li a{
     color: #b3b3b3;
 }
 
+li a:hover{
+    color: #e6e6e6;
+}
+
+.navbar{
+    box-shadow: 0 1px 3px #4f4f4f;
+}
+
 .header-logo{
     height: 100px;
 }
@@ -39,9 +47,9 @@ li a{
 .sideNavMenu{
     position: fixed;
     height: 100%;
-    width: 70%;
     z-index: 1050;
     font-size: 20px;
+    box-shadow: 1px 0 2px #4f4f4f;
 }
 
 .sideNavMenuClosed{
@@ -79,7 +87,49 @@ li a{
 .signature{
     font-size: 12px;
     font-style: italic;
-    color: #b3b3b3;
+    color: #808080;
     margin-top: 0.5%;
     margin-bottom: 0;
+}
+
+/* Smartphone XS screen */
+@media (min-width: 300px){
+    .sideNavMenu{
+        width: 70%;
+    }
+}
+
+/* Smartphone screen */
+@media (min-width: 350px){
+    .sideNavMenu{
+        width: 70%;
+    }
+}
+
+/* Smartphone XL screen */
+@media (min-width: 481px){
+    .sideNavMenu{
+        width: 40%;
+    }
+}
+
+/* Tablet sreen */
+@media (min-width: 768px){
+    .sideNavMenu{
+        width: 30%;
+    }
+}
+
+/* Desktop screen */
+@media (min-width: 992px){
+    .sideNavMenu{
+        width: 25%;
+    }
+}
+
+/* XL screen*/
+@media (min-width: 1200px){
+    .sideNavMenu{
+        width: 20%;
+    }
 }

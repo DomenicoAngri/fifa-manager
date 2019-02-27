@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import {NavLink} from 'react-router-dom';
 import Backdrop from '../Backdrop/Backdrop';
+import {commonConstants} from '../../../common/utilities/constants';
 
 import './Header.css';
 import '../../../common/css/common.css';
@@ -25,17 +26,18 @@ class Header extends Component{
         });
     }
 
-    // TODO - fare signature con altro colore come se non fosse cliccabile.
-    // TODO - fare funzionalità logout
-    // TODO - aggiustare con mediaquery il menu a tutte le dimensioni
+    logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+    }
 
     render(){
         /* Header component types */
         let headerComponent = 
             <nav className="navbar dark-bg fixed-top navbar-dark">
-                <a className="navbar-brand" onClick={this.showMenuComponent}>
+                <span className="navbar-brand" onClick={this.showMenuComponent}>
                     <i className="fas fa-bars"/>
-                </a>
+                </span>
 
                 <NavLink to="/dashboard" className="navbar-brand my-2 my-lg-0">
                     Fifa Manager&nbsp;
@@ -61,9 +63,8 @@ class Header extends Component{
                     </div>
 
                     <div className="d-flex justify-content-center">
-                        {/* TODO - Da togliere, solo per test. */}
                         <span>
-                            {username + "DomenicoAngri"}
+                            {username}
                         </span>
                     </div>
                 </div>
@@ -74,32 +75,33 @@ class Header extends Component{
             <ul>
                 <li>
                     <NavLink to="/dashboard">
-                        <i class="fas fa-trophy"/>&nbsp;
+                        <i className="fas fa-trophy"/>&nbsp;
                         Le mie leghe
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/dashboard">
-                        <i class="fas fa-search"/>&nbsp;
+                        <i className="fas fa-search"/>&nbsp;
                         Cerca una lega
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/dashboard">
-                        <i class="fas fa-gamepad"/>&nbsp;
+                        <i className="fas fa-gamepad"/>&nbsp;
                         Cerca un player
                     </NavLink>
                 </li>
                 <li className="li-footer">
-                    <i class="fas fa-sign-out-alt"/>&nbsp;
-                    Logout
+                    <NavLink to="/login" onClick={this.logout}>
+                        <i className="fas fa-sign-out-alt"/>&nbsp;
+                        Logout
+                    </NavLink>
 
-                    {/* TODO - vedere come mettere il process.env qui. */}
                     <p className="signature">
-                        Fifa Manager v. 1.0.1
+                        {commonConstants.FE_APP_VERSION}
                     </p>
                     <p className="signature">
-                        Developed with <i class="fas fa-heart"/> By Domenico Angri
+                        Developed with <i className="fas fa-heart"/> By Domenico Angri
                     </p>
                 </li>
             </ul>;
