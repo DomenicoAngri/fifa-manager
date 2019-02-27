@@ -37,6 +37,6 @@ export default function getMessage(messageCode){
          * Default message
          * ******************** */
         default:
-            return 'Sinceramente, non so che errore sia capitato, probabilmente il server a breve scoppierà. Prova a contattare Gandalf il Bianco. Fuggite.. Sciocchi! Codice errore: EVIL_666.';
+            return 'Ad essere sincero... Non so che errore sia mai potuto capitare, probabilmente il server a breve scoppierà. Prova a contattare Gandalf il Bianco. Fuggite.. Sciocchi! Codice errore: EVIL_666.';
     }
 }

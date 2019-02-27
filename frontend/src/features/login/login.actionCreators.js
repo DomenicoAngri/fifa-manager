@@ -15,10 +15,6 @@ function login(username, password){
     return (dispatch) => {
         dispatch(commonActions.showSpinner());
 
-        const baseUrlConfig = {
-            baseURL: process.env.API_BASE_URL
-        };
-
         const loginUrl = '/api/user/login';
 
         const loginBody = {
@@ -61,17 +57,13 @@ function checkLoginStatus(){
     return (dispatch) => {
         const token = localStorage.getItem('token');
 
-        const baseUrlConfig = {
-            baseURL: process.env.API_BASE_URL
-        };
-
         const checkLoginStatusUrl = '/api/user/checkLoginStatus';
 
         const loginStatusBody = {
             token: token
         };  
 
-        request.post(checkLoginStatusUrl, loginStatusBody, baseUrlConfig)
+        request.post(checkLoginStatusUrl, loginStatusBody)
         .then(function(result){
             dispatch(loginActions.userAuthenticated());
             history.push('/dashboard');
@@ -82,6 +74,9 @@ function checkLoginStatus(){
             }
             else if(error.response.status === 401){
                 dispatch(loginActions.userNotAuthenticated(error.response.data.code));
+            }
+            else if(error.response.status === 500){
+                dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
             }
             else{
                 dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
