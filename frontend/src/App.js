@@ -11,7 +11,6 @@ import Dashboard from './features/dashboard/Dashboard';
 import './common/css/common.css';
 
 // TODO - Problem on spinner when do animation with bar on the side.
-// TODO - Spinner not working on registration.
 
 class App extends Component{
     componentDidMount(){

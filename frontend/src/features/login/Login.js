@@ -118,7 +118,7 @@ class Login extends Component{
                 <div className="container">
                     <div className="row">
                         <div className="card card-height dark-bg col-xl-4 offset-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12">
-                            <Header classes="header-login-form"/>
+                            <Header headerType="loginHeader" classes="header-login-form"/>
 
                             <div className="card-body">
                                 <h5 className="card-title">Login</h5>
