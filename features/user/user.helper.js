@@ -32,7 +32,7 @@ function userHelper(){
 
     function getUserWithPasswordByUsername(username){
         return new Promise(function(resolve, reject){
-            userModel.findOne({username: username})
+            userModel.findOne({username: '/' + username + '/i'})
             .select('+password')
             .then(function(user){
                 resolve(user);
@@ -57,17 +57,8 @@ function userHelper(){
 
     function insertNewUser(userBody){
         return new Promise(function(resolve, reject){
-            let user = new userModel();
+            let user = new userModel(userBody);
 
-            user.username = userBody.username;
-            user.password = userBody.password;
-
-            // user.email = userBody.email;
-            // user.name = userBody.name;
-            // user.surname = userBody.surname;
-            // user.telephoneNumber = userBody.telephoneNumber;
-            // user.team = userBody.team;
-            
             user.save()
             .then(function(userSaved){
                 resolve(userSaved);

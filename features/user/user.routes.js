@@ -16,9 +16,10 @@ const router = express.Router();
 // TODO - Develop admin permission for method.
 // TODOPOST - Total errors and warns review.
 
-router.get('/checkUsernameExists/:username',
-        userController.checkIfUsernameIsUsed
-);
+// Is useful?
+// router.get('/checkUsernameExists/:username',
+//         userController.checkIfUsernameIsUsed
+// );
 
 router.post('/checkLoginStatus',
         auth.checkLoginStatus

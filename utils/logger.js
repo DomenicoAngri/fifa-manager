@@ -14,22 +14,22 @@ function logger(){
 
     function debug(message){
         console.debug('----------------------------------------------------------------------------------------------------');
-        console.debug(message);
+        console.debug('DEBUG --> ' + message);
     }
 
     function info(message){
         console.info('----------------------------------------------------------------------------------------------------');
-        console.info(message);
+        console.info('INFO --> ' + message);
     }
 
     function warn(message){
         console.warn('----------------------------------------------------------------------------------------------------');
-        console.warn(message);
+        console.warn('WARN --> ' + message);
     }
 
     function error(message){
         console.error('----------------------------------------------------------------------------------------------------');
-        console.error(message);
+        console.error('ERROR --> ' + message);
     }
 }
 
