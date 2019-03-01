@@ -26,15 +26,15 @@ router.post('/checkLoginStatus',
 );
 
 router.get('/:username',
-        auth.authentication,
-        userMiddleware.checkUserExists,
+        auth.checkLoginStatus,
+        // userMiddleware.checkUserExists,
         userController.getUserByUsername
 );
 
-router.get('/',
-        auth.authentication,
-        userController.getAllUsers
-);
+// router.get('/',
+//         auth.authentication,
+//         userController.getAllUsers
+// );
 
 router.post('/',
         userMiddleware.checkMandatoryFields,
@@ -47,23 +47,23 @@ router.post('/login',
         userController.login
 );
 
-router.put('/:username',
-        auth.authentication,
-        userMiddleware.checkUserExists,
-        userController.updateUser
-);
+// router.put('/:username',
+//         auth.authentication,
+//         userMiddleware.checkUserExists,
+//         userController.updateUser
+// );
 
-// TODO - Develop this method correctly.
-router.put('/userteam/:username/:teamId',
-        auth.authentication,
-        userMiddleware.checkUserExists,
-        userController.setUserTeam
-);
+// // TODO - Develop this method correctly.
+// router.put('/userteam/:username/:teamId',
+//         auth.authentication,
+//         userMiddleware.checkUserExists,
+//         userController.setUserTeam
+// );
 
-router.delete('/:username',
-        auth.authentication,
-        userMiddleware.checkUserExists,
-        userController.deleteUser
-);
+// router.delete('/:username',
+//         auth.authentication,
+//         userMiddleware.checkUserExists,
+//         userController.deleteUser
+// );
 
 module.exports = router;

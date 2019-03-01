@@ -20,7 +20,7 @@ function userHelper(){
     function getUserByUsername(username){
         return new Promise(function(resolve, reject){
             userModel.findOne({username: username})
-            .populate('team')
+            // .populate('team')
             .then(function(user){
                 resolve(user);
             })
@@ -32,7 +32,7 @@ function userHelper(){
 
     function getUserWithPasswordByUsername(username){
         return new Promise(function(resolve, reject){
-            userModel.findOne({username: '/' + username + '/i'})
+            userModel.findOne({username: new RegExp('^' + username + '$', 'i')})
             .select('+password')
             .then(function(user){
                 resolve(user);

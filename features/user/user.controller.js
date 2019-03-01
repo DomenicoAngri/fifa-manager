@@ -24,25 +24,28 @@ function userController(){
     return userController;
 
     function getUserByUsername(request, response){
+        log.info('userController --> getUserByUsername start.');
+
         const username = request.params.username;
 
         helper.getUserByUsername(username)
         .then(function(user){
             if(user != null){
-                log.logSeparator(console.info, 'INFO --> User ' + username + ' found!');
-                log.logSeparator(console.debug, user);
+                log.info('User ' + username + ' found!');
+                log.debug(user);
                 response.status(200).send(user);
+                log.info('userController --> getUserByUsername ended.');
                 return;
             }
             else{
-                log.logSeparator(console.warn, 'WARN - WARN_020 --> User ' + username + ' not found!');
+                log.warn('WARN_020 - User ' + username + ' not found!');
                 response.status(404).send(new responseMessage('WARN_020','WARN --> User  ' + username + ' not found!'));
                 return;
             }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_023 --> Fatal error on getting user ' + username + ' from DB.');
-            log.logSeparator(console.error, error);
+            log.error('FAT_023 - Fatal error on getting user ' + username + ' from DB.');
+            log.error(error);
             response.status(500).send(new responseMessage('FAT_023', 'FATAL --> Fatal error on getting user ' + username + ' from DB. Check immediately console and logs.'));
             return;
         });
@@ -186,8 +189,6 @@ function userController(){
             return;
         });
     }
-
-    // TODO sono qui vedere fatto del login in lowercase.
 
     function login(request, response){
         log.info('userController --> login start.');
