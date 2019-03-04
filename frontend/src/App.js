@@ -5,6 +5,7 @@ import Login from './features/login/Login';
 import {loginActionCreators} from './features/login/login.actionCreators';
 import Registration from './features/registration/Registration';
 import Dashboard from './features/dashboard/Dashboard';
+import User from './features/user/User';
 
 // import Test from './features/test/Test';
 
@@ -34,6 +35,7 @@ class App extends Component{
                     <Route path="/login" component={Login}/>
                     <Route path="/registration" component={Registration}/>
                     <Route path="/dashboard" component={Dashboard}/>
+                    <Route path="/user" component={User}/>
                     <Redirect to="/login"/>
                 </Switch>
             );

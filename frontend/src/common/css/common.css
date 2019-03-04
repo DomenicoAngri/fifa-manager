@@ -64,6 +64,10 @@ a, a:hover{
     .card-height{
         margin-top: 15%;
     }
+
+    .main-container{
+        margin-top: 20%;
+    }
 }
 
 /* Smartphone screen */
@@ -74,6 +78,10 @@ a, a:hover{
 
     .card-height{
         margin-top: 15%;
+    }
+
+    .main-container{
+        margin-top: 20%;
     }
 }
 
@@ -86,6 +94,10 @@ a, a:hover{
     .card-height{
         margin-top: 15%;
     }
+
+    .main-container{
+        margin-top: 20%;
+    }
 }
 
 /* Tablet sreen */
@@ -96,6 +108,10 @@ a, a:hover{
 
     .card-height{
         margin-top: 10%;
+    }
+
+    .main-container{
+        margin-top: 20%;
     }
 }
 
@@ -108,6 +124,10 @@ a, a:hover{
     .card-height{
         margin-top: 10%;
     }
+
+    .main-container{
+        margin-top: 20%;
+    }
 }
 
 /* XL screen*/
@@ -118,5 +138,9 @@ a, a:hover{
 
     .card-height{
         margin-top: 7%;
+    }
+
+    .main-container{
+        margin-top: 20%;
     }
 }
