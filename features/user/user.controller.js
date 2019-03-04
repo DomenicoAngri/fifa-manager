@@ -79,24 +79,29 @@ function userController(){
     // }
 
     function getAllUsers(request, response){
+        log.info('userController --> getAllUsers start.');
+
         helper.getAllUsers()
         .then(function(users){
-            log.logSeparator(console.info, 'INFO --> Users found in db: ' + users.length + '.');
+            log.info('Users found in db: ' + users.length + '.');
 
             if(users != null && users.length > 0){
-                log.logSeparator(console.debug, users);
+                log.debug(users);
+                log.info('userController --> getAllUsers ended.');
                 response.status(200).send(users);
                 return;
             }
             else{
-                log.logSeparator(console.warn, 'WARN - WARN_021 --> No users found!');
+                log.warn('WARN_021 - No users found!');
+                log.info('userController --> getAllUsers ended.');
                 response.status(404).send(new responseMessage('WARN_021','WARN --> No users found!'));
                 return;
             }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_022 --> Fatal error on getting all users from DB.');
-            log.logSeparator(console.error, error);
+            log.error('FAT_022 - Fatal error on getting all users from DB.');
+            log.error(error);
+            log.info('userController --> getAllUsers ended.');
             response.status(500).send(new responseMessage('FAT_022', 'FATAL --> Fatal error on getting all users from DB. Check immediately console and logs.'));
             return;
         });
@@ -136,36 +141,47 @@ function userController(){
     }
 
     function updateUser(request, response){
+        log.info('userController --> updateUser start.');
+
         const username = request.params.username;
+        log.debug('Updating user ' + username + '.');
+        log.debug('Info to update: ' + request.body)
 
         helper.updateUser(username, request.body)
         .then(function(userUpdated){
-            log.logSeparator(console.info, 'INFO --> User ' + username + ' updated!');
-            log.logSeparator(console.log, userUpdated);
+            log.info('User ' + username + ' updated!');
+            log.debug(userUpdated);
+            log.info('userController --> updateUser ended.');
             response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + username + ' updated correctly!'));
             return;
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_024 --> Fatal error on updating user ' + username + '.');
-            log.logSeparator(console.error, error);
+            log.error('FAT_024 - Fatal error on updating user ' + username + '.');
+            log.error(error);
+            log.info('userController --> updateUser ended.');
             response.status(500).send(new responseMessage('FAT_024', 'FATAL --> Fatal error on updating user ' + username + '. Check immediately console and logs.'));
             return;
         }); 
     }
 
     function deleteUser(request, response){
+        log.info('userController --> deleteUser start.');
+
         const username = request.params.username;
+        log.info('Deleting user: ' + username);
 
         helper.deleteUser(username)
         .then(function(userDeleted){
-            log.logSeparator(console.info, 'INFO --> User ' + username + ' deleted correctly!');
-            log.logSeparator(console.debug, userDeleted);
+            log.info('User ' + username + ' deleted correctly!');
+            log.debug(userDeleted);
+            log.info('userController --> deleteUser ended.');
             response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + username + ' deleted correctly!'));
             return;
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_026 --> Fatal error on deleting user ' + username + '.');
-            log.logSeparator(console.error, error);
+            log.error('FAT_026 - Fatal error on deleting user ' + username + '.');
+            log.error(error);
+            log.info('userController --> deleteUser ended.');
             response.status(500).send(new responseMessage('FAT_026', 'FATAL --> Fatal error on deleting user ' + username + '. Check immediately console and logs.'));
             return;
         });

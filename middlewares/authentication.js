@@ -5,14 +5,14 @@
 const log = require('../utils/logger');
 const jwt = require('jwt-simple');
 const responseMessage = require('../utils/responseMessage');
-const userHelper = require('../features/user/user.helper');
 
 function authenticationMiddleware(){
     let authenticationMiddleware = this;
 
-    // authenticationMiddleware.authentication = authentication;
+    authenticationMiddleware.authentication = authentication;
     authenticationMiddleware.checkMandatoryFields = checkMandatoryFields;
     authenticationMiddleware.checkLoginStatus = checkLoginStatus;
+    authenticationMiddleware.checkPersonalIdentity = checkPersonalIdentity;
 
     return authenticationMiddleware;
 
@@ -42,38 +42,23 @@ function authenticationMiddleware(){
         }
     }
 
-    // TODO - Capire come usare questa auth, ok per proteggere le risorse, ma vedere anche se gli utenti possono.
-    // function authentication(request, response, next){
-    //     log.logSeparator(console.info, 'authenticationMiddleware --> authentication start.');
+    function authentication(request, response, next){
+        log.info('authenticationMiddleware --> authentication start.');
 
-    //     const token = request.body.token;
-    //     log.logSeparator(console.debug, 'Token --> ' + token);
+        const payload = isTokenValid(request.body.token);
 
-    //     const payload = isTokenValid(token);
-    //     log.logSeparator(console.debug, 'Payload --> ' + payload);
-        
-    //     userHelper.getUserByUsername(payload.sub)
-    //     .then(function(user){
-    //         if(user !== null){
-    //             log.logSeparator(console.info, 'User ' + payload.sub + ' stored in token, found!')
-    //             log.logSeparator(console.debug, user);
-    //             next();
-    //         }
-    //         else{
-    //             log.logSeparator(console.error, 'ERROR - ERR_039 --> Username stored in session not found. Please login again.');
-    //             response.status(401).send(new responseMessage('ERR_039', 'ERROR --> Username stored in session not found. Please login again.'))
-    //             return;
-    //         }
-    //     })
-    //     .catch(function(error){
-    //         log.logSeparator(console.error, 'FATAL - FAT_046 --> Fatal error on authentication user ' + payload.sub + '.');
-    //         log.logSeparator(console.error, error);
-    //         response.status(500).send(new responseMessage('FAT_046', 'FATAL --> Fatal error on authentication user ' + payload.sub + '. Check immediately console and logs.'));
-    //         return;
-    //     });
-    // }
-
-    // TODO sono qui, per fare get user e servizi in generale non bisogna rispondere fare un altro metod quindi
+        if(payload){
+            log.info('Token is valid! You are authorized.');
+            log.info('authenticationMiddleware --> authentication ended.');
+            next();
+        }
+        else{
+            log.info('Token is not valid, your session is expired. Please login again!');
+            log.info('authenticationMiddleware --> authentication ended.');
+            response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Token is not valid, your session is expired. Please login again!'))
+            return;
+        }
+    }
 
     function checkLoginStatus(request, response){
         log.info('authenticationMiddleware --> checkLoginStatus start.');
@@ -114,6 +99,36 @@ function authenticationMiddleware(){
         //     response.status(500).send(new responseMessage('FAT_048', 'FATAL --> Fatal error on checking login status.'));
         //     return;
         // });
+    }
+
+    function checkPersonalIdentity(request, response, next){
+        log.info('authenticationMiddleware --> checkPersonalIdentity start.');
+
+        const payload = isTokenValid(request.body.token);
+        const username = request.params.username;
+
+        if(payload){
+            log.info('Token is valid! You are authorized.');
+
+            log.info('Checking if user\'s personal identity is valid...');
+            if(payload.sub === username){
+                log.info('Username is valid! You are authorized.');
+                log.info('authenticationMiddleware --> checkPersonalIdentity ended.');
+                next();
+            }
+            else{
+                log.warn('WARN_028 - Username is not valid! Please logout and repeate the operation.');
+                log.info('authenticationMiddleware --> checkPersonalIdentity ended.');
+                response.status(401).send(new responseMessage('INFO', 'INFO --> Token is not valid, your session is expired. Please login again!'));
+                return;
+            }   
+        }
+        else{
+            log.info('Token is not valid, your session is expired. Please login again!');
+            log.info('authenticationMiddleware --> checkPersonalIdentity ended.');
+            response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Token is not valid, your session is expired. Please login again!'))
+            return;
+        }
     }
     
     function isTokenValid(token){

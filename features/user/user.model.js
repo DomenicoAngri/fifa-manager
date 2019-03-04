@@ -116,7 +116,7 @@ const userSchema = new mongoose.Schema({
         unique: false,
         required: true
     },
-    totalTournament: {
+    totalTournaments: {
         type: Number,
         minlength: 0,
         default: 0,
