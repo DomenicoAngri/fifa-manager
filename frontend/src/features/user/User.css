@@ -1,3 +1,38 @@
-.bibi{
+a{
+    color: #b3b3b3;
+}
+
+a:hover{
+    color: #e6e6e6;
+}
+
+p{
+    margin-bottom: 2%;
+}
+
+.card{
+    padding: 10px;
+}
+
+.profile-card-bg{
     background-color: #454642;
+}
+
+.d-flex{
+    margin: 2%;
+}
+
+.hr-style-bg{
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #ffffff4d;
+}
+
+.small-text{
+    color: #b3b3b3;
+}
+
+.row{
+    margin-bottom: 4%;
 }

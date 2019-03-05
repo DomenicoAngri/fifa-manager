@@ -61,11 +61,15 @@ a, a:hover{
         top: -20%;
     }
 
-    .card-height{
+    .card-login-height{
         margin-top: 15%;
     }
 
     .main-container{
+        margin-top: 20%;
+    }
+
+    .card-app-height{
         margin-top: 20%;
     }
 }
@@ -76,11 +80,15 @@ a, a:hover{
         top: -30%;
     }
 
-    .card-height{
+    .card-login-height{
         margin-top: 15%;
     }
 
     .main-container{
+        margin-top: 20%;
+    }
+
+    .card-app-height{
         margin-top: 20%;
     }
 }
@@ -91,11 +99,15 @@ a, a:hover{
         top: -30%;
     }
 
-    .card-height{
+    .card-login-height{
         margin-top: 15%;
     }
 
     .main-container{
+        margin-top: 20%;
+    }
+
+    .card-app-height{
         margin-top: 20%;
     }
 }
@@ -106,11 +118,15 @@ a, a:hover{
         top: -35%;
     }
 
-    .card-height{
+    .card-login-height{
         margin-top: 10%;
     }
 
     .main-container{
+        margin-top: 20%;
+    }
+
+    .card-app-height{
         margin-top: 20%;
     }
 }
@@ -121,11 +137,15 @@ a, a:hover{
         top: -30%;
     }
 
-    .card-height{
+    .card-login-height{
         margin-top: 10%;
     }
 
     .main-container{
+        margin-top: 20%;
+    }
+
+    .card-app-height{
         margin-top: 20%;
     }
 }
@@ -136,11 +156,15 @@ a, a:hover{
         top: -25%;
     }
 
-    .card-height{
+    .card-login-height{
         margin-top: 7%;
     }
 
     .main-container{
+        margin-top: 20%;
+    }
+
+    .card-app-height{
         margin-top: 20%;
     }
 }
