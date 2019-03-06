@@ -107,10 +107,11 @@ class User extends Component{
 
                     <div className="row">
                         <div className="card profile-card-bg col-12">
-                            <div className="card-header"><h4>Statistiche di Domenico</h4></div>
-                            <div className="card-body">
+                            <div className="card-header">
+                                <h4>Statistiche di Domenico</h4>
+                            </div>
 
-                                
+                            <div className="card-body">
                                 <div className="row">
                                     <div className="col-12">
                                         <small className="small-text"><i class="far fa-futbol"/>&nbsp;Squadra</small>
@@ -166,33 +167,34 @@ class User extends Component{
                                         <p>2</p>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 </div>
             </Auxiliary>
         );
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 const mapStateToProps = state => {
     return{
+        name: state.user.name,
+        surname: state.user.surname,
+        age: state.user.age,
+        nationality: state.user.nationality,
+        city: state.user.city,
+        email: state.user.email,
+        telephone: state.user.telephone,
+        teamName: state.user.teamName,
+        totalMatches: state.user.totalMatches,
+        wonMatches: state.user.wonMatches,
+        drawMatches: state.user.drawMatches,
+        lossesMatch: state.user.lossesMatch,
+        scoredGoals: state.user.scoredGoals,
+        concededGoals: state.user.concededGoals,
+        createdDate: state.user.createdDate,
+        totalTournaments: state.user.totalTournaments,
+        wonTrophies: state.user.wonTrophies
     };
 };
 
