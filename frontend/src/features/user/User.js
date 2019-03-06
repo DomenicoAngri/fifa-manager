@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Header from '../../components/UI/Header/Header';
+import {Doughnut} from 'react-chartjs-2';
 
 import './User.css';
 import '../../common/css/common.css';
@@ -21,6 +22,14 @@ class User extends Component{
         /* User information */
         const username = localStorage.getItem("username");
 
+        const matchesData = {labels:['Vittorie','Pareggi','Sconfitte'],datasets:[{data:[10,3,6],backgroundColor:['#31be51','#FFCE56','#e43546'],hoverBackgroundColor:['#31be51','#FFCE56','#e43546']}]};
+        const goalData = {labels:['Gol fatti','Gol subiti'],datasets:[{data:[130,45],backgroundColor:['#17a2b8','#fd7e14'],hoverBackgroundColor:['#17a2b8','#fd7e14']}]};
+
+        const pieChartlegend = {
+            display: true,
+            position: 'right'
+        };
+
         return(
             <Auxiliary>
                 <Header/>
@@ -34,10 +43,12 @@ class User extends Component{
                                 </div>
 
                                 <div className="d-flex justify-content-center">
-                                    {username}&nbsp;
-                                    <NavLink to="/editUser">
-                                        <i class="far fa-edit"/>
-                                    </NavLink>
+                                    <h4>
+                                        {username}&nbsp;
+                                        <NavLink to="/editUser">
+                                            <i class="far fa-edit"/>
+                                        </NavLink>
+                                    </h4>
                                 </div>
 
                                 <hr className="hr-style-bg"/>
@@ -96,9 +107,66 @@ class User extends Component{
 
                     <div className="row">
                         <div className="card profile-card-bg col-12">
-                            <div className="card-header">Statistiche</div>
+                            <div className="card-header"><h4>Statistiche di Domenico</h4></div>
                             <div className="card-body">
+
                                 
+                                <div className="row">
+                                    <div className="col-12">
+                                        <small className="small-text"><i class="far fa-futbol"/>&nbsp;Squadra</small>
+                                        <NavLink to="/userClub">
+                                            <p>JUVENTUS FOOTBALL CLUB</p>
+                                        </NavLink>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-12">
+                                        <small className="small-text">Partite totali</small>
+                                        <p>125</p>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-12">
+                                        <Doughnut data={matchesData} legend={pieChartlegend}/>
+                                    </div>
+                                </div>
+
+                                <hr className="hr-style-bg"/>
+
+                                <div className="row">
+                                    <div className="col-6">
+                                        <small className="small-text">Media gol fatti</small>
+                                        <p>2,34</p>
+                                    </div>
+
+                                    <div className="col-6">
+                                        <small className="small-text">Media gol subiti</small>
+                                        <p>0,37</p>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-12">
+                                        <Doughnut data={goalData} legend={pieChartlegend}/>
+                                    </div>
+                                </div>
+
+                                <hr className="hr-style-bg"/>
+
+                                <div className="row">
+                                    <div className="col-6">
+                                        <small className="small-text"><i class="fas fa-clipboard-list"/>&nbsp;Partecipazioni</small>
+                                        <p>20</p>
+                                    </div>
+
+                                    <div className="col-6">
+                                        <small className="small-text"><i class="fas fa-trophy"/>&nbsp;Trofei vinti</small>
+                                        <p>2</p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

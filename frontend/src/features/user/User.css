@@ -36,3 +36,7 @@ p{
 .row{
     margin-bottom: 4%;
 }
+
+.card-header{
+    background-color: #454642;
+}
