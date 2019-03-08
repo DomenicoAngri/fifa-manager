@@ -54,9 +54,6 @@ export function loginReducer(state = initialState, action){
                 showModalMessage: false
             });
 
-        // case actionType.LOGOUT:
-        //     return updateObject(state, {isUsernameUsed: false});
-
         default:
             return state;
     }

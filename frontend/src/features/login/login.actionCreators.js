@@ -50,7 +50,7 @@ function login(username, password){
                 dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
             }
         });
-    };
+    }
 }
 
 function checkLoginStatus(){
@@ -82,7 +82,7 @@ function checkLoginStatus(){
                 dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
             }
         });
-    };
+    }
 }
 
 function resetLoginErrorStates(){

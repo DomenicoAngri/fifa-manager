@@ -4,6 +4,7 @@ import {NavLink} from 'react-router-dom';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Header from '../../components/UI/Header/Header';
 import {Doughnut} from 'react-chartjs-2';
+import {userActionCreators} from './user.actionCreators';
 
 import './User.css';
 import '../../common/css/common.css';
@@ -11,19 +12,28 @@ import '../../common/css/common.css';
 import userSample from '../../assets/images/user-sample.png';
 
 class User extends Component{
+    componentWillMount(){
+        const username = localStorage.getItem("username");
+        const token = localStorage.getItem("token");
 
+        this.props.getUser(username, token);
+    }
 
-
-
-
-
-
+    checkStringEmptyOrNull = (stringField) => {
+        if(stringField){
+            return stringField;
+        }
+        else{
+            return 'N/A';
+        }
+    }
+    
     render(){
         /* User information */
         const username = localStorage.getItem("username");
 
-        const matchesData = {labels:['Vittorie','Pareggi','Sconfitte'],datasets:[{data:[10,3,6],backgroundColor:['#31be51','#FFCE56','#e43546'],hoverBackgroundColor:['#31be51','#FFCE56','#e43546']}]};
-        const goalData = {labels:['Gol fatti','Gol subiti'],datasets:[{data:[130,45],backgroundColor:['#17a2b8','#fd7e14'],hoverBackgroundColor:['#17a2b8','#fd7e14']}]};
+        const matchesData = {labels:['Vittorie','Pareggi','Sconfitte'],datasets:[{data:[this.props.wonMatches,this.props.drawMatches,this.props.lossesMatch],backgroundColor:['#31be51','#FFCE56','#e43546'],hoverBackgroundColor:['#31be51','#FFCE56','#e43546']}]};
+        const goalData = {labels:['Gol fatti','Gol subiti'],datasets:[{data:[this.props.scoredGoals,this.props.concededGoals],backgroundColor:['#17a2b8','#fd7e14'],hoverBackgroundColor:['#17a2b8','#fd7e14']}]};
 
         const pieChartlegend = {
             display: true,
@@ -46,7 +56,7 @@ class User extends Component{
                                     <h4>
                                         {username}&nbsp;
                                         <NavLink to="/editUser">
-                                            <i class="far fa-edit"/>
+                                            <i className="far fa-edit"/>
                                         </NavLink>
                                     </h4>
                                 </div>
@@ -55,25 +65,25 @@ class User extends Component{
                                 
                                 <div className="row">
                                     <div className="col-6">
-                                        <small className="small-text"><i class="fas fa-male"/>&nbsp;Nome</small>
-                                        <p>Domenico Angri</p>
+                                        <small className="small-text"><i className="fas fa-male"/>&nbsp;Nome</small>
+                                        <p>{this.props.name && this.props.surname ? 'N/A' : this.props.name + ' ' + this.props.surname}</p>
                                     </div>
 
                                     <div className="col-6">
-                                        <small className="small-text"><i class="fas fa-birthday-cake"/>&nbsp;Età</small>
-                                        <p>29</p>
+                                        <small className="small-text"><i className="fas fa-birthday-cake"/>&nbsp;Età</small>
+                                        <p>{this.checkStringEmptyOrNull(this.props.age)}</p>
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div className="col-6">
-                                        <small className="small-text"><i class="fas fa-globe-americas"/>&nbsp;Nazionalità</small>
-                                        <p>Italiana</p>
+                                        <small className="small-text"><i className="fas fa-globe-americas"/>&nbsp;Nazionalità</small>
+                                        <p>{this.checkStringEmptyOrNull(this.props.nationality)}</p>
                                     </div>
 
                                     <div className="col-6">
-                                        <small className="small-text"><i class="fas fa-map-marker-alt"/>&nbsp;From</small>
-                                        <p>Milano</p>
+                                        <small className="small-text"><i className="fas fa-map-marker-alt"/>&nbsp;From</small>
+                                        <p>{this.checkStringEmptyOrNull(this.props.city)}</p>
                                     </div>
                                 </div>
 
@@ -81,15 +91,15 @@ class User extends Component{
 
                                 <div className="row">
                                     <div className="col-12">
-                                        <small className="small-text"><i class="fas fa-envelope"/>&nbsp;Mail</small>
-                                        <p>domenico.angri@gmail.com</p>
+                                        <small className="small-text"><i className="fas fa-envelope"/>&nbsp;Mail</small>
+                                        <p>{this.checkStringEmptyOrNull(this.props.email)}</p>
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div className="col-12">
-                                        <small className="small-text"><i class="fas fa-mobile-alt"/>&nbsp;Telefono</small>
-                                        <p>3273114756</p>
+                                        <small className="small-text"><i className="fas fa-mobile-alt"/>&nbsp;Telefono</small>
+                                        <p>{this.checkStringEmptyOrNull(this.props.telephone)}</p>
                                     </div>
                                 </div>
 
@@ -97,8 +107,8 @@ class User extends Component{
 
                                 <div className="row">
                                     <div className="col-12">
-                                        <small className="small-text"><i class="fas fa-calendar-alt"/>&nbsp;Joined</small>
-                                        <p>05/07/2016</p>
+                                        <small className="small-text"><i className="fas fa-calendar-alt"/>&nbsp;Joined</small>
+                                        <p>{this.props.createdDate}</p>
                                     </div>
                                 </div>
                             </div>
@@ -108,15 +118,15 @@ class User extends Component{
                     <div className="row">
                         <div className="card profile-card-bg col-12">
                             <div className="card-header">
-                                <h4>Statistiche di Domenico</h4>
+                                <h4>Statistiche di {this.props.name ? this.props.name : username}</h4>
                             </div>
 
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col-12">
-                                        <small className="small-text"><i class="far fa-futbol"/>&nbsp;Squadra</small>
+                                        <small className="small-text"><i className="far fa-futbol"/>&nbsp;Squadra</small>
                                         <NavLink to="/userClub">
-                                            <p>JUVENTUS FOOTBALL CLUB</p>
+                                            <p>{this.props.teamName ? this.props.teamName : 'Team non ancora assegnato!'}</p>
                                         </NavLink>
                                     </div>
                                 </div>
@@ -124,7 +134,7 @@ class User extends Component{
                                 <div className="row">
                                     <div className="col-12">
                                         <small className="small-text">Partite totali</small>
-                                        <p>125</p>
+                                        <p>this.props.totalMatches</p>
                                     </div>
                                 </div>
 
@@ -139,12 +149,15 @@ class User extends Component{
                                 <div className="row">
                                     <div className="col-6">
                                         <small className="small-text">Media gol fatti</small>
-                                        <p>2,34</p>
+                                        {console.log(this.props.totalMatches)}
+                                        {console.log(this.props.scoredGoals)}
+                                        {console.log(this.props.totalMatches / this.props.scoredGoals)}
+                                        <p>{this.props.totalMatches / this.props.scoredGoals}</p>
                                     </div>
 
                                     <div className="col-6">
                                         <small className="small-text">Media gol subiti</small>
-                                        <p>0,37</p>
+                                        <p>{this.props.totalMatches / this.props.concededGoals}</p>
                                     </div>
                                 </div>
 
@@ -158,13 +171,13 @@ class User extends Component{
 
                                 <div className="row">
                                     <div className="col-6">
-                                        <small className="small-text"><i class="fas fa-clipboard-list"/>&nbsp;Partecipazioni</small>
-                                        <p>20</p>
+                                        <small className="small-text"><i className="fas fa-clipboard-list"/>&nbsp;Partecipazioni</small>
+                                        <p>{this.props.totalTournaments}</p>
                                     </div>
 
                                     <div className="col-6">
-                                        <small className="small-text"><i class="fas fa-trophy"/>&nbsp;Trofei vinti</small>
-                                        <p>2</p>
+                                        <small className="small-text"><i className="fas fa-trophy"/>&nbsp;Trofei vinti</small>
+                                        <p>{this.props.wonTrophies}</p>
                                     </div>
                                 </div>
                             </div>
@@ -200,6 +213,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
+        getUser: (username, token) => dispatch(userActionCreators.getUser(username, token))
     };
 };
 

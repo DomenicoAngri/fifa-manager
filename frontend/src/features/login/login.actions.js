@@ -8,8 +8,6 @@ export const loginActions = {
     showModalMessage,
     resetLoginErrorStates,
     hideModalMessage
-
-    // logout
 };
 
 function userAuthenticated(){
@@ -57,9 +55,3 @@ function resetLoginErrorStates(){
         type: loginConstants.RESET_LOGIN_ERROR_STATES
     }
 }
-
-// function logout(){
-//     return{
-//         type: loginConstants.LOGOUT
-//     }
-// }
