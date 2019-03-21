@@ -25,23 +25,23 @@ export function userReducer(state = initialState, action){
     switch(action.type){
         case actionType.GET_USER:
             return updateObject(state, {
-                name: action.userInfo.name,
-                surname: action.userInfo.surname,
-                age: action.userInfo.age,
-                nationality: action.userInfo.nationality,
-                city: action.userInfo.city,
-                email: action.userInfo.email,
-                telephone: action.userInfo.telephone,
-                teamName: action.userInfo.teamName,
-                totalMatches: action.userInfo.totalMatches,
-                wonMatches: action.userInfo.wonMatches,
-                drawMatches: action.userInfo.drawMatches,
-                lossesMatch: action.userInfo.lossesMatch,
-                scoredGoals: action.userInfo.scoredGoals,
-                concededGoals: action.userInfo.concededGoals,
-                createdDate: action.userInfo.createdDate,
-                totalTournaments: action.userInfo.totalTournaments,
-                wonTrophies: action.userInfo.wonTrophies
+                name: action.userInfo.data.name,
+                surname: action.userInfo.data.surname,
+                age: action.userInfo.data.age,
+                nationality: action.userInfo.data.nationality,
+                city: action.userInfo.data.city,
+                email: action.userInfo.data.email,
+                telephone: action.userInfo.data.telephone,
+                teamName: action.userInfo.data.teamName,
+                totalMatches: action.userInfo.data.totalMatches,
+                wonMatches: action.userInfo.data.wonMatches,
+                drawMatches: action.userInfo.data.drawMatches,
+                lossesMatch: action.userInfo.data.lossesMatches,
+                scoredGoals: action.userInfo.data.scoredGoals,
+                concededGoals: action.userInfo.data.concededGoals,
+                createdDate: action.userInfo.data.createdDate,
+                totalTournaments: action.userInfo.data.totalTournaments,
+                wonTrophies: action.userInfo.data.wonTrophies
             });
 
         default:

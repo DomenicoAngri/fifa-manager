@@ -25,7 +25,7 @@ router.post('/checkLoginStatus',
         auth.checkLoginStatus
 );
 
-router.get('/:username',
+router.get('/:username/:token',
         auth.authentication,
         // userMiddleware.checkUserExists,
         userController.getUserByUsername

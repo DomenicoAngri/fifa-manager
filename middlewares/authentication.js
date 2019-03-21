@@ -45,7 +45,9 @@ function authenticationMiddleware(){
     function authentication(request, response, next){
         log.info('authenticationMiddleware --> authentication start.');
 
-        const payload = isTokenValid(request.body.token);
+        const token = request.params.token != null ? request.params.token : request.body.token;
+
+        const payload = isTokenValid(token);
 
         if(payload){
             log.info('Token is valid! You are authorized.');

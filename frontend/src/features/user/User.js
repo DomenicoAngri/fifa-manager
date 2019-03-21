@@ -32,8 +32,8 @@ class User extends Component{
         /* User information */
         const username = localStorage.getItem("username");
 
-        const matchesData = {labels:['Vittorie','Pareggi','Sconfitte'],datasets:[{data:[this.props.wonMatches,this.props.drawMatches,this.props.lossesMatch],backgroundColor:['#31be51','#FFCE56','#e43546'],hoverBackgroundColor:['#31be51','#FFCE56','#e43546']}]};
-        const goalData = {labels:['Gol fatti','Gol subiti'],datasets:[{data:[this.props.scoredGoals,this.props.concededGoals],backgroundColor:['#17a2b8','#fd7e14'],hoverBackgroundColor:['#17a2b8','#fd7e14']}]};
+        const matchesData = {labels:['Vittorie: ' + this.props.wonMatches,'Pareggi: ' + this.props.drawMatches,'Sconfitte: ' + this.props.lossesMatch],datasets:[{data:[this.props.wonMatches,this.props.drawMatches,this.props.lossesMatch],backgroundColor:['#31be51','#FFCE56','#e43546'],hoverBackgroundColor:['#31be51','#FFCE56','#e43546']}]};
+        const goalData = {labels:['Gol fatti: ' + this.props.scoredGoals,'Gol subiti: ' + this.props.concededGoals],datasets:[{data:[this.props.scoredGoals,this.props.concededGoals],backgroundColor:['#17a2b8','#fd7e14'],hoverBackgroundColor:['#17a2b8','#fd7e14']}]};
 
         const pieChartlegend = {
             display: true,

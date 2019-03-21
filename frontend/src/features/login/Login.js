@@ -12,6 +12,37 @@ import {commonActionCreators} from '../../common/actions/common.actions.actionCr
 import './Login.css';
 import '../../common/css/common.css';
 
+/*
+    TODO - Costrutto da vedere ed eventualmente sostituire in tutto il progetto per comodità.
+
+    const UserNotFoundBlock = <div className="invalid-feedback">{getMessage(this.props.loginErrorCode)}</div>;
+
+    const{
+        usernameInputError,
+        usernameInputErrorMessage,
+        passwordInputError,
+        passwordInputErrorMessage
+    } = this.state;
+
+    const{
+        userNotFound,
+        incorrectUserPassword
+    } = this.props;
+
+    // if(usernameInputError){
+    //     usernameInvalidFeedback = <div className="invalid-feedback">{usernameInputErrorMessage}</div>;
+    // }
+    // else if(userNotFound){
+    //     usernameInvalidFeedback = <div className="invalid-feedback">{getMessage(this.props.loginErrorCode)}</div>;
+    // }
+
+    {usernameInputError && <div className="invalid-feedback">{usernameInputErrorMessage}</div>}
+    {userNotFound && <UserNotFoundBlock/>}
+
+    {passwordInputError && <div className="invalid-feedback">{passwordInputErrorMessage}</div>}
+    {incorrectUserPassword && <UserNotFoundBlock/>}
+*/
+
 class Login extends Component{
     state = {
         username: '',

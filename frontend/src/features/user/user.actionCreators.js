@@ -11,13 +11,17 @@ function getUser(username, token){
     return (dispatch) => {
         dispatch(commonActions.showSpinner());
 
-        const getUserUrl = '/api/user/' + username;
+        const getUserUrl = '/api/user/' + username + '/' + token;
 
-        const getUserBody = {
-            token: token
-        };
+        // const getUserBody = {
+        //     token: token
+        // };
 
-        request.get(getUserUrl, getUserBody)
+        // const getUserHeaders = {
+        //     'Content-Type': 'application/json'
+        // };
+
+        request.get(getUserUrl)
         .then(function(user){
             dispatch(userActions.getUser(user));
             dispatch(commonActions.hideSpinner());
