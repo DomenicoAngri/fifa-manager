@@ -13,6 +13,11 @@ import '../../common/css/common.css';
 
 import userSample from '../../assets/images/user-sample.png';
 
+// - fixed quando si apre menu
+// - controllare lo spinner se c'è dappertutto
+// - risolvere bug delle label sui grafici
+// - risolvere bug dello smooting in iphone
+
 class User extends Component{
     componentWillMount(){
         moment.locale('it');
@@ -153,9 +158,6 @@ class User extends Component{
                                 <div className="row">
                                     <div className="col-6">
                                         <small className="small-text">Media gol fatti</small>
-                                        {console.log(this.props.totalMatches)}
-                                        {console.log(this.props.scoredGoals)}
-                                        {console.log(this.props.totalMatches / this.props.scoredGoals)}
                                         <p>{(this.props.scoredGoals / this.props.totalMatches).toFixed(2)}</p>
                                     </div>
 
