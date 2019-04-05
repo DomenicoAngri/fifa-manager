@@ -5,6 +5,8 @@ import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Header from '../../components/UI/Header/Header';
 import {Doughnut} from 'react-chartjs-2';
 import {userActionCreators} from './user.actionCreators';
+import moment from 'moment';
+import 'moment/locale/it';
 
 import './User.css';
 import '../../common/css/common.css';
@@ -13,6 +15,8 @@ import userSample from '../../assets/images/user-sample.png';
 
 class User extends Component{
     componentWillMount(){
+        moment.locale('it');
+
         const username = localStorage.getItem("username");
         const token = localStorage.getItem("token");
 
@@ -66,7 +70,7 @@ class User extends Component{
                                 <div className="row">
                                     <div className="col-6">
                                         <small className="small-text"><i className="fas fa-male"/>&nbsp;Nome</small>
-                                        <p>{this.props.name && this.props.surname ? 'N/A' : this.props.name + ' ' + this.props.surname}</p>
+                                        <p>{this.props.name && this.props.surname ? this.props.name + ' ' + this.props.surname : 'N/A'}</p>
                                     </div>
 
                                     <div className="col-6">
@@ -92,7 +96,7 @@ class User extends Component{
                                 <div className="row">
                                     <div className="col-12">
                                         <small className="small-text"><i className="fas fa-envelope"/>&nbsp;Mail</small>
-                                        <p>{this.checkStringEmptyOrNull(this.props.email)}</p>
+                                        <p>{this.checkStringEmptyOrNull(this.props.mail)}</p>
                                     </div>
                                 </div>
 
@@ -108,7 +112,7 @@ class User extends Component{
                                 <div className="row">
                                     <div className="col-12">
                                         <small className="small-text"><i className="fas fa-calendar-alt"/>&nbsp;Joined</small>
-                                        <p>{this.props.createdDate}</p>
+                                        <p>{moment(this.props.createdDate).format('LL')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +138,7 @@ class User extends Component{
                                 <div className="row">
                                     <div className="col-12">
                                         <small className="small-text">Partite totali</small>
-                                        <p>this.props.totalMatches</p>
+                                        <p>{this.props.totalMatches}</p>
                                     </div>
                                 </div>
 
@@ -152,12 +156,12 @@ class User extends Component{
                                         {console.log(this.props.totalMatches)}
                                         {console.log(this.props.scoredGoals)}
                                         {console.log(this.props.totalMatches / this.props.scoredGoals)}
-                                        <p>{this.props.totalMatches / this.props.scoredGoals}</p>
+                                        <p>{(this.props.scoredGoals / this.props.totalMatches).toFixed(2)}</p>
                                     </div>
 
                                     <div className="col-6">
                                         <small className="small-text">Media gol subiti</small>
-                                        <p>{this.props.totalMatches / this.props.concededGoals}</p>
+                                        <p>{(this.props.concededGoals / this.props.totalMatches).toFixed(2)}</p>
                                     </div>
                                 </div>
 
@@ -196,7 +200,7 @@ const mapStateToProps = state => {
         age: state.user.age,
         nationality: state.user.nationality,
         city: state.user.city,
-        email: state.user.email,
+        mail: state.user.mail,
         telephone: state.user.telephone,
         teamName: state.user.teamName,
         totalMatches: state.user.totalMatches,

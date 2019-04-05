@@ -30,7 +30,7 @@ export function userReducer(state = initialState, action){
                 age: action.userInfo.data.age,
                 nationality: action.userInfo.data.nationality,
                 city: action.userInfo.data.city,
-                email: action.userInfo.data.email,
+                mail: action.userInfo.data.mail,
                 telephone: action.userInfo.data.telephone,
                 teamName: action.userInfo.data.teamName,
                 totalMatches: action.userInfo.data.totalMatches,
