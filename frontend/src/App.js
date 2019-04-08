@@ -5,12 +5,15 @@ import Login from './features/login/Login';
 import {loginActionCreators} from './features/login/login.actionCreators';
 import Registration from './features/registration/Registration';
 import Dashboard from './features/dashboard/Dashboard';
+import User from './features/user/User';
 
 // import Test from './features/test/Test';
 
 import './common/css/common.css';
 
 // TODO - Problem on spinner when do animation with bar on the side.
+// TODO - Reset all problem status on login and other form after new tentative.
+// TODO - Vedere quando si apre il menù il fatto che scorrono i contenuti sotto.
 
 class App extends Component{
     componentDidMount(){
@@ -34,6 +37,7 @@ class App extends Component{
                     <Route path="/login" component={Login}/>
                     <Route path="/registration" component={Registration}/>
                     <Route path="/dashboard" component={Dashboard}/>
+                    <Route path="/user" component={User}/>
                     <Redirect to="/login"/>
                 </Switch>
             );

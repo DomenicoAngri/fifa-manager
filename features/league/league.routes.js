@@ -14,36 +14,36 @@ const router = express.Router();
 // Routes.
 
 router.put('/currentLeague/:id',
-        auth.authentication,
+        // auth.authentication,
         leagueMiddleware.checkLeagueExists,
         leagueController.setCurrentLeague);
 
 router.get('/currentLeagues',
-        auth.authentication,
+        // auth.authentication,
         leagueController.getCurrentLeagues);
 
 router.get('/:id',
-        auth.authentication,
+        // auth.authentication,
         leagueMiddleware.checkLeagueExists,
         leagueController.getLeagueById);
 
 router.get('/',
-        auth.authentication,
+        // auth.authentication,
         leagueController.getAllLeagues);
 
 router.post('/',
-        auth.authentication,
+        // auth.authentication,
         leagueMiddleware.checkMandatoryFields,
         leagueMiddleware.checkLeagueNotExists,
         leagueController.insertNewLeague);
 
 router.put('/:id',
-        auth.authentication,
+        // auth.authentication,
         leagueMiddleware.checkLeagueExists,
         leagueController.updateLeague);
 
 router.delete('/:id',
-        auth.authentication,
+        // auth.authentication,
         leagueMiddleware.checkLeagueExists,
         leagueController.deleteLeague);
 

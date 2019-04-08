@@ -56,7 +56,7 @@ class Header extends Component{
         const username = localStorage.getItem("username");
 
         let userSection = 
-            <NavLink to="/profile">
+            <NavLink to="/user">
                 <div className="user-section">
                     <div className="d-flex justify-content-center">
                         <img src={userSample} className="rounded-circle user-image" alt="Fifa Manager Logo"/>

@@ -12,6 +12,37 @@ import {commonActionCreators} from '../../common/actions/common.actions.actionCr
 import './Login.css';
 import '../../common/css/common.css';
 
+/*
+    TODO - Costrutto da vedere ed eventualmente sostituire in tutto il progetto per comodità.
+
+    const UserNotFoundBlock = <div className="invalid-feedback">{getMessage(this.props.loginErrorCode)}</div>;
+
+    const{
+        usernameInputError,
+        usernameInputErrorMessage,
+        passwordInputError,
+        passwordInputErrorMessage
+    } = this.state;
+
+    const{
+        userNotFound,
+        incorrectUserPassword
+    } = this.props;
+
+    // if(usernameInputError){
+    //     usernameInvalidFeedback = <div className="invalid-feedback">{usernameInputErrorMessage}</div>;
+    // }
+    // else if(userNotFound){
+    //     usernameInvalidFeedback = <div className="invalid-feedback">{getMessage(this.props.loginErrorCode)}</div>;
+    // }
+
+    {usernameInputError && <div className="invalid-feedback">{usernameInputErrorMessage}</div>}
+    {userNotFound && <UserNotFoundBlock/>}
+
+    {passwordInputError && <div className="invalid-feedback">{passwordInputErrorMessage}</div>}
+    {incorrectUserPassword && <UserNotFoundBlock/>}
+*/
+
 class Login extends Component{
     state = {
         username: '',
@@ -117,7 +148,7 @@ class Login extends Component{
 
                 <div className="container">
                     <div className="row">
-                        <div className="card card-height dark-bg col-xl-4 offset-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12">
+                        <div className="card card-login-height dark-bg col-xl-4 offset-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12">
                             <Header headerType="loginHeader" classes="header-login-form"/>
 
                             <div className="card-body">

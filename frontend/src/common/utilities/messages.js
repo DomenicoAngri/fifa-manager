@@ -21,6 +21,12 @@ export default function getMessage(messageCode){
         case 'ERR_036':
             return 'La password non è corretta, ricontrolla!';
 
+        case 'ERR_038':
+            return 'La tua sessione è scaduta, loggati nuovamente!';
+
+        case 'ERR_039':
+            return 'Attenzione, è successo qualcosa di grave. Il tuo utente all\'improvviso sembra scomparso, contatta immediatamente un amministratore!';
+
         /* ********************
          * Fatal messages
          * ******************** */

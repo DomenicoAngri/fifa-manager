@@ -6,12 +6,12 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 
 const userSchema = new mongoose.Schema({
+    /* Personal information */
     username: {
         type: String,
         minlength: 3,
         maxlength: 50,
         unique: true,
-        lowercase: true,
         required: true
     },
     email: {
@@ -34,7 +34,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         minlength: 3,
         maxlength: 50,
-        lowercase: true,
         unique: false,
         required: false
     },
@@ -42,7 +41,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         minlength: 3,
         maxlength: 50,
-        lowercase: true,
         unique: false,
         required: false
     },
@@ -54,6 +52,14 @@ const userSchema = new mongoose.Schema({
         required: false,
         sparse: true
     },
+    createdData: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+
+    /* Tournaments information */
+
     team: {
         type: ObjectId,
         ref: 'team',
@@ -61,11 +67,69 @@ const userSchema = new mongoose.Schema({
         required: false,
         sparse: true
     },
+    scoredGoals: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+    concededGoals: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+    wonMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+    lossesMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+    drawMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+    totalMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+    wonTrophies: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+    totalTournaments: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+
+    /* Admin information */
     isAdmin: {
         type: Boolean,
         default: false,
-        required: false
-    }
+        required: true
+    },
 
     // TODOPOST - Add profile trophies.
 

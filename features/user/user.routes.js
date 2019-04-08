@@ -16,17 +16,18 @@ const router = express.Router();
 // TODO - Develop admin permission for method.
 // TODOPOST - Total errors and warns review.
 
-router.get('/checkUsernameExists/:username',
-        userController.checkIfUsernameIsUsed
-);
+// Is useful?
+// router.get('/checkUsernameExists/:username',
+//         userController.checkIfUsernameIsUsed
+// );
 
 router.post('/checkLoginStatus',
         auth.checkLoginStatus
 );
 
-router.get('/:username',
+router.get('/:username/:token',
         auth.authentication,
-        userMiddleware.checkUserExists,
+        // userMiddleware.checkUserExists,
         userController.getUserByUsername
 );
 
@@ -48,20 +49,20 @@ router.post('/login',
 
 router.put('/:username',
         auth.authentication,
-        userMiddleware.checkUserExists,
+        auth.checkPersonalIdentity,
         userController.updateUser
 );
 
-// TODO - Develop this method correctly.
-router.put('/userteam/:username/:teamId',
-        auth.authentication,
-        userMiddleware.checkUserExists,
-        userController.setUserTeam
-);
+// // TODO - Develop this method correctly.
+// router.put('/userteam/:username/:teamId',
+//         auth.authentication,
+//         userMiddleware.checkUserExists,
+//         userController.setUserTeam
+// );
 
 router.delete('/:username',
         auth.authentication,
-        userMiddleware.checkUserExists,
+        auth.checkPersonalIdentity,
         userController.deleteUser
 );
 

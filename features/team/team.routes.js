@@ -14,34 +14,34 @@ const router = express.Router();
 // Routes.
 
 router.get('/userteam/:username',
-            auth.authentication,
+            // auth.authentication,
             teamMiddleware.checkTeamExists,
             teamController.getTeamByUser);
 
 router.get('/:id',
-            auth.authentication,
+            // auth.authentication,
             teamMiddleware.checkTeamExists,
             teamController.getTeamById);
 
 router.get('/',
-            auth.authentication,
+            // auth.authentication,
             teamController.getAllTeams);
 
 router.post('/',
-            auth.authentication,
+            // auth.authentication,
             teamMiddleware.checkMandatoryFields,
             teamMiddleware.checkTeamNotExists,
             teamController.insertNewTeam);
 
 router.put('/:id',
-            auth.authentication,
+            // auth.authentication,
             teamMiddleware.checkTeamExists,
             teamController.updateTeam);
 
 // router.put('/:id/:username', teamController.setUserTeam);
 
 router.delete('/:id',
-            auth.authentication,
+            // auth.authentication,
             teamMiddleware.checkTeamExists,
             teamController.deleteTeam);
 
