@@ -13,10 +13,17 @@ import '../../common/css/common.css';
 
 import userSample from '../../assets/images/user-sample.png';
 
+// import CanvasJSReact from '../../assets/libraries/canvasjs.react'
+// const CanvasJS = CanvasJSReact.CanvasJS;
+// const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 // - fixed quando si apre menu
 // - controllare lo spinner se c'è dappertutto
 // - risolvere bug delle label sui grafici
 // - risolvere bug dello smooting in iphone
+// - Aggiungere ombra su foto del profilo
+// - Distaccare nome da foto del profilo
+// - Calcolo dell'età automatico
 
 class User extends Component{
     componentWillMount(){
@@ -41,7 +48,56 @@ class User extends Component{
         /* User information */
         const username = localStorage.getItem("username");
 
-        const matchesData = {labels:['Vittorie: ' + this.props.wonMatches,'Pareggi: ' + this.props.drawMatches,'Sconfitte: ' + this.props.lossesMatch],datasets:[{data:[this.props.wonMatches,this.props.drawMatches,this.props.lossesMatch],backgroundColor:['#31be51','#FFCE56','#e43546'],hoverBackgroundColor:['#31be51','#FFCE56','#e43546']}]};
+        const matchesData =
+            {
+                labels: [
+                    'Vittorie: ' + this.props.wonMatches,
+                    'Pareggi: ' + this.props.drawMatches,
+                    'Sconfitte: ' + this.props.lossesMatch
+                ],
+                datasets: [{
+                    data: [
+                        this.props.wonMatches,
+                        this.props.drawMatches,
+                        this.props.lossesMatch
+                    ],
+                    backgroundColor: ['#31be51','#FFCE56','#e43546'],
+                    hoverBackgroundColor:['#31be51','#FFCE56','#e43546']
+                }],
+            };
+
+        // const options = {
+		// 	// theme: "dark2",
+		// 	animationEnabled: true,
+		// 	// exportFileName: "New Year Resolutions",
+		// 	// exportEnabled: true,
+		// 	// title:{
+		// 	// 	text: "Top Categories of New Year's Resolution"
+		// 	// },
+		// 	data: [{
+		// 		type: "pie",
+		// 		showInLegend: true,
+		// 		legendText: "{label}",
+		// 		toolTipContent: "{label}: <strong>{y}%</strong>",
+		// 		indexLabel: "{y}%",
+		// 		indexLabelPlacement: "inside",
+		// 		dataPoints: [
+		// 			{ y: this.props.wonMatches, label: "Vittorie" },
+		// 			{ y: this.props.drawMatches, label: "Pareggi" },
+		// 			{ y: this.props.lossesMatch, label: "Sconfitte" }
+		// 		]
+		// 	}]
+		// };
+
+
+
+        
+        
+        
+        
+        
+        
+        
         const goalData = {labels:['Gol fatti: ' + this.props.scoredGoals,'Gol subiti: ' + this.props.concededGoals],datasets:[{data:[this.props.scoredGoals,this.props.concededGoals],backgroundColor:['#17a2b8','#fd7e14'],hoverBackgroundColor:['#17a2b8','#fd7e14']}]};
 
         const pieChartlegend = {
@@ -150,6 +206,9 @@ class User extends Component{
                                 <div className="row">
                                     <div className="col-12">
                                         <Doughnut data={matchesData} legend={pieChartlegend}/>
+                                        
+                                        {/* <CanvasJSChart options = {options} /> */}
+                                        
                                     </div>
                                 </div>
 
