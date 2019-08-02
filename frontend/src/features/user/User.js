@@ -13,21 +13,20 @@ import '../../common/css/common.css';
 
 import userSample from '../../assets/images/user-sample.png';
 
-// import CanvasJSReact from '../../assets/libraries/canvasjs.react'
-// const CanvasJS = CanvasJSReact.CanvasJS;
-// const CanvasJSChart = CanvasJSReact.CanvasJSChart;
-
-// - fixed quando si apre menu
+// - proprietà fixed quando si apre menu e scorre ancora la roba sotto
 // - controllare lo spinner se c'è dappertutto
-// - risolvere bug delle label sui grafici
 // - risolvere bug dello smooting in iphone
 // - Aggiungere ombra su foto del profilo
 // - Distaccare nome da foto del profilo
-// - Calcolo dell'età automatico
+// - Cambiare i gol subiti da NaN a 0
+// - La media gol viene infinito, capire perchè
+// - Capire se quando linea lenta ed info ancora non caricate, se mettere qualcosa di attesa.
+
+// - Aggiungere tutte le informazioni mancanti sull'utente a BE
 
 class User extends Component{
     componentWillMount(){
-        moment.locale('it');
+        moment().locale('it');
 
         const username = localStorage.getItem("username");
         const token = localStorage.getItem("token");
@@ -47,58 +46,60 @@ class User extends Component{
     render(){
         /* User information */
         const username = localStorage.getItem("username");
+        const totalGoals = this.props.scoredGoals + this.props.concededGoals;
+        const age = moment.diff(this.props.dateOfBirth, 'years');
 
-        const matchesData =
-            {
-                labels: [
-                    'Vittorie: ' + this.props.wonMatches,
-                    'Pareggi: ' + this.props.drawMatches,
-                    'Sconfitte: ' + this.props.lossesMatch
+        const matchesData = {
+            labels: [
+                'Vittorie: ' + this.props.wonMatches,
+                'Pareggi: ' + this.props.drawMatches,
+                'Sconfitte: ' + this.props.lossesMatches
+            ],
+            datasets: [{
+                data: [
+                    this.props.wonMatches,
+                    this.props.drawMatches,
+                    this.props.lossesMatches
                 ],
-                datasets: [{
-                    data: [
-                        this.props.wonMatches,
-                        this.props.drawMatches,
-                        this.props.lossesMatch
-                    ],
-                    backgroundColor: ['#31be51','#FFCE56','#e43546'],
-                    hoverBackgroundColor:['#31be51','#FFCE56','#e43546']
-                }],
-            };
+                backgroundColor: ['#31be51','#FFCE56','#e43546'],
+                hoverBackgroundColor:['#31be51','#FFCE56','#e43546']
+            }]
+        };
 
-        // const options = {
-		// 	// theme: "dark2",
-		// 	animationEnabled: true,
-		// 	// exportFileName: "New Year Resolutions",
-		// 	// exportEnabled: true,
-		// 	// title:{
-		// 	// 	text: "Top Categories of New Year's Resolution"
-		// 	// },
-		// 	data: [{
-		// 		type: "pie",
-		// 		showInLegend: true,
-		// 		legendText: "{label}",
-		// 		toolTipContent: "{label}: <strong>{y}%</strong>",
-		// 		indexLabel: "{y}%",
-		// 		indexLabelPlacement: "inside",
-		// 		dataPoints: [
-		// 			{ y: this.props.wonMatches, label: "Vittorie" },
-		// 			{ y: this.props.drawMatches, label: "Pareggi" },
-		// 			{ y: this.props.lossesMatch, label: "Sconfitte" }
-		// 		]
-		// 	}]
-		// };
+        const matchesOptions = {
+            tooltips: {
+                callbacks: {
+                    label: (tooltipItem, data) => {
+                        return ` ${(data.datasets[0].data[tooltipItem.index] / this.props.totalMatches * 100).toFixed(1)}%`;
+                    }
+                }
+            }
+        };
 
+        const goalsData = {
+            labels: [
+                'Gol fatti: ' + this.props.scoredGoals,
+                'Gol subiti: ' + this.props.concededGoals
+            ],
+            datasets: [{
+                data: [
+                    this.props.scoredGoals,
+                    this.props.concededGoals
+                ],
+                backgroundColor: ['#17a2b8','#fd7e14'],
+                hoverBackgroundColor:['#17a2b8','#fd7e14']
+            }]
+        };
 
-
-        
-        
-        
-        
-        
-        
-        
-        const goalData = {labels:['Gol fatti: ' + this.props.scoredGoals,'Gol subiti: ' + this.props.concededGoals],datasets:[{data:[this.props.scoredGoals,this.props.concededGoals],backgroundColor:['#17a2b8','#fd7e14'],hoverBackgroundColor:['#17a2b8','#fd7e14']}]};
+        const goalsOptions = {
+            tooltips: {
+                callbacks: {
+                    label: (tooltipItem, data) => {
+                        return ` ${(data.datasets[0].data[tooltipItem.index] / totalGoals * 100).toFixed(1)}%`;
+                    }
+                }
+            }
+        };
 
         const pieChartlegend = {
             display: true,
@@ -136,7 +137,7 @@ class User extends Component{
 
                                     <div className="col-6">
                                         <small className="small-text"><i className="fas fa-birthday-cake"/>&nbsp;Età</small>
-                                        <p>{this.checkStringEmptyOrNull(this.props.age)}</p>
+                                        <p>{this.checkStringEmptyOrNull(age)}</p>
                                     </div>
                                 </div>
 
@@ -156,15 +157,15 @@ class User extends Component{
 
                                 <div className="row">
                                     <div className="col-12">
-                                        <small className="small-text"><i className="fas fa-envelope"/>&nbsp;Mail</small>
-                                        <p>{this.checkStringEmptyOrNull(this.props.mail)}</p>
+                                        <small className="small-text"><i className="fas fa-envelope"/>&nbsp;eMail</small>
+                                        <p>{this.checkStringEmptyOrNull(this.props.email)}</p>
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div className="col-12">
                                         <small className="small-text"><i className="fas fa-mobile-alt"/>&nbsp;Telefono</small>
-                                        <p>{this.checkStringEmptyOrNull(this.props.telephone)}</p>
+                                        <p>{this.checkStringEmptyOrNull(this.props.telephoneNumber)}</p>
                                     </div>
                                 </div>
 
@@ -205,10 +206,7 @@ class User extends Component{
 
                                 <div className="row">
                                     <div className="col-12">
-                                        <Doughnut data={matchesData} legend={pieChartlegend}/>
-                                        
-                                        {/* <CanvasJSChart options = {options} /> */}
-                                        
+                                        <Doughnut data={matchesData} options={matchesOptions} legend={pieChartlegend}/>
                                     </div>
                                 </div>
 
@@ -228,7 +226,7 @@ class User extends Component{
 
                                 <div className="row">
                                     <div className="col-12">
-                                        <Doughnut data={goalData} legend={pieChartlegend}/>
+                                        <Doughnut data={goalsData} options={goalsOptions} legend={pieChartlegend}/>
                                     </div>
                                 </div>
 
@@ -258,16 +256,16 @@ const mapStateToProps = state => {
     return{
         name: state.user.name,
         surname: state.user.surname,
-        age: state.user.age,
+        dateOfBirth: state.user.dateOfBirth,
         nationality: state.user.nationality,
         city: state.user.city,
-        mail: state.user.mail,
-        telephone: state.user.telephone,
+        email: state.user.email,
+        telephoneNumber: state.user.telephoneNumber,
         teamName: state.user.teamName,
         totalMatches: state.user.totalMatches,
         wonMatches: state.user.wonMatches,
         drawMatches: state.user.drawMatches,
-        lossesMatch: state.user.lossesMatch,
+        lossesMatches: state.user.lossesMatches,
         scoredGoals: state.user.scoredGoals,
         concededGoals: state.user.concededGoals,
         createdDate: state.user.createdDate,
