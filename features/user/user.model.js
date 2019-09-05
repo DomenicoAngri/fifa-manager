@@ -44,6 +44,24 @@ const userSchema = new mongoose.Schema({
         unique: false,
         required: false
     },
+    dateOfBirth: {
+        type: Date,
+        required: false
+    },
+    nationality: {
+        type: String,
+        minlength: 3,
+        maxlength: 50,
+        unique: false,
+        required: false
+    },
+    city: {
+        type: String,
+        minlength: 3,
+        maxlength: 50,
+        unique: false,
+        required: false
+    },
     telephoneNumber: {
         type: String,
         minlength: 8,
@@ -52,14 +70,13 @@ const userSchema = new mongoose.Schema({
         required: false,
         sparse: true
     },
-    createdData: {
+    createdDate: {
         type: Date,
         default: Date.now,
         required: true
     },
 
     /* Tournaments information */
-
     team: {
         type: ObjectId,
         ref: 'team',

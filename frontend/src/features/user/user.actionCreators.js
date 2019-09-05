@@ -13,14 +13,6 @@ function getUser(username, token){
 
         const getUserUrl = '/api/user/' + username + '/' + token;
 
-        // const getUserBody = {
-        //     token: token
-        // };
-
-        // const getUserHeaders = {
-        //     'Content-Type': 'application/json'
-        // };
-
         request.get(getUserUrl)
         .then(function(user){
             dispatch(userActions.getUser(user));
