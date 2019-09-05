@@ -11,9 +11,13 @@ import User from './features/user/User';
 
 import './common/css/common.css';
 
-// TODO - Problem on spinner when do animation with bar on the side.
-// TODO - Reset all problem status on login and other form after new tentative.
-// TODO - Vedere quando si apre il menù il fatto che scorrono i contenuti sotto.
+// TODO:
+// - Problem on spinner when do animation with bar on the side.
+// - Reset all problem status on login and other form after new tentative.
+// - Vedere quando si apre il menù il fatto che scorrono i contenuti sotto.
+// - Proprietà fixed quando si apre menu e scorre ancora la roba sotto
+// - Controllare lo spinner se c'è dappertutto
+// - Risolvere bug dello smooting in iphone
 
 class App extends Component{
     componentDidMount(){

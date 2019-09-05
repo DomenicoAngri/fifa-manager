@@ -13,15 +13,12 @@ import '../../common/css/common.css';
 
 import userSample from '../../assets/images/user-sample.png';
 
-// - proprietà fixed quando si apre menu e scorre ancora la roba sotto
-// - controllare lo spinner se c'è dappertutto
-// - risolvere bug dello smooting in iphone
+// TODO:
 // - Aggiungere ombra su foto del profilo
 // - Distaccare nome da foto del profilo
+// - Capire se quando linea lenta ed info ancora non caricate, se mettere qualcosa di attesa.
 // - Cambiare i gol subiti da NaN a 0
 // - La media gol viene infinito, capire perchè
-// - Capire se quando linea lenta ed info ancora non caricate, se mettere qualcosa di attesa.
-
 // - Aggiungere tutte le informazioni mancanti sull'utente a BE
 
 class User extends Component{
@@ -47,7 +44,7 @@ class User extends Component{
         /* User information */
         const username = localStorage.getItem("username");
         const totalGoals = this.props.scoredGoals + this.props.concededGoals;
-        const age = moment.diff(this.props.dateOfBirth, 'years');
+        const age = moment().diff(this.props.dateOfBirth, 'years');
 
         const matchesData = {
             labels: [
