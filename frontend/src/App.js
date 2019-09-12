@@ -15,9 +15,14 @@ import './common/css/common.css';
 // - Problem on spinner when do animation with bar on the side.
 // - Reset all problem status on login and other form after new tentative.
 // - Vedere quando si apre il menù il fatto che scorrono i contenuti sotto.
-// - Proprietà fixed quando si apre menu e scorre ancora la roba sotto
-// - Controllare lo spinner se c'è dappertutto
-// - Risolvere bug dello smooting in iphone
+// - Proprietà fixed quando si apre menu e scorre ancora la roba sotto.
+// - Controllare lo spinner se c'è dappertutto.
+// - Risolvere bug dello smooting in iphone.
+// - Su ogni pagina, dopo ripristinarne lo stato. Ad esempio se nella schermata di login c'è stato un errore e poi la persona si logga correttamente, ripristinare la maschera, non lasciare errore memorizzato, che se in futuro si dovesse tornare a quella schermata, resta con l'errore creando inconsistenza.
+// - Al login, inserire il tasto di visualizzazione della password.
+// - Al login, se password sbagliata inserire X, oppure cancellarla in automatico.
+
+// TODOORA: devo inserire lo stato is super admin al posto giusto, devo farlo diventare più breve dalla risposta perchè ora è troppo lungo, e quindi devo capire chi restituisce il payload e vedre se farlo senza token.
 
 class App extends Component{
     componentDidMount(){

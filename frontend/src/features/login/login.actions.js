@@ -10,9 +10,10 @@ export const loginActions = {
     hideModalMessage
 };
 
-function userAuthenticated(){
+function userAuthenticated(userInfo){
     return{
-        type: loginConstants.USER_AUTHENTICATED
+        type: loginConstants.USER_AUTHENTICATED,
+        userInfo: userInfo
     }
 }
 

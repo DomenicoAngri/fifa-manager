@@ -124,11 +124,11 @@ function userController(){
             log.info('User ' + username + ' registered!');
             
             log.info('Creating token for new user ' + username + '...');
-            const userWithToken = createJWTToken(userSaved.username);
+            const userInfoWithToken = createJWTToken(userSaved);
             log.info('Token for ' + username + ' created!');
 
             log.info('userController --> insertNewUser ended.');
-            response.status(200).send(userWithToken);
+            response.status(200).send(userInfoWithToken);
             return;
         })
         .catch(function(error){
@@ -220,12 +220,10 @@ function userController(){
                 if(bcrypt.compareSync(password, user.password)){
                     log.info('Password is correct!');
 
-                    const userWithToken = createJWTToken(user.username);
-
+                    const userInfoWithToken = createJWTToken(user);
                     log.info('Token and information created!');
-                    log.debug(userWithToken);
 
-                    response.status(200).send(userWithToken);
+                    response.status(200).send(userInfoWithToken);
                     log.info('userController --> login ended.');
                     return;
                 }
@@ -251,11 +249,11 @@ function userController(){
         });
     }
 
-    function createJWTToken(username){
+    function createJWTToken(userInfo){
         log.info('userController --> createJWTToken start.');
 
         const payload = {
-            sub : username,
+            sub : userInfo,
             iat : moment().unix(),
             exp : moment().add(1, 'days').unix()
             // exp : moment().add(10, 'seconds').unix()
@@ -264,7 +262,7 @@ function userController(){
         log.info('userController --> createJWTToken ended.');
         return {
             token: jwt.encode(payload, process.env.SECRET_JWT_TOKEN),
-            username: payload.sub,
+            userInfo: payload.sub,
             expirationDate: payload.exp
         };
     }

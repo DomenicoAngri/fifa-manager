@@ -22,11 +22,11 @@ function userRegistration(username, password){
         };
 
         request.post(userRegistrationUrl, userRegistrationBody)
-        .then(function(userWithToken){
-            localStorage.setItem('token', userWithToken.data.token);
-            localStorage.setItem('username', userWithToken.data.username);
+        .then(function(userInfoWithToken){
+            localStorage.setItem('token', userInfoWithToken.data.token);
+            localStorage.setItem('username', userInfoWithToken.data.userInfo.username);
 
-            dispatch(loginActions.userAuthenticated());
+            dispatch(loginActions.userAuthenticated(userInfoWithToken));
             dispatch(commonActions.hideSpinner());
 
             history.push('/dashboard');

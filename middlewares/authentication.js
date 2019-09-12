@@ -70,7 +70,8 @@ function authenticationMiddleware(){
         if(payload){
             log.info('Token is valid! You are authorized.');
             log.info('authenticationMiddleware --> checkLoginStatus ended.');
-            response.status(200).send(new responseMessage('INFO', 'INFO --> Token is valid! You are authorized.'));
+            //response.status(200).send(new responseMessage('INFO', 'INFO --> Token is valid! You are authorized.'));
+            response.status(200).send(payload.sub);
             return;
         }
         else{

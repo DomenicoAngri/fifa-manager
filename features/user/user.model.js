@@ -147,6 +147,11 @@ const userSchema = new mongoose.Schema({
         default: false,
         required: true
     },
+    isSuperAdmin: {
+        type: Boolean,
+        default: false,
+        required: true
+    }
 
     // TODOPOST - Add profile trophies.
 

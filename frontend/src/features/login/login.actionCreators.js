@@ -23,11 +23,11 @@ function login(username, password){
         };
 
         request.post(loginUrl, loginBody)
-        .then(function(userWithToken){
-            localStorage.setItem('token', userWithToken.data.token);
-            localStorage.setItem('username', userWithToken.data.username);
+        .then(function(userInfoWithToken){
+            localStorage.setItem('token', userInfoWithToken.data.token);
+            localStorage.setItem('username', userInfoWithToken.data.userInfo.username);
 
-            dispatch(loginActions.userAuthenticated());
+            dispatch(loginActions.userAuthenticated(userInfoWithToken));
             dispatch(commonActions.hideSpinner());
 
             history.push('/dashboard');
@@ -64,8 +64,8 @@ function checkLoginStatus(){
         };  
 
         request.post(checkLoginStatusUrl, loginStatusBody)
-        .then(function(result){
-            dispatch(loginActions.userAuthenticated());
+        .then(function(userInfo){
+            dispatch(loginActions.userAuthenticated(userInfo));
             history.push('/dashboard');
         })
         .catch(function(error){

@@ -5,14 +5,18 @@ const initialState = {
     isUserAuthenticated: false,
     userNotFound: false,
     incorrectUserPassword: false,
-    loginErrorCode: ''
+    loginErrorCode: '',
+    isAdmin: false,
+    isSuperAdmin: false
 };
 
 export function loginReducer(state = initialState, action){
     switch(action.type){
         case actionType.USER_AUTHENTICATED:
             return updateObject(state, {
-                isUserAuthenticated: true
+                isUserAuthenticated: true,
+                isAdmin: action.isAdmin,
+                isSuperAdmin: action.isSuperAdmin
             });
 
         case actionType.USER_NOT_AUTHENTICATED:
