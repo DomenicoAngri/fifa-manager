@@ -1,9 +1,8 @@
 import request from 'axios';
 import {registrationActions} from './registration.actions';
 import {commonActions} from '../../common/actions/common.actions.actions';
+import {startActions} from '../start/start.actions';
 import getMessage from '../../common/utilities/messages';
-import history from '../../common/utilities/history';
-import {loginActions} from '../login/login.actions';
 
 export const registrationActionCreators = {
     userRegistration,
@@ -26,10 +25,8 @@ function userRegistration(username, password){
             localStorage.setItem('token', userInfoWithToken.data.token);
             localStorage.setItem('username', userInfoWithToken.data.userInfo.username);
 
-            dispatch(loginActions.userAuthenticated(userInfoWithToken));
+            dispatch(startActions.userAuthenticated(userInfoWithToken));
             dispatch(commonActions.hideSpinner());
-
-            history.push('/dashboard');
         })
         .catch(function(error){
             if(error.response == null){
