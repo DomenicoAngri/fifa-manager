@@ -19,7 +19,7 @@ function checkLoginStatus(){
 
         request.post(checkLoginStatusUrl, checkloginStatusBody)
         .then(function(userInfo){
-            dispatch(startActions.userAuthenticated(userInfo));
+            dispatch(startActions.userAuthenticated(userInfo.data));
         })
         .catch(function(error){
             if(error.response == null){

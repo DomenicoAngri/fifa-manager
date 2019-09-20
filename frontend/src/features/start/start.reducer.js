@@ -12,8 +12,8 @@ export function startReducer(state = initialState, action){
         case actionType.USER_AUTHENTICATED:
             return updateObject(state, {
                 isUserAuthenticated: true,
-                isAdmin: action.isAdmin,
-                isSuperAdmin: action.isSuperAdmin
+                isAdmin: action.userInfo.isAdmin,
+                isSuperAdmin: action.userInfo.isSuperAdmin
             });
 
         case actionType.USER_NOT_AUTHENTICATED:

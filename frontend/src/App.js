@@ -21,6 +21,7 @@ import './common/css/common.css';
 // - Su ogni pagina, dopo ripristinarne lo stato. Ad esempio se nella schermata di login c'è stato un errore e poi la persona si logga correttamente, ripristinare la maschera, non lasciare errore memorizzato, che se in futuro si dovesse tornare a quella schermata, resta con l'errore creando inconsistenza.
 // - Al login, inserire il tasto di visualizzazione della password.
 // - Al login, se password sbagliata inserire X, oppure cancellarla in automatico.
+// - Trimmare username al login.
 
 // TODOORA: devo inserire lo stato is super admin al posto giusto, devo farlo diventare più breve dalla risposta perchè ora è troppo lungo, e quindi devo capire chi restituisce il payload e vedre se farlo senza token.
 
@@ -29,7 +30,7 @@ class App extends Component{
         const token = localStorage.getItem('token');
         let routes = null;
 
-        /*
+        /* 
             We must check first if there is token stored in local storage, for to render the correct routes.
 
             We must do this first, because if we will check login status before to render the routes, the user will display first the login page,
@@ -48,13 +49,43 @@ class App extends Component{
             this.props.checkLoginStatus();
 
             if(this.props.isUserAuthenticated){
-                routes = (
-                    <Switch>
-                        <Route path="/dashboard" component={Dashboard}/>
-                        <Route path="/user" component={User}/>
-                        <Redirect to="/dashboard"/>
-                    </Switch>
-                );
+                if(this.props.isSuperAdmin){
+                    // TODO - Super admin section
+                    routes = (
+                        <Switch>
+                            <Route path="/super-admin" component={Dashboard}/>
+                            <Redirect to="/super-admin"/>
+                        </Switch>
+                    );
+                }
+                else if(this.props.isAdmin){
+                    // TODO - Admin section
+                    routes = (
+                        <Switch>
+                            <Route path="/dashboard" component={Dashboard}/>
+                            <Route path="/user" component={User}/>
+                            <Route path="/my-leagues" component={User}/>
+                            <Route path="/search-leagues" component={User}/>
+                            <Route path="/search-users" component={User}/>
+                            <Route path="/create-league" component={User}/>
+                            <Route path="/insert-results" component={User}/>
+                            <Route path="/make-admin" component={User}/>
+                            <Redirect to="/dashboard"/>
+                        </Switch>
+                    );
+                }
+                else{
+                    routes = (
+                        <Switch>
+                            <Route path="/dashboard" component={Dashboard}/>
+                            <Route path="/user" component={User}/>
+                            <Route path="/my-leagues" component={User}/>
+                            <Route path="/search-leagues" component={User}/>
+                            <Route path="/search-users" component={User}/>
+                            <Redirect to="/dashboard"/>
+                        </Switch>
+                    );
+                }
             }
         }
         else{
@@ -77,7 +108,9 @@ class App extends Component{
 
 const mapStateToProps = state => {
     return{
-        isUserAuthenticated: state.start.isUserAuthenticated
+        isUserAuthenticated: state.start.isUserAuthenticated,
+        isSuperAdmin: state.start.isSuperAdmin,
+        isAdmin: state.start.isAdmin
     };
 };
 
