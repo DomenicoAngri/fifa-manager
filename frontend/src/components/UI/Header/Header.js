@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import {NavLink} from 'react-router-dom';
 import Backdrop from '../Backdrop/Backdrop';
-import {commonConstants} from '../../../common/utilities/constants';
+import Signature from '../Signature/Signature';
 
 import './Header.css';
 import '../../../common/css/common.css';
@@ -70,19 +70,102 @@ class Header extends Component{
                 </div>
             </NavLink>
 
+
+
+
+
+// Cambiare icone e fare area per admin menu piu carina
+
+
+
+
+
+
+
+
+
+
+        // TODO - Super admin menu.
+        let superAdminMenu =
+            <ul>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i className="fas fa-trophy"/>&nbsp;
+                        Pannello admin
+                    </NavLink>
+                </li>
+                <li className="li-footer">
+                    <NavLink to="/login" onClick={this.logout}>
+                        <i className="fas fa-sign-out-alt"/>&nbsp;
+                        Logout
+                    </NavLink>
+
+                    <Signature/>
+                </li>
+            </ul>;
+
+        /* Menu admin types */
+        let adminMenu =
+            <ul>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i className="fas fa-trophy"/>&nbsp;
+                        Le mie competizioni
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i className="fas fa-search"/>&nbsp;
+                        Cerca una competizione
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i className="fas fa-gamepad"/>&nbsp;
+                        Cerca un player
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i className="fas fa-gamepad"/>&nbsp;
+                        Nuova competizione
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i className="fas fa-gamepad"/>&nbsp;
+                        Inserisci un risultato
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard">
+                        <i className="fas fa-gamepad"/>&nbsp;
+                        Area admin
+                    </NavLink>
+                </li>
+                <li className="li-footer">
+                    <NavLink to="/login" onClick={this.logout}>
+                        <i className="fas fa-sign-out-alt"/>&nbsp;
+                        Logout
+                    </NavLink>
+
+                    <Signature/>
+                </li>
+            </ul>;
+
         /* Menu user types */
         let userMenu =
             <ul>
                 <li>
                     <NavLink to="/dashboard">
                         <i className="fas fa-trophy"/>&nbsp;
-                        Le mie leghe
+                        Le mie competizioni
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/dashboard">
                         <i className="fas fa-search"/>&nbsp;
-                        Cerca una lega
+                        Cerca una competizione
                     </NavLink>
                 </li>
                 <li>
@@ -97,20 +180,46 @@ class Header extends Component{
                         Logout
                     </NavLink>
 
-                    <p className="signature">
-                        {commonConstants.FE_APP_VERSION}
-                    </p>
-                    <p className="signature">
-                        Developed with <i className="fas fa-heart"/> By Domenico Angri
-                    </p>
+                    <Signature/>
                 </li>
             </ul>;
 
-        // TODO - After for administrator user.
-        // let adminMenu = null;
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /* Sidenav menu */
         let sideNavMenu = null;
+        let menu = userMenu;
+
+        if(this.props.menuType === 'superAdmin'){
+            menu = superAdminMenu;
+        }
+        else if(this.props.menuType === 'admin'){
+            menu = adminMenu;
+        }
 
         if(this.state.hideMenuComponent === false){
             sideNavMenu = 
@@ -118,7 +227,7 @@ class Header extends Component{
                     <Backdrop show={true} backdropStyle="backdropStyle " clicked={this.hideMenuComponent}/>
                     <nav className="dark-bg sideNavMenu sideNavMenuOpened animated slideInLeft faster">
                         {userSection}
-                        {userMenu}
+                        {menu}
                     </nav>
                 </Auxiliary>;
         }
@@ -127,7 +236,7 @@ class Header extends Component{
                 <Auxiliary>
                     <nav className="dark-bg sideNavMenu animated slideOutLeft faster sideNavMenuClosed">
                         {userSection}
-                        {userMenu}
+                        {menu}
                     </nav>
                 </Auxiliary>;
         }

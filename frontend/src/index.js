@@ -11,6 +11,7 @@ import {commonReducer} from './common/actions/common.actions.reducer';
 import {loginReducer} from './features/login/login.reducer';
 import {registrationReducer} from './features/registration/registration.reducer';
 import {userReducer} from './features/user/user.reducer';
+import {startReducer} from './features/start/start.reducer';
 
 import registerServiceWorker from './services/registerServiceWorker';
 
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     common: commonReducer,
     login: loginReducer,
     registration: registrationReducer,
-    user: userReducer
+    user: userReducer,
+    start: startReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

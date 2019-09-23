@@ -6,7 +6,7 @@ ul{
 li{
     margin: 4%;
     padding: 2%;
-    /* box-shadow: 0 2px 2px #373834; */
+    font-size: 18px;
 }
 
 li a{
@@ -82,14 +82,6 @@ li a:hover{
     color: #b3b3b3;
     position: absolute;
     bottom: 0;
-}
-
-.signature{
-    font-size: 12px;
-    font-style: italic;
-    color: #808080;
-    margin-top: 0.5%;
-    margin-bottom: 0;
 }
 
 /* Smartphone XS screen */

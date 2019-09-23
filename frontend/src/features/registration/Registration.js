@@ -144,8 +144,8 @@ class Registration extends Component{
                                     <div className="form-group">
                                         <div className="input-group mb-3">
                                             <div className="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-user"/>
+                                                <span className="input-group-text">
+                                                    <i className="fas fa-user"/>
                                                 </span>
                                             </div>
 
@@ -163,8 +163,8 @@ class Registration extends Component{
                                     <div className="form-group">
                                         <div className="input-group mb-3">
                                             <div className="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-key"/>
+                                                <span className="input-group-text">
+                                                    <i className="fas fa-key"/>
                                                 </span>
                                             </div>
 
@@ -182,8 +182,8 @@ class Registration extends Component{
                                     <div className="form-group">
                                         <div className="input-group mb-3">
                                             <div className="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-check-circle"/>
+                                                <span className="input-group-text">
+                                                    <i className="fas fa-check-circle"/>
                                                 </span>
                                             </div>
 
@@ -200,12 +200,12 @@ class Registration extends Component{
 
                                     <button className="btn btn-primary button-registration-form">
                                         Registrati&nbsp;
-                                        <i class="fas fa-user-plus"/>
+                                        <i className="fas fa-user-plus"/>
                                     </button>
 
                                     <NavLink to="/login">
                                         <button type="button" className="btn btn-warning button-registration-form">
-                                            <i class="fas fa-sign-in-alt"/>
+                                            <i className="fas fa-sign-in-alt"/>
                                         </button>
                                     </NavLink>
                                 </form>

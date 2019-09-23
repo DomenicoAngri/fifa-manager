@@ -1,27 +1,12 @@
 import {loginConstants} from './login.constants';
 
 export const loginActions = {
-    userAuthenticated,
-    userNotAuthenticated,
-    incorrectUserPassword,
     userNotFound,
+    incorrectUserPassword,
     showModalMessage,
     resetLoginErrorStates,
     hideModalMessage
 };
-
-function userAuthenticated(){
-    return{
-        type: loginConstants.USER_AUTHENTICATED
-    }
-}
-
-function userNotAuthenticated(loginErrorCode){
-    return{
-        type: loginConstants.USER_NOT_AUTHENTICATED,
-        loginErrorCode: loginErrorCode
-    }
-}
 
 function userNotFound(loginErrorCode){
     return{

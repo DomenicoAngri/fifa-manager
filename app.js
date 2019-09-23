@@ -8,8 +8,8 @@ const router = require('./configs/routes');
 const cors = require('cors');
 const path = require('path');
 
-// TODOPOST - Add documentations on every functions.
-// TODOPOST - Review all console log for clear events description.
+// TODO - Add documentations on every functions.
+// TODO - Review all console log for clear events description.
 
 // TODO - Capire perchè al refresh, in qualsiasi pagina mi trovi, torna alla login e poi se loggati, alla dashboard.
 

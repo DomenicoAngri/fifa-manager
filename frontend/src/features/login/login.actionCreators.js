@@ -1,12 +1,11 @@
 import request from 'axios';
 import {loginActions} from './login.actions';
+import {startActions} from '../start/start.actions';
 import {commonActions} from '../../common/actions/common.actions.actions';
 import getMessage from '../../common/utilities/messages';
-import history from '../../common/utilities/history';
 
 export const loginActionCreators = {
     login,
-    checkLoginStatus,
     resetLoginErrorStates,
     hideModalMessage
 };
@@ -23,14 +22,12 @@ function login(username, password){
         };
 
         request.post(loginUrl, loginBody)
-        .then(function(userWithToken){
-            localStorage.setItem('token', userWithToken.data.token);
-            localStorage.setItem('username', userWithToken.data.username);
+        .then(function(userInfoWithToken){
+            localStorage.setItem('token', userInfoWithToken.data.token);
+            localStorage.setItem('username', userInfoWithToken.data.userInfo.username);
 
-            dispatch(loginActions.userAuthenticated());
+            dispatch(startActions.userAuthenticated(userInfoWithToken));
             dispatch(commonActions.hideSpinner());
-
-            history.push('/dashboard');
         })
         .catch(function(error){
             if(error.response == null){
@@ -47,38 +44,6 @@ function login(username, password){
             }
             else{
                 dispatch(commonActions.hideSpinner());
-                dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
-            }
-        });
-    }
-}
-
-function checkLoginStatus(){
-    return (dispatch) => {
-        const token = localStorage.getItem('token');
-
-        const checkLoginStatusUrl = '/api/user/checkLoginStatus';
-
-        const loginStatusBody = {
-            token: token
-        };  
-
-        request.post(checkLoginStatusUrl, loginStatusBody)
-        .then(function(result){
-            dispatch(loginActions.userAuthenticated());
-            history.push('/dashboard');
-        })
-        .catch(function(error){
-            if(error.response == null){
-                dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
-            }
-            else if(error.response.status === 401){
-                dispatch(loginActions.userNotAuthenticated(error.response.data.code));
-            }
-            else if(error.response.status === 500){
-                dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
-            }
-            else{
                 dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
             }
         });

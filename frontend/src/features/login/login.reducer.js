@@ -2,7 +2,6 @@ import {updateObject} from '../../common/utilities/utilities';
 import {loginConstants as actionType} from './login.constants';
 
 const initialState = {
-    isUserAuthenticated: false,
     userNotFound: false,
     incorrectUserPassword: false,
     loginErrorCode: ''
@@ -10,16 +9,6 @@ const initialState = {
 
 export function loginReducer(state = initialState, action){
     switch(action.type){
-        case actionType.USER_AUTHENTICATED:
-            return updateObject(state, {
-                isUserAuthenticated: true
-            });
-
-        case actionType.USER_NOT_AUTHENTICATED:
-            return updateObject(state, {
-                isUserAuthenticated: false
-            });
-
         case actionType.USER_NOT_FOUND:
             return updateObject(state, {
                 isUserAuthenticated: false,
