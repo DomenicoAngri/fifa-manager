@@ -9,6 +9,11 @@ import '../../../common/css/common.css';
 import Logo from '../../../assets/images/fifa-manager-logo.png';
 import userSample from '../../../assets/images/user-sample.png';
 
+// TODO
+// - Super admin menu
+// - Make more beautiful admin area
+// - Align menu icons with others
+
 class Header extends Component{
     state = {
         hideMenuComponent: null
@@ -70,27 +75,11 @@ class Header extends Component{
                 </div>
             </NavLink>
 
-
-
-
-
-// Cambiare icone e fare area per admin menu piu carina
-
-
-
-
-
-
-
-
-
-
-        // TODO - Super admin menu.
         let superAdminMenu =
             <ul>
                 <li>
                     <NavLink to="/dashboard">
-                        <i className="fas fa-trophy"/>&nbsp;
+                        <i className="fas fa-user-lock"/>&nbsp;
                         Pannello admin
                     </NavLink>
                 </li>
@@ -127,19 +116,19 @@ class Header extends Component{
                 </li>
                 <li>
                     <NavLink to="/dashboard">
-                        <i className="fas fa-gamepad"/>&nbsp;
+                        <i className="fas fa-calendar-plus"/>&nbsp;
                         Nuova competizione
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/dashboard">
-                        <i className="fas fa-gamepad"/>&nbsp;
+                        <i className="fas fa-poll-h"/>&nbsp;
                         Inserisci un risultato
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to="/dashboard">
-                        <i className="fas fa-gamepad"/>&nbsp;
+                        <i className="fas fa-user-lock"/>&nbsp;
                         Area admin
                     </NavLink>
                 </li>
@@ -183,32 +172,6 @@ class Header extends Component{
                     <Signature/>
                 </li>
             </ul>;
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /* Sidenav menu */
         let sideNavMenu = null;

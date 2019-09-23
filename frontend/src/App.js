@@ -23,8 +23,6 @@ import './common/css/common.css';
 // - Al login, se password sbagliata inserire X, oppure cancellarla in automatico.
 // - Trimmare username al login.
 
-// TODOORA: devo inserire lo stato is super admin al posto giusto, devo farlo diventare più breve dalla risposta perchè ora è troppo lungo, e quindi devo capire chi restituisce il payload e vedre se farlo senza token.
-
 class App extends Component{
     render(){
         const token = localStorage.getItem('token');
