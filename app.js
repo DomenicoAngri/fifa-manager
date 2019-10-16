@@ -11,8 +11,6 @@ const path = require('path');
 // TODO - Add documentations on every functions.
 // TODO - Review all console log for clear events description.
 
-// TODO - Capire perchè al refresh, in qualsiasi pagina mi trovi, torna alla login e poi se loggati, alla dashboard.
-
 // Dotenv current environment.
 if(process.env.NODE_ENV === 'production'){
     require('dotenv').config({path: '.env.production'});
@@ -33,7 +31,8 @@ const app = express();
 app.use(bodyParser.json());
 
 // ... Other app.use middleware 
-app.use(express.static(path.join(__dirname, "frontend", "build")));
+// app.use(express.static(path.join(__dirname, "frontend", "build")));
+app.use(express.static(path.join(__dirname, "frontend")));
 
 // This router will take all request, get and post, for every addresses.
 app.use('/api', router);

@@ -9,8 +9,9 @@ export const startActionCreators = {
 
 function checkLoginStatus(){
     return (dispatch) => {
-        const token = localStorage.getItem('token');
+        dispatch(commonActions.showSpinner());
 
+        const token = localStorage.getItem('token');
         const checkLoginStatusUrl = '/api/user/checkLoginStatus';
 
         const checkloginStatusBody = {
@@ -20,19 +21,24 @@ function checkLoginStatus(){
         request.post(checkLoginStatusUrl, checkloginStatusBody)
         .then(function(userInfo){
             dispatch(startActions.userAuthenticated(userInfo.data));
+            dispatch(commonActions.hideSpinner());
         })
         .catch(function(error){
             if(error.response == null){
                 dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
+                dispatch(commonActions.hideSpinner());
             }
             else if(error.response.status === 401){
                 dispatch(startActions.userNotAuthenticated(error.response.data.code));
+                dispatch(commonActions.hideSpinner());
             }
             else if(error.response.status === 500){
                 dispatch(commonActions.showModalMessage(getMessage('FAT_000')));
+                dispatch(commonActions.hideSpinner());
             }
             else{
                 dispatch(commonActions.showModalMessage(getMessage(error.response.data.code)));
+                dispatch(commonActions.hideSpinner());
             }
         });
     }

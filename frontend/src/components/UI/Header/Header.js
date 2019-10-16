@@ -61,7 +61,7 @@ class Header extends Component{
         const username = localStorage.getItem("username");
 
         let userSection = 
-            <NavLink to="/user">
+            <NavLink to="/user" onClick={this.hideMenuComponent}>
                 <div className="user-section">
                     <div className="d-flex justify-content-center">
                         <img src={userSample} className="rounded-circle user-image" alt="Fifa Manager Logo"/>
@@ -78,7 +78,7 @@ class Header extends Component{
         let superAdminMenu =
             <ul>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-user-lock"/>&nbsp;
                         Pannello admin
                     </NavLink>
@@ -97,37 +97,37 @@ class Header extends Component{
         let adminMenu =
             <ul>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-trophy"/>&nbsp;
                         Le mie competizioni
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-search"/>&nbsp;
                         Cerca una competizione
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-gamepad"/>&nbsp;
                         Cerca un player
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-calendar-plus"/>&nbsp;
                         Nuova competizione
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-poll-h"/>&nbsp;
                         Inserisci un risultato
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-user-lock"/>&nbsp;
                         Area admin
                     </NavLink>
@@ -146,19 +146,19 @@ class Header extends Component{
         let userMenu =
             <ul>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-trophy"/>&nbsp;
                         Le mie competizioni
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-search"/>&nbsp;
                         Cerca una competizione
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-gamepad"/>&nbsp;
                         Cerca un player
                     </NavLink>

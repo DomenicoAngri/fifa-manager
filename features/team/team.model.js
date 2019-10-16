@@ -6,14 +6,6 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 
 const teamSchema = new mongoose.Schema({
-    id: {
-        type: String,
-        minlength: 2,
-        maxlength: 50,
-        lowercase: true,
-        unique: true,
-        required: true,
-    },
     name: {
         type: String,
         minlength: 2,
@@ -38,9 +30,6 @@ const teamSchema = new mongoose.Schema({
         unique: false,
         required: false
     },
-
-    // TODO - Players
-
     scoredGoals: {
         type: Number,
         minlength: 0,
@@ -75,10 +64,91 @@ const teamSchema = new mongoose.Schema({
         default: 0,
         unique: false,
         required: false
+    },
+    totalMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    yellowCards: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    redCards: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    currentScoredGoals: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    currentConcededGoals: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    currentWonMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    currentLossesMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    currentDrawMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    currentTotalMatches: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    totalManagers:{
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    currentYellowCards: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
+    },
+    currentRedCards: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: false
     }
-
-    // TODO - Points - (?)
-
 });
 
 module.exports = mongoose.model('team', teamSchema);
