@@ -10,6 +10,7 @@ const path = require('path');
 
 // TODO - Add documentations on every functions.
 // TODO - Review all console log for clear events description.
+// TODO - Handle cache for all entire app.
 
 // Dotenv current environment.
 if(process.env.NODE_ENV === 'production'){
