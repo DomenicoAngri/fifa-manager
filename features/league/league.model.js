@@ -6,14 +6,9 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 
 const leagueSchema = new mongoose.Schema({
-    id: {
-        type: String,
-        minlength: 2,
-        maxlength: 50,
-        lowercase: true,
-        unique: true,
-        required: true,
-    },
+
+    // TODO: ID della lega?
+
     name: {
         type: String,
         minlength: 2,
@@ -21,18 +16,9 @@ const leagueSchema = new mongoose.Schema({
         unique: false,
         required: true
     },
-    year: {
-        type: Number,
-        minlength: 1900,
-        maxlength: 3000,
-        unique: false,
-        required: true
-    },
-    month: {
-        type: Number,
-        minlength: 1,
-        maxlength: 12,
-        unique: false,
+    createdDate: {
+        type: Date,
+        default: Date.now,
         required: true
     },
     current: {
@@ -41,9 +27,13 @@ const leagueSchema = new mongoose.Schema({
         required: true
     },
     participantTeams: {
+        type: [ObjectId],
+        ref: 'team',
+        required: false
+    },
+    winningTeam: {
         type: ObjectId,
         ref: 'team',
-        unique: true,
         required: false
     }
     

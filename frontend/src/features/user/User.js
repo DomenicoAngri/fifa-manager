@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
-import Header from '../../components/UI/Header/Header';
 import {Doughnut} from 'react-chartjs-2';
 import {userActionCreators} from './user.actionCreators';
 import moment from 'moment';
@@ -105,8 +104,6 @@ class User extends Component{
 
         return(
             <Auxiliary>
-                <Header/>
-
                 <div className="container card-app-height">
                     <div className="row">
                         <div className="card profile-card-bg col-12">

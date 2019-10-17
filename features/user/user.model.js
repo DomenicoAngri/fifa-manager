@@ -141,6 +141,12 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
+    // TODO
+    lastLogin: {
+        type: Date,
+        required: true
+    },
+
     /* Admin information */
     isAdmin: {
         type: Boolean,

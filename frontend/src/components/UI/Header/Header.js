@@ -9,6 +9,11 @@ import '../../../common/css/common.css';
 import Logo from '../../../assets/images/fifa-manager-logo.png';
 import userSample from '../../../assets/images/user-sample.png';
 
+// TODO
+// - Super admin menu
+// - Make more beautiful admin area
+// - Align menu icons with others
+
 class Header extends Component{
     state = {
         hideMenuComponent: null
@@ -56,7 +61,7 @@ class Header extends Component{
         const username = localStorage.getItem("username");
 
         let userSection = 
-            <NavLink to="/user">
+            <NavLink to="/user" onClick={this.hideMenuComponent}>
                 <div className="user-section">
                     <div className="d-flex justify-content-center">
                         <img src={userSample} className="rounded-circle user-image" alt="Fifa Manager Logo"/>
@@ -70,27 +75,11 @@ class Header extends Component{
                 </div>
             </NavLink>
 
-
-
-
-
-// Cambiare icone e fare area per admin menu piu carina
-
-
-
-
-
-
-
-
-
-
-        // TODO - Super admin menu.
         let superAdminMenu =
             <ul>
                 <li>
-                    <NavLink to="/dashboard">
-                        <i className="fas fa-trophy"/>&nbsp;
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
+                        <i className="fas fa-user-lock"/>&nbsp;
                         Pannello admin
                     </NavLink>
                 </li>
@@ -108,38 +97,38 @@ class Header extends Component{
         let adminMenu =
             <ul>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-trophy"/>&nbsp;
                         Le mie competizioni
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-search"/>&nbsp;
                         Cerca una competizione
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-gamepad"/>&nbsp;
                         Cerca un player
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
-                        <i className="fas fa-gamepad"/>&nbsp;
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
+                        <i className="fas fa-calendar-plus"/>&nbsp;
                         Nuova competizione
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
-                        <i className="fas fa-gamepad"/>&nbsp;
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
+                        <i className="fas fa-poll-h"/>&nbsp;
                         Inserisci un risultato
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
-                        <i className="fas fa-gamepad"/>&nbsp;
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
+                        <i className="fas fa-user-lock"/>&nbsp;
                         Area admin
                     </NavLink>
                 </li>
@@ -157,19 +146,19 @@ class Header extends Component{
         let userMenu =
             <ul>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-trophy"/>&nbsp;
                         Le mie competizioni
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-search"/>&nbsp;
                         Cerca una competizione
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/dashboard">
+                    <NavLink to="/dashboard" onClick={this.hideMenuComponent}>
                         <i className="fas fa-gamepad"/>&nbsp;
                         Cerca un player
                     </NavLink>
@@ -183,32 +172,6 @@ class Header extends Component{
                     <Signature/>
                 </li>
             </ul>;
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /* Sidenav menu */
         let sideNavMenu = null;
