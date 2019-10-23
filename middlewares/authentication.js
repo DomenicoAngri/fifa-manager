@@ -13,6 +13,8 @@ function authenticationMiddleware(){
     authenticationMiddleware.checkMandatoryFields = checkMandatoryFields;
     authenticationMiddleware.checkLoginStatus = checkLoginStatus;
     authenticationMiddleware.checkPersonalIdentity = checkPersonalIdentity;
+    authenticationMiddleware.authenticationLikeAdmin = authenticationLikeAdmin;
+    authenticationMiddleware.authenticationLikeSuperAdmin = authenticationLikeSuperAdmin;
 
     return authenticationMiddleware;
 
@@ -44,8 +46,11 @@ function authenticationMiddleware(){
 
     function authentication(request, response, next){
         log.info('authenticationMiddleware --> authentication start.');
-
-        const token = request.params.token != null ? request.params.token : request.body.token;
+        
+        let token = request.headers['x-access-token'] || request.headers['authorization'];
+        if(token && token.startsWith('Bearer ')){
+            token = token.slice(7, token.length);
+        }
 
         const payload = isTokenValid(token);
 
@@ -62,10 +67,81 @@ function authenticationMiddleware(){
         }
     }
 
+    function authenticationLikeAdmin(request, response, next){
+        log.info('authenticationMiddleware --> authenticationLikeAdmin start.');
+        
+        let token = request.headers['x-access-token'] || request.headers['authorization'];
+        if(token && token.startsWith('Bearer ')){
+            token = token.slice(7, token.length);
+        }
+
+        const payload = isTokenValid(token);
+
+        if(payload){
+            log.info('Token is valid! You are authorized.');
+
+            if(payload.sub.isAdmin){
+                log.info('Good you are an admin, so you can acces to this resource!');
+                log.info('authenticationMiddleware --> authenticationLikeAdmin ended.');
+                next();
+            }
+            else{
+                log.info('I\'m sorry, but you aren\'t an admin, and you aren\'t authorized to access to this resource.');
+                log.info('authenticationMiddleware --> authenticationLikeAdmin ended.');
+                response.status(401).send(new responseMessage('ERR_041', 'ERROR --> I\'m sorry, but you aren\'t an admin, and you aren\'t authorized to access to this resource.'))
+                return;
+            }
+        }
+        else{
+            log.info('Token is not valid, your session is expired. Please login again!');
+            log.info('authenticationMiddleware --> authenticationLikeAdmin ended.');
+            response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Token is not valid, your session is expired. Please login again!'))
+            return;
+        }
+    }
+
+    function authenticationLikeSuperAdmin(request, response, next){
+        log.info('authenticationMiddleware --> authenticationLikeSuperAdmin start.');
+        
+        let token = request.headers['x-access-token'] || request.headers['authorization'];
+        if(token && token.startsWith('Bearer ')){
+            token = token.slice(7, token.length);
+        }
+
+        const payload = isTokenValid(token);
+
+        if(payload){
+            log.info('Token is valid! You are authorized.');
+
+            if(payload.sub.isSuperAdmin){
+                log.info('Good you are a super admin, so you can acces to this resource!');
+                log.info('authenticationMiddleware --> authenticationLikeSuperAdmin ended.');
+                next();
+            }
+            else{
+                log.info('I\'m sorry, but you aren\'t a super admin, and you aren\'t authorized to access to this resource.');
+                log.info('authenticationMiddleware --> authenticationLikeSuperAdmin ended.');
+                response.status(401).send(new responseMessage('ERR_042', 'ERROR --> I\'m sorry, but you aren\'t a super admin, and you aren\'t authorized to access to this resource.'))
+                return;
+            }
+        }
+        else{
+            log.info('Token is not valid, your session is expired. Please login again!');
+            log.info('authenticationMiddleware --> authenticationLikeSuperAdmin ended.');
+            response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Token is not valid, your session is expired. Please login again!'))
+            return;
+        }
+    }
+
     function checkLoginStatus(request, response){
         log.info('authenticationMiddleware --> checkLoginStatus start.');
 
-        const payload = isTokenValid(request.body.token);
+        let token = request.headers['x-access-token'] || request.headers['authorization'];
+        if(token && token.startsWith('Bearer ')){
+            token = token.slice(7, token.length);
+        }
+
+        const payload = isTokenValid(token);
 
         if(payload){
             log.info('Token is valid! You are authorized.');
@@ -103,10 +179,21 @@ function authenticationMiddleware(){
         // });
     }
 
+    /**
+     * This method check if the user is the same that wants to access (and add, edit or delete) to API for his resources.
+     * For example, if user wants edit his username, through backend API (not in FE, because it cannot access by UI)
+     * teorically it can add, edit or delete every username in the system. This middleware function, prevent this behavior,
+     * and allows to user, to add, edit or delete only his information, and not other from other users.
+     */
     function checkPersonalIdentity(request, response, next){
         log.info('authenticationMiddleware --> checkPersonalIdentity start.');
 
-        const payload = isTokenValid(request.body.token);
+        let token = request.headers['x-access-token'] || request.headers['authorization'];
+        if(token && token.startsWith('Bearer ')){
+            token = token.slice(7, token.length);
+        }
+
+        const payload = isTokenValid(token);
         const username = request.params.username;
 
         if(payload){
@@ -158,7 +245,7 @@ function authenticationMiddleware(){
         }
 
         log.info('Token is decoded and is valid.');
-        log.debug('Token username = ' + payload.sub + ' - Token expiration date = ' + payload.exp);
+        log.debug('Token username = ' + payload.sub.username + ' - Token expiration date = ' + payload.exp);
         log.info('authenticationMiddleware --> isTokenValid ended.');
 
         return payload;

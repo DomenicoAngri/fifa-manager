@@ -13,7 +13,6 @@ function userController(){
     let userController = this;
 
     userController.getUserByUsername = getUserByUsername;
-    // userController.checkIfUsernameIsUsed = checkIfUsernameIsUsed;
     userController.getAllUsers = getAllUsers;
     userController.insertNewUser = insertNewUser;
     userController.updateUser = updateUser;
@@ -39,7 +38,7 @@ function userController(){
             }
             else{
                 log.warn('WARN_020 - User ' + username + ' not found!');
-                response.status(404).send(new responseMessage('WARN_020','WARN --> User  ' + username + ' not found!'));
+                response.status(404).send(new responseMessage('WARN_020','WARN --> User ' + username + ' not found!'));
                 return;
             }
         })
@@ -50,33 +49,6 @@ function userController(){
             return;
         });
     }
-
-    // Is useful?
-    // function checkIfUsernameIsUsed(request, response){
-    //     const username = request.params.username;
-
-    //     log.logSeparator(console.info, 'INFO --> Checking username ' + username + ' is used..');
-    //     helper.getUserByUsername(username)
-    //     .then(function(user){
-    //         if(user != null){
-    //             log.logSeparator(console.warn, 'WARN - WARN_027 --> User ' + username + ' found!');
-    //             log.logSeparator(console.debug, user);
-    //             response.status(200).send({isUsernameUsed: true});
-    //             return;
-    //         }
-    //         else{
-    //             log.logSeparator(console.info, 'INFO --> Good! Username ' + username + ' is not used!');
-    //             response.status(200).send({isUsernameUsed: false});
-    //             return;
-    //         }
-    //     })
-    //     .catch(function(error){
-    //         log.logSeparator(console.error, 'FATAL - FAT_047 --> Fatal error on checking if username ' + username + ' is used.');
-    //         log.logSeparator(console.error, error);
-    //         response.status(500).send(new responseMessage('FAT_047', 'FATAL --> Fatal error on checking if username ' + username + ' is used. Check immediately console and logs.'));
-    //         return;
-    //     });
-    // }
 
     function getAllUsers(request, response){
         log.info('userController --> getAllUsers start.');
@@ -122,9 +94,14 @@ function userController(){
         helper.insertNewUser(newUser)
         .then(function(userSaved){
             log.info('User ' + username + ' registered!');
+
+            if(userSaved.password){
+                userSaved.password = undefined;
+            }
             
             log.info('Creating token for new user ' + username + '...');
-            const userInfoWithToken = createJWTToken(userSaved);
+            let userInfoWithToken = createJWTToken(userSaved);
+            
             log.info('Token for ' + username + ' created!');
 
             log.info('userController --> insertNewUser ended.');
@@ -145,15 +122,21 @@ function userController(){
 
         const username = request.params.username;
         log.debug('Updating user ' + username + '.');
-        log.debug('Info to update: ' + request.body)
 
         helper.updateUser(username, request.body)
         .then(function(userUpdated){
-            log.info('User ' + username + ' updated!');
-            log.debug(userUpdated);
-            log.info('userController --> updateUser ended.');
-            response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + username + ' updated correctly!'));
-            return;
+            if(userUpdated.nModified > 0){
+                log.info('User ' + username + ' updated!');
+                log.info('userController --> updateUser ended.');
+                response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + username + ' updated correctly!'));
+                return;
+            }
+            else{
+                log.warn('WARN_032 - User ' + username + ' not updated; this can be occurred when user not exists, or nothing new was updated.');
+                log.info('userController --> updateUser ended.');
+                response.status(404).send(new responseMessage('WARN_031','WARN --> User ' + username + ' not updated; this can be occurred when user not exists, or nothing new was updated.'));
+                return;
+            }            
         })
         .catch(function(error){
             log.error('FAT_024 - Fatal error on updating user ' + username + '.');
@@ -172,11 +155,18 @@ function userController(){
 
         helper.deleteUser(username)
         .then(function(userDeleted){
-            log.info('User ' + username + ' deleted correctly!');
-            log.debug(userDeleted);
-            log.info('userController --> deleteUser ended.');
-            response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + username + ' deleted correctly!'));
-            return;
+            if(userDeleted.deletedCount > 0){
+                log.info('User ' + username + ' deleted correctly!');
+                log.info('userController --> deleteUser ended.');
+                response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + username + ' deleted correctly!'));
+                return;
+            }
+            else{
+                log.warn('WARN_020 - User ' + username + ' not found!');
+                log.info('userController --> deleteUser ended.');
+                response.status(404).send(new responseMessage('WARN_020','WARN --> User ' + username + ' not found!'));
+                return;
+            }
         })
         .catch(function(error){
             log.error('FAT_026 - Fatal error on deleting user ' + username + '.');
@@ -220,7 +210,11 @@ function userController(){
                 if(bcrypt.compareSync(password, user.password)){
                     log.info('Password is correct!');
 
-                    const userInfoWithToken = createJWTToken(user);
+                    if(user.password){
+                        user.password = undefined;
+                    }
+
+                    let userInfoWithToken = createJWTToken(user);
                     log.info('Token and information created!');
 
                     response.status(200).send(userInfoWithToken);

@@ -112,7 +112,6 @@ function userHelper(){
             });
         });
     }
-
 }
 
 module.exports = new userHelper();
