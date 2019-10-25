@@ -2,16 +2,18 @@
  * League routes
  *******************************/
 
-  // Requirements.
+  // Requirements
 const express = require('express');
 const leagueController = require('./league.controller');
 const leagueMiddleware = require('./league.middleware');
 const auth = require('../../middlewares/authentication');
 
-// Initialize.
+// Initialize
 const router = express.Router();
 
-// Routes.
+/**************
+ * Routes
+ **************/
 
 router.put('/currentLeague/:id',
         // auth.authentication,

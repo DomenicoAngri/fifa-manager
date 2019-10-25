@@ -2,16 +2,18 @@
  * Team routes
  *******************************/
 
-// Requirements.
+// Requirements
 const express = require('express');
 const teamMiddleware = require('./team.middleware');
 const teamController = require('./team.controller');
 const auth = require('../../middlewares/authentication');
 
-// Initialize.
+// Initialize
 const router = express.Router();
 
-// Routes.
+/**************
+ * Routes
+ **************/
 
 router.get('/userteam/:username',
             // auth.authentication,

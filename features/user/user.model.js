@@ -141,10 +141,10 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
-    // TODO
+    // TODO 
     lastLogin: {
         type: Date,
-        required: true
+        required: false
     },
 
     /* Admin information */

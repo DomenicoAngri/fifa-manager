@@ -2,55 +2,49 @@
  * User routes
  *******************************/
 
- // Requirements.
+ // Requirements
 const express = require('express');
 const userController = require('./user.controller');
 const userMiddleware = require('./user.middleware');
 const auth = require('../../middlewares/authentication');
 
-// Initialize.
+// Initialize
 const router = express.Router();
 
-// Routes.
+/**************
+ * Routes
+ **************/
 
-// TODO - Develop admin permission for method.
 // TODOPOST - Total errors and warns review.
 
-// Is useful?
-// router.get('/checkUsernameExists/:username',
-//         userController.checkIfUsernameIsUsed
-// );
-
 router.post('/checkLoginStatus',
-        auth.checkLoginStatus
+    auth.checkLoginStatus
 );
 
-router.get('/:username/:token',
-        auth.authentication,
-        // userMiddleware.checkUserExists,
-        userController.getUserByUsername
+router.get('/:username',
+    auth.authentication,
+    userController.getUserByUsername
 );
 
 router.get('/',
-        auth.authentication,
-        userController.getAllUsers
+    auth.authentication,
+    userController.getAllUsers
 );
 
 router.post('/',
-        userMiddleware.checkMandatoryFields,
-        userMiddleware.checkUserNotExists,
-        userController.insertNewUser
+    userMiddleware.checkMandatoryFields,
+    userMiddleware.checkUserNotExists,
+    userController.insertNewUser
 );
 
 router.post('/login',
-        auth.checkMandatoryFields,
-        userController.login
+    auth.checkMandatoryFields,
+    userController.login
 );
 
 router.put('/:username',
-        auth.authentication,
-        auth.checkPersonalIdentity,
-        userController.updateUser
+    auth.checkPersonalIdentity,
+    userController.updateUser
 );
 
 // // TODO - Develop this method correctly.
@@ -61,9 +55,8 @@ router.put('/:username',
 // );
 
 router.delete('/:username',
-        auth.authentication,
-        auth.checkPersonalIdentity,
-        userController.deleteUser
+    auth.checkPersonalIdentity,
+    userController.deleteUser
 );
 
 module.exports = router;

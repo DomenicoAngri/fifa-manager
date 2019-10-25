@@ -10,15 +10,15 @@ export const startActionCreators = {
 function checkLoginStatus(){
     return (dispatch) => {
         dispatch(commonActions.showSpinner());
-
+        
         const token = localStorage.getItem('token');
         const checkLoginStatusUrl = '/api/user/checkLoginStatus';
 
-        const checkloginStatusBody = {
-            token: token
-        };  
+        const options = {
+            headers: {'authorization': token}
+        };
 
-        request.post(checkLoginStatusUrl, checkloginStatusBody)
+        request.post(checkLoginStatusUrl, null, options)
         .then(function(userInfo){
             dispatch(startActions.userAuthenticated(userInfo.data));
             dispatch(commonActions.hideSpinner());

@@ -11,9 +11,13 @@ function getUser(username, token){
     return (dispatch) => {
         dispatch(commonActions.showSpinner());
 
-        const getUserUrl = '/api/user/' + username + '/' + token;
+        const getUserUrl = '/api/user/' + username;
+        
+        const options = {
+            headers: {'authorization': token}
+        };
 
-        request.get(getUserUrl)
+        request.get(getUserUrl, options)
         .then(function(user){
             dispatch(userActions.getUser(user));
             dispatch(commonActions.hideSpinner());

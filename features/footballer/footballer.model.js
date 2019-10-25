@@ -6,19 +6,16 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 
 const footballerSchema = new mongoose.Schema({
-
-    // TODO: ID del giocatore?
-
     name: {
         type: String,
-        minlength: 3,
+        minlength: 2,
         maxlength: 50,
         unique: false,
-        required: false
+        required: true
     },
     surname: {
         type: String,
-        minlength: 3,
+        minlength: 2,
         maxlength: 50,
         unique: false,
         required: false
@@ -34,19 +31,17 @@ const footballerSchema = new mongoose.Schema({
         unique: false,
         required: false
     },
-    vg: {
+    overall: {
         type: Number,
         minlength: 1,
-        default: 1,
         unique: false,
-        required: true
+        required: false
     },
     marketValue: {
         type: Number,
         minlength: 1,
-        default: 1,
         unique: false,
-        required: true
+        required: false
     },
     currentTeam: {
         type: [ObjectId],
@@ -64,46 +59,53 @@ const footballerSchema = new mongoose.Schema({
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     yellowCards: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     redCards: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentScoredGoals: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentYellowCards: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentRedCards: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     position: {
         type: String,
-        minlength: 3,
+        minlength: 1,
+        maxlength: 50,
+        unique: false,
+        required: false
+    },
+    preferredFoot: {
+        type: String,
+        minlength: 1,
         maxlength: 50,
         unique: false,
         required: false
