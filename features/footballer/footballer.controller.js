@@ -14,6 +14,7 @@ function footballerController(){
     footballerController.insertNewFootballer = insertNewFootballer;
     footballerController.updateFootballer = updateFootballer;
     footballerController.deleteFootballer = deleteFootballer;
+    footballerController.insertFootballersCollection = insertFootballersCollection;
 
     return footballerController;
 
@@ -157,6 +158,36 @@ function footballerController(){
             log.error(error);
             log.info('footballerController --> deleteFootballer ended.');
             response.status(500).send(new responseMessage('FAT_053', 'FATAL --> Fatal error on deleting footballer with id = ' + id + '. Check immediately console and logs.'));
+            return;
+        });
+    }
+
+    function insertFootballersCollection(request, response){
+        log.info('footballerController --> insertFootballersCollection start.');
+
+        const footballersCollection = request.body.footballersCollection;
+        log.info('Inserting ' + footballersCollection.length + ' records.');
+
+        helper.insertFootballersCollection(footballersCollection)
+        .then(function(result){
+            if(result.insertedCount > 0){
+                log.info('Good! Inserted footballers: ' + result.insertedCount + '.');
+                log.info('footballerController --> insertFootballersCollection ended.');
+                response.status(200).send(new responseMessage('INFO', 'INFO --> Good! Inserted footballers: ' + result.insertedCount + '.'));
+                return;
+            }
+            else{
+                log.warn('WARN_033 - Sorry! No footballers inserted...');
+                log.info('footballerController --> insertFootballersCollection ended.');
+                response.status(404).send(new responseMessage('WARN_033','WARN --> Sorry! No footballers inserted, if you think there is an error, check mmediately console and logs.'));
+                return;
+            }
+        })
+        .catch(function(error){
+            log.error('FAT_054 - Fatal error on inserting footballers dataset.');
+            log.error(error);
+            log.info('footballerController --> insertFootballersCollection ended.');
+            response.status(500).send(new responseMessage('FAT_054', 'FATAL --> Fatal error on inserting footballers dataset. Check immediately console and logs.'));
             return;
         });
     }

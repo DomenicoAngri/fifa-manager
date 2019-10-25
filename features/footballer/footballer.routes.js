@@ -13,7 +13,6 @@ const router = express.Router();
 
 // TODO - Prevedere specie di paginazione in servizio getAll per non farsi restituire 20K record.
 // TODO - set footballer to team - search footballer from name, id - footballer pagination
-// TODO - insert a long dataset of all footballers
 
 /**************
  * Routes
@@ -31,7 +30,6 @@ router.get('/',
 
 router.post('/',
     auth.authenticationLikeAdmin,
-    footballerMiddleware.checkMandatoryFields,
     footballerController.insertNewFootballer
 );
 
@@ -43,6 +41,11 @@ router.put('/:footballerId',
 router.delete('/:footballerId',
     auth.authenticationLikeAdmin,
     footballerController.deleteFootballer
+);
+
+router.post('/insertFootballersCollection',
+    auth.authenticationLikeAdmin,
+    footballerController.insertFootballersCollection
 );
 
 module.exports = router;

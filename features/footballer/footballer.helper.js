@@ -12,6 +12,7 @@ function footballerHelper(){
     footballerHelper.insertNewFootballer = insertNewFootballer;
     footballerHelper.updateFootballer = updateFootballer;
     footballerHelper.deleteFootballer = deleteFootballer;
+    footballerHelper.insertFootballersCollection = insertFootballersCollection;
 
     return footballerHelper;
 
@@ -74,6 +75,18 @@ function footballerHelper(){
             footballerModel.deleteOne({_id: id})
             .then(function(footballerDeleted){
                 resolve(footballerDeleted);
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        });
+    }
+
+    function insertFootballersCollection(dataset){
+        return new Promise(function(resolve, reject){
+            footballerModel.collection.insertMany(dataset)
+            .then(function(result){
+                resolve(result);
             })
             .catch(function(error){
                 reject(error);
