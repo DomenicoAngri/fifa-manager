@@ -24,7 +24,7 @@ function login(username, password){
         request.post(loginUrl, loginBody)
         .then(function(userInfoWithToken){
             localStorage.setItem('token', userInfoWithToken.data.token);
-            localStorage.setItem('username', userInfoWithToken.data.userInfo.username);
+            localStorage.setItem('username', userInfoWithToken.data.userInfo.originalUsername);
 
             dispatch(startActions.userAuthenticated(userInfoWithToken));
             dispatch(commonActions.hideSpinner());

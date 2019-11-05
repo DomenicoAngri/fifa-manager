@@ -88,6 +88,7 @@ function userController(){
 
         let newUser = {
             username: username,
+            originalUsername: username,
             password: bcrypt.hashSync(password, 16)
         };
 

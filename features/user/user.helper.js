@@ -19,7 +19,7 @@ function userHelper(){
 
     function getUserByUsername(username){
         return new Promise(function(resolve, reject){
-            userModel.findOne({username: username})
+            userModel.findOne({username: new RegExp('^' + username + '$', 'i')})
             // .populate('team')
             .then(function(user){
                 resolve(user);
@@ -32,6 +32,8 @@ function userHelper(){
 
     function getUserWithPasswordByUsername(username){
         return new Promise(function(resolve, reject){
+            // This regex transform username in lowercase that comes from FE, for match with backend username lowercase.
+            // new RegExp('^' + username + '$', 'i')
             userModel.findOne({username: new RegExp('^' + username + '$', 'i')})
             .select('+password')
             .then(function(user){
@@ -72,7 +74,7 @@ function userHelper(){
     function updateUser(username, userBody){
         return new Promise(function(resolve, reject){
             userModel.updateOne(
-                {username: username},
+                {username: new RegExp('^' + username + '$', 'i')},
                 {$set: userBody},
                 {new: true}
             )
@@ -87,7 +89,7 @@ function userHelper(){
 
     function deleteUser(username){
         return new Promise(function(resolve, reject){
-            userModel.deleteOne({username: username})
+            userModel.deleteOne({username: new RegExp('^' + username + '$', 'i')})
             .then(function(userDeleted){
                 resolve(userDeleted);
             })
@@ -100,8 +102,8 @@ function userHelper(){
     function setUserTeam(username, teamId){
         return new Promise(function(resolve, reject){
             userModel.updateOne(
-                {username: username},
-                {team: teamId},
+                {username: new RegExp('^' + username + '$', 'i')},
+                {team: teamName},
                 {new: true}
             )
             .then(function(userUpdated){

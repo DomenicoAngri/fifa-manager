@@ -20,8 +20,8 @@ function footballerMiddleware(){
 
         if(!body.name || whiteSpaceValidation.test(body.name)){
             log.error('ERR_040 - Footballer name cannot be empty or null!');
-            response.status(400).send(new responseMessage('ERR_040', 'ERROR --> Footballer name cannot be empty or null!'));
             log.info('footballerMiddleware --> checkMandatoryFields ended.');
+            response.status(400).send(new responseMessage('ERR_040', 'ERROR --> Footballer name cannot be empty or null!'));
             return;
         }
         else{

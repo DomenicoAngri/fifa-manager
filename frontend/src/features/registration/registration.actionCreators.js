@@ -17,13 +17,14 @@ function userRegistration(username, password){
 
         const userRegistrationBody = {
             username: username,
+            originalUsername: username,
             password: password
         };
 
         request.post(userRegistrationUrl, userRegistrationBody)
         .then(function(userInfoWithToken){
             localStorage.setItem('token', userInfoWithToken.data.token);
-            localStorage.setItem('username', userInfoWithToken.data.userInfo.username);
+            localStorage.setItem('username', userInfoWithToken.data.userInfo.originalUsername);
 
             dispatch(startActions.userAuthenticated(userInfoWithToken));
             dispatch(commonActions.hideSpinner());

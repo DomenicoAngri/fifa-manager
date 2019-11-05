@@ -6,7 +6,15 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.ObjectId;
 
 const teamSchema = new mongoose.Schema({
-    name: {
+    teamName: {
+        type: String,
+        minlength: 2,
+        maxlength: 50,
+        lowercase: true,
+        unique: true,
+        required: true
+    },
+    originalTeamName: {
         type: String,
         minlength: 2,
         maxlength: 50,
@@ -22,7 +30,8 @@ const teamSchema = new mongoose.Schema({
         type: ObjectId,
         ref: 'user',
         unique: true,
-        required: false
+        required: false,
+        sparse: true
     },
     leagues: {
         type: [ObjectId],
@@ -35,119 +44,119 @@ const teamSchema = new mongoose.Schema({
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     concededGoals: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     wonMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     lossesMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     drawMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     totalMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     yellowCards: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     redCards: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentScoredGoals: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentConcededGoals: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentWonMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentLossesMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentDrawMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentTotalMatches: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     totalManagers:{
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentYellowCards: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     },
     currentRedCards: {
         type: Number,
         minlength: 0,
         default: 0,
         unique: false,
-        required: false
+        required: true
     }
 });
 

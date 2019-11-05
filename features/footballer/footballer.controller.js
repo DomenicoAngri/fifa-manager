@@ -37,7 +37,7 @@ function footballerController(){
             else{
                 log.warn('WARN_029 - Footballer with id = ' + id + ', not found!');
                 log.info('footballerController --> getFootballerById ended.');
-                response.status(404).send(new responseMessage('WARN_029','WARN --> Footballer with id = ' + id + ', not found!'));
+                response.status(404).send(new responseMessage('WARN_029', 'WARN --> Footballer with id = ' + id + ', not found!'));
                 return;
             }
         })
@@ -66,7 +66,7 @@ function footballerController(){
             else{
                 log.warn('WARN_030 - No footballers found!');
                 log.info('footballerController --> getAllFootballers ended.');
-                response.status(404).send(new responseMessage('WARN_030','WARN --> No footballers found!'));
+                response.status(404).send(new responseMessage('WARN_030', 'WARN --> No footballers found!'));
                 return;
             }
         })
@@ -119,7 +119,7 @@ function footballerController(){
             else{
                 log.warn('WARN_031 - Footballer with id = ' + id + ' not updated; this can be occurred when footballer not exists, or nothing new was updated.');
                 log.info('footballerController --> updateFootballer ended.');
-                response.status(404).send(new responseMessage('WARN_031','WARN --> Footballer with id = ' + id + ' not updated; this can be occurred when footballer not exists, or nothing new was updated.'));
+                response.status(404).send(new responseMessage('WARN_031', 'WARN --> Footballer with id = ' + id + ' not updated; this can be occurred when footballer not exists, or nothing new was updated.'));
                 return;
             }
         })
@@ -149,7 +149,7 @@ function footballerController(){
             else{
                 log.warn('WARN_029 - Footballer with id = ' + id + ', not found!');
                 log.info('footballerController --> deleteFootballer ended.');
-                response.status(404).send(new responseMessage('WARN_029','WARN --> Footballer with id = ' + id + ', not found!'));
+                response.status(404).send(new responseMessage('WARN_029', 'WARN --> Footballer with id = ' + id + ', not found!'));
                 return;
             }
         })
@@ -179,7 +179,7 @@ function footballerController(){
             else{
                 log.warn('WARN_033 - Sorry! No footballers inserted...');
                 log.info('footballerController --> insertFootballersCollection ended.');
-                response.status(404).send(new responseMessage('WARN_033','WARN --> Sorry! No footballers inserted, if you think there is an error, check mmediately console and logs.'));
+                response.status(404).send(new responseMessage('WARN_033', 'WARN --> Sorry! No footballers inserted, if you think there is an error, check mmediately console and logs.'));
                 return;
             }
         })

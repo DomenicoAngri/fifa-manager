@@ -7,7 +7,7 @@ const teamModel = require('./team.model');
 function teamHelper(){
     let teamHelper = this;
 
-    teamHelper.getTeamById = getTeamById;
+    teamHelper.getTeamByName = getTeamByName;
     teamHelper.getAllTeams = getAllTeams;
     teamHelper.getTeamByUser = getTeamByUser;
     teamHelper.insertNewTeam = insertNewTeam;
@@ -15,15 +15,13 @@ function teamHelper(){
     // teamHelper.setUserTeam = setUserTeam;
     teamHelper.deleteTeam = deleteTeam;
 
-    // TODO
-    // deleteteam by user?
-    // updateteam by user?
-
     return teamHelper;
 
-    function getTeamById(id){
+    function getTeamByName(teamName){
         return new Promise(function(resolve, reject){
-            teamModel.findOne({id: id})
+            // This regex transform teamName in lowercase that comes from FE, for match with backend teamName lowercase.
+            // new RegExp('^' + teamName + '$', 'i')
+            teamModel.findOne({teamName: new RegExp('^' + teamName + '$', 'i')})
             .then(function(team){
                 resolve(team);
             })
@@ -59,18 +57,7 @@ function teamHelper(){
 
     function insertNewTeam(teamBody){
         return new Promise(function(resolve, reject){
-            let team = new teamModel();
-
-            team.id = teamBody.id;
-            team.name = teamBody.name;
-            team.createdData = teamBody.createdData;
-            team.managerUser = teamBody.managerUser;
-            team.leagues = teamBody.leagues;
-            team.scoredGoals = teamBody.scoredGoals;
-            team.concededGoals = teamBody.concededGoals;
-            team.wonMatches = teamBody.wonMatches;
-            team.lossesMatches = teamBody.lossesMatches;
-            team.drawMatches = teamBody.drawMatches;
+            let team = new teamModel(teamBody);
 
             team.save()
             .then(function(teamSaved){
@@ -82,10 +69,10 @@ function teamHelper(){
         });
     }
 
-    function updateteam(id, teamBody){
+    function updateteam(teamName, teamBody){
         return new Promise(function(resolve, reject){
             teamModel.updateOne(
-                {id: id},
+                {teamName: new RegExp('^' + teamName + '$', 'i')},
                 {$set: teamBody},
                 {new: true}
             )
@@ -101,9 +88,9 @@ function teamHelper(){
     // function setUserTeam(teamId, username){
     // }
 
-    function deleteTeam(id){
+    function deleteTeam(teamName){
         return new Promise(function(resolve, reject){
-            userModel.deleteOne({id: id})
+            teamModel.deleteOne({teamName: new RegExp('^' + teamName + '$', 'i')})
             .then(function(teamDeleted){
                 resolve(teamDeleted);
             })
@@ -112,7 +99,6 @@ function teamHelper(){
             });
         });
     }
-
 }
 
 module.exports = new teamHelper();

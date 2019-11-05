@@ -11,40 +11,47 @@ const auth = require('../../middlewares/authentication');
 // Initialize
 const router = express.Router();
 
+// TODO - set team to user - search team from name, id - team pagination (??)
+// TODO - Delete team by user, set - unset team by user
+// TODO - da sviluppare appena team ed user saranno connessi
+
 /**************
  * Routes
  **************/
 
 router.get('/userteam/:username',
-            // auth.authentication,
-            teamMiddleware.checkTeamExists,
-            teamController.getTeamByUser);
+    auth.authentication,
+    teamController.getTeamByUser
+);
 
-router.get('/:id',
-            // auth.authentication,
-            teamMiddleware.checkTeamExists,
-            teamController.getTeamById);
+router.get('/:teamName',
+    auth.authentication,
+    teamMiddleware.checkTeamExists,
+    teamController.getTeamByName
+);
 
 router.get('/',
-            // auth.authentication,
-            teamController.getAllTeams);
+    auth.authentication,
+    teamController.getAllTeams
+);
 
 router.post('/',
-            // auth.authentication,
-            teamMiddleware.checkMandatoryFields,
-            teamMiddleware.checkTeamNotExists,
-            teamController.insertNewTeam);
+    auth.authenticationLikeAdmin,
+    teamMiddleware.checkMandatoryFields,
+    teamMiddleware.checkTeamNotExists,
+    teamController.insertNewTeam
+);
 
-router.put('/:id',
-            // auth.authentication,
-            teamMiddleware.checkTeamExists,
-            teamController.updateTeam);
+router.put('/:teamName',
+    auth.authenticationLikeAdmin,
+    teamMiddleware.checkTeamExists,
+    teamController.updateTeam
+);
 
-// router.put('/:id/:username', teamController.setUserTeam);
-
-router.delete('/:id',
-            // auth.authentication,
-            teamMiddleware.checkTeamExists,
-            teamController.deleteTeam);
+router.delete('/:teamName',
+    auth.authenticationLikeAdmin,
+    teamMiddleware.checkTeamExists,
+    teamController.deleteTeam
+);
 
 module.exports = router;

@@ -208,7 +208,7 @@ function authenticationMiddleware(){
             else{
                 log.warn('WARN_028 - Username is not valid! Please logout and repeate the operation.');
                 log.info('authenticationMiddleware --> checkPersonalIdentity ended.');
-                response.status(401).send(new responseMessage('INFO', 'INFO --> Token is not valid, your session is expired. Please login again!'));
+                response.status(401).send(new responseMessage('INFO', 'WARN_028 --> Username is not valid! Please logout and repeate the operation.'));
                 return;
             }   
         }

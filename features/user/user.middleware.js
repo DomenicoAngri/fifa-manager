@@ -36,6 +36,12 @@ function userMiddleware(){
             log.info('userMiddleware --> checkMandatoryFields ended.');
             return;
         }
+        else if(!body.originalUsername || whiteSpaceValidation.test(body.originalUsername)){
+            log.error('ERR_035 - Original username cannot be empty or null!');
+            response.status(400).send(new responseMessage('ERR_035', 'ERROR --> Original username cannot be empty or null!'));
+            log.info('userMiddleware --> checkMandatoryFields ended.');
+            return;
+        }
         else{
             log.info('Username and password are valid!');
             log.info('userMiddleware --> checkMandatoryFields ended.');
