@@ -2,7 +2,8 @@
  * User controller
  *******************************/
 
-const helper = require('./user.helper');
+const userHelper = require('./user.helper');
+const teamHelper = require('../team/team.helper');
 const responseMessage = require('../../utils/responseMessage');
 const log = require('../../utils/logger');
 const jwt = require('jwt-simple');
@@ -18,6 +19,7 @@ function userController(){
     userController.updateUser = updateUser;
     userController.deleteUser = deleteUser;
     userController.setUserTeam = setUserTeam;
+    userController.unsetUserTeam = unsetUserTeam;
     userController.login = login;
 
     return userController;
@@ -27,7 +29,7 @@ function userController(){
 
         const username = request.params.username;
 
-        helper.getUserByUsername(username)
+        userHelper.getUserByUsername(username)
         .then(function(user){
             if(user != null){
                 log.info('User ' + username + ' found!');
@@ -53,7 +55,7 @@ function userController(){
     function getAllUsers(request, response){
         log.info('userController --> getAllUsers start.');
 
-        helper.getAllUsers()
+        userHelper.getAllUsers()
         .then(function(users){
             log.info('Users found in db: ' + users.length + '.');
 
@@ -92,7 +94,7 @@ function userController(){
             password: bcrypt.hashSync(password, 16)
         };
 
-        helper.insertNewUser(newUser)
+        userHelper.insertNewUser(newUser)
         .then(function(userSaved){
             log.info('User ' + username + ' registered!');
 
@@ -124,7 +126,7 @@ function userController(){
         const username = request.params.username;
         log.debug('Updating user ' + username + '.');
 
-        helper.updateUser(username, request.body)
+        userHelper.updateUser(username, request.body)
         .then(function(userUpdated){
             if(userUpdated.nModified > 0){
                 log.info('User ' + username + ' updated!');
@@ -154,7 +156,7 @@ function userController(){
         const username = request.params.username;
         log.info('Deleting user: ' + username);
 
-        helper.deleteUser(username)
+        userHelper.deleteUser(username)
         .then(function(userDeleted){
             if(userDeleted.deletedCount > 0){
                 log.info('User ' + username + ' deleted correctly!');
@@ -179,20 +181,107 @@ function userController(){
     }
 
     function setUserTeam(request, response){
-        const username = request.params.username;
-        const teamId = request.params.teamId;
+        log.info('userController --> setUserTeam start.');
 
-        helper.setUserTeam(username, teamId)
+        const username = request.body.username;
+        const teamId = request.body.teamId;
+        const body = {team: teamId};
+        log.debug('Username = ' + username);
+        log.debug('Team ID = ' + teamId);
+
+        userHelper.updateUser(username, body)
         .then(function(userUpdated){
-            log.logSeparator(console.info, 'INFO --> ' + teamId + ' team correctly added to user ' + username + '!');
-            log.logSeparator(console.debug, userUpdated);
-            response.status(200).send(new responseMessage('INFO', 'INFO --> ' + teamId + ' team correctly added to user ' + username + '!'));
-            return;
+            if(userUpdated.nModified > 0){
+                log.info('Team with ID = ' + teamId + ' correctly assigned to ' + username + '!');
+                
+                const teamName = userUpdated.teamName;
+                const userId = userUpdated._id;
+                const body = {
+                    managerUser: userId,
+                    currentScoredGoals: 0,
+                    currentConcededGoals: 0,
+                    currentWonMatches: 0,
+                    currentLossesMatches: 0,
+                    currentDrawMatches: 0,
+                    currentTotalMatches: 0,
+                    currentYellowCards: 0,
+                    currentRedCards: 0,
+                    totalManager: +1
+                };
+
+                log.info('Starting updating team\'s manager id...');
+
+                /// SONO QUI DICE CHE IL TEAM NAME ED USERID SONO UNDEFINED
+                
+                log.debug('Team name = ' + teamName);
+                log.debug('User id = ' + userId);
+
+                teamHelper.updateteam(teamName, body)
+                .then(function(teamUpdated){
+                    if(teamUpdated.nModified > 0){
+                        log.info('Team ' + teamName + ' updated with new user manager!');
+                        log.debug(teamUpdated);
+                        log.info('userController --> setUserTeam ended.');
+                        response.status(200).send(new responseMessage('INFO', 'INFO --> Team with ID = ' + teamId + ' correctly assigned to ' + username + '!'));
+                        return;
+                    }
+                    else{
+                        log.warn('WARN_043 - ' + username + '\'s team not updated; this can be occurred when user cannot have assigned team, user or team not exists, or nothing new was updated. This is very strange, because user is updated a little while ago, check immediatly probably for probably errors.');
+                        log.info('userController --> setUserTeam ended.');
+                        response.status(404).send(new responseMessage('WARN_043','WARN --> ' + username + '\'s team not updated; this can be occurred when user cannot have assigned team, user or team not exists, or nothing new was updated. This is very strange, because user is updated a little while ago, check immediatly for probably errors.'));
+                        return;
+                    }
+                })
+                .catch(function(error){
+                    log.error('FAT_056 --> Fatal error on updating team with new info.');
+                    log.error(error);
+                    log.info('userController --> setUserTeam ended.');
+                    response.status(500).send(new responseMessage('FAT_056', 'FATAL --> Fatal error on updating team with new info. Check immediately console and logs.'));
+                    return;
+                });
+            }
+            else{
+                log.warn('WARN_039 - Team with ID = ' + teamId + ' not assigned to ' + username + '; this can be occurred when user or team not exists, or nothing new was updated.');
+                log.info('userController --> setUserTeam ended.');
+                response.status(404).send(new responseMessage('WARN_039','WARN --> Team with ID = ' + teamId + ' not assigned to ' + username + '; this can be occurred when user or team not exists, or nothing new was updated.'));
+                return;
+            }
         })
         .catch(function(error){
-            log.logSeparator(console.error, 'FATAL - FAT_044 --> Fatal error on adding ' + teamId + ' team to user ' + username + '.');
-            log.logSeparator(console.error, error);
-            response.status(500).send(new responseMessage('FAT_044', 'FATAL --> Fatal error on adding ' + teamId + ' team to user ' + username + '. Check immediately console and logs.'));
+            log.error('FAT_044 --> Fatal error on adding team with ID = ' + teamId + ' to user ' + username + '.');
+            log.error(error);
+            log.info('userController --> setUserTeam ended.');
+            response.status(500).send(new responseMessage('FAT_044', 'FATAL --> Fatal error on adding team with ID = ' + teamId + ' to user ' + username + '. Check immediately console and logs.'));
+            return;
+        });
+    }
+
+    function unsetUserTeam(request, response){
+        log.info('userController --> unsetUserTeam start.');
+
+        const username = request.body.username;
+        const body = {team: null}
+        log.debug('Username = ' + username);
+
+        userHelper.updateUser(username, body)
+        .then(function(userUpdated){
+            if(userUpdated.nModified > 0){
+                log.info(username + '\'s team correctly unset!');
+                log.info('userController --> unsetUserTeam ended.');
+                response.status(200).send(new responseMessage('INFO', 'INFO --> ' + username + '\'s team correctly unset!'));
+                return;
+            }
+            else{
+                log.warn('WARN_042 - ' + username + '\'s team not unsetted; this can be occurred when user cannot have assigned team, user or team not exists, or nothing new was updated.');
+                log.info('userController --> unsetUserTeam ended.');
+                response.status(404).send(new responseMessage('WARN_042','WARN --> ' + username + '\s team not unsetted; this can be occurred when user cannot have assigned team, user or team not exists, or nothing new was updated.'));
+                return;
+            }
+        })
+        .catch(function(error){
+            log.error('FAT_044 --> Fatal error on unsetting ' + username + '\'s team.');
+            log.error(error);
+            response.status(500).send(new responseMessage('FAT_044', 'FATAL --> Fatal error on unsetting ' + username + '\s team. Check immediately console and logs.'));
             return;
         });
     }
@@ -203,7 +292,7 @@ function userController(){
         const username = request.body.username;
         const password = request.body.password;
 
-        helper.getUserWithPasswordByUsername(username)
+        userHelper.getUserWithPasswordByUsername(username)
         .then(function(user){
             if(user !== null){
                 log.info('User ' + user.username + ' found!');

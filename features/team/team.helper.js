@@ -8,6 +8,7 @@ function teamHelper(){
     let teamHelper = this;
 
     teamHelper.getTeamByName = getTeamByName;
+    teamHelper.getTeamById = getTeamById;
     teamHelper.getAllTeams = getAllTeams;
     teamHelper.getTeamByUser = getTeamByUser;
     teamHelper.insertNewTeam = insertNewTeam;
@@ -22,6 +23,18 @@ function teamHelper(){
             // This regex transform teamName in lowercase that comes from FE, for match with backend teamName lowercase.
             // new RegExp('^' + teamName + '$', 'i')
             teamModel.findOne({teamName: new RegExp('^' + teamName + '$', 'i')})
+            .then(function(team){
+                resolve(team);
+            })
+            .catch(function(error){
+                reject(error);
+            })
+        });
+    }
+
+    function getTeamById(teamId){
+        return new Promise(function(resolve, reject){
+            teamModel.findOne({_id: teamId})
             .then(function(team){
                 resolve(team);
             })
@@ -84,9 +97,6 @@ function teamHelper(){
             });
         });
     }
-
-    // function setUserTeam(teamId, username){
-    // }
 
     function deleteTeam(teamName){
         return new Promise(function(resolve, reject){

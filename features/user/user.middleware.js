@@ -5,46 +5,95 @@
 const userHelper = require('./user.helper');
 const responseMessage = require('../../utils/responseMessage');
 const log = require('../../utils/logger');
+const whiteSpaceValidation = RegExp('^ *$');
 
 function userMiddleware(){
     let userMiddleware = this;
 
-    userMiddleware.checkMandatoryFields = checkMandatoryFields;
+    userMiddleware.checkUsernameField = checkUsernameField;
+    userMiddleware.checkPasswordField = checkPasswordField;
+    userMiddleware.checkOriginalUsernameField = checkOriginalUsernameField;
+    userMiddleware.checkTeamIdField = checkTeamIdField;
     userMiddleware.checkUserExists = checkUserExists;
     userMiddleware.checkUserNotExists = checkUserNotExists;
 
     return userMiddleware;
 
     /**
-     * Check mandatory fields for new user.
+     * Check mandatory fields.
      */
-    function checkMandatoryFields(request, response, next){
-        log.info('userMiddleware --> checkMandatoryFields start.');
 
-        const body = request.body;
-        const whiteSpaceValidation = RegExp('^ *$');
+    function checkUsernameField(request, response, next){
+        log.info('userMiddleware --> checkUsernameField start.');
 
-        if(!body.username || whiteSpaceValidation.test(body.username)){
+        const username = request.body.username;
+        log.debug('Username = ' + username);
+
+        if(!username || whiteSpaceValidation.test(username)){
             log.error('ERR_020 - Username cannot be empty or null!');
             response.status(400).send(new responseMessage('ERR_020', 'ERROR --> Username cannot be empty or null!'));
-            log.info('userMiddleware --> checkMandatoryFields ended.');
-            return;
-        }
-        else if(!body.password || whiteSpaceValidation.test(body.password)){
-            log.error('ERR_022 - Password cannot be empty or null!');
-            response.status(400).send(new responseMessage('ERR_022', 'ERROR --> Password cannot be empty or null!'));
-            log.info('userMiddleware --> checkMandatoryFields ended.');
-            return;
-        }
-        else if(!body.originalUsername || whiteSpaceValidation.test(body.originalUsername)){
-            log.error('ERR_035 - Original username cannot be empty or null!');
-            response.status(400).send(new responseMessage('ERR_035', 'ERROR --> Original username cannot be empty or null!'));
-            log.info('userMiddleware --> checkMandatoryFields ended.');
+            log.info('userMiddleware --> checkUsernameField ended.');
             return;
         }
         else{
-            log.info('Username and password are valid!');
-            log.info('userMiddleware --> checkMandatoryFields ended.');
+            log.info('Username is valid!');
+            log.info('userMiddleware --> checkUsernameField ended.');
+            next();
+        }
+    }
+
+    function checkPasswordField(request, response, next){
+        log.info('userMiddleware --> checkPasswordField start.');
+
+        const password = request.body.password;
+
+        if(!password || whiteSpaceValidation.test(password)){
+            log.error('ERR_022 - Password cannot be empty or null!');
+            response.status(400).send(new responseMessage('ERR_022', 'ERROR --> Password cannot be empty or null!'));
+            log.info('userMiddleware --> checkPasswordField ended.');
+            return;
+        }
+        else{
+            log.info('Password is valid!');
+            log.info('userMiddleware --> checkPasswordField ended.');
+            next();
+        }
+    }
+
+    function checkOriginalUsernameField(request, response, next){
+        log.info('userMiddleware --> checkOriginalUsernameField start.');
+
+        const originalUsername = request.body.originalUsername;
+        log.debug('Original username = ' + originalUsername);
+
+        if(!originalUsername || whiteSpaceValidation.test(originalUsername)){
+            log.error('ERR_035 - Original username cannot be empty or null!');
+            response.status(400).send(new responseMessage('ERR_035', 'ERROR --> Original username cannot be empty or null!'));
+            log.info('userMiddleware --> checkOriginalUsernameField ended.');
+            return;
+        }
+        else{
+            log.info('Original username is valid!');
+            log.info('userMiddleware --> checkOriginalUsernameField ended.');
+            next();
+        }
+    }
+
+    function checkTeamIdField(request, response, next){
+        log.info('userMiddleware --> checkTeamIdField start.');
+
+        const teamId = request.body.teamId;
+        log.debug('Team ID = ' + teamId);
+        
+        if(!teamId || whiteSpaceValidation.test(teamId)){
+            log.error('ERR_043 - Team ID cannot be empty or null!');
+            log.info('userMiddleware --> checkTeamIdField ended.');
+            response.status(400).send(new responseMessage('ERR_043', 'ERROR --> Team ID cannot be empty or null!'));
+            return;
+        }
+        else{
+            log.info('Team ID is valid!');
+            log.info('userMiddleware --> checkTeamIdField ended.');
             next();
         }
     }
@@ -92,16 +141,16 @@ function userMiddleware(){
             else{
                 log.warn('WARN_022 - User ' + username + ' exists! Username is not available.');
                 log.debug(user);
-                response.status(409).send(new responseMessage('WARN_022', 'WARN --> User ' + username + ' exists!'));
                 log.info('userMiddleware --> checkUserNotExists ended.');
+                response.status(409).send(new responseMessage('WARN_022', 'WARN --> User ' + username + ' exists!'));
                 return;
             }
         })
         .catch(function(error){
             log.error('FAT_025 - Fatal error on checking user ' + username + ' not exists.');
             log.error(error);
-            response.status(500).send(new responseMessage('FAT_025', 'FATAL --> Fatal error on checking user ' + username + ' not exists. Check immediately console and logs.'));
             log.info('userMiddleware --> checkUserNotExists ended.');
+            response.status(500).send(new responseMessage('FAT_025', 'FATAL --> Fatal error on checking user ' + username + ' not exists. Check immediately console and logs.'));
             return;
         });
     }

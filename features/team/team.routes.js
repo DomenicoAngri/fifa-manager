@@ -13,7 +13,6 @@ const router = express.Router();
 
 // TODO - set team to user - search team from name, id - team pagination (??)
 // TODO - Delete team by user, set - unset team by user
-// TODO - da sviluppare appena team ed user saranno connessi
 
 /**************
  * Routes

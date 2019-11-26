@@ -11,7 +11,9 @@ function teamMiddleware(){
 
     teamMiddleware.checkMandatoryFields = checkMandatoryFields;
     teamMiddleware.checkTeamExists = checkTeamExists;
+    teamMiddleware.checkTeamExistsById = checkTeamExistsById;
     teamMiddleware.checkTeamNotExists = checkTeamNotExists;
+    teamMiddleware.checkIfTeamIsFree = checkIfTeamIsFree;
 
     return teamMiddleware;
 
@@ -72,6 +74,36 @@ function teamMiddleware(){
         });
     }
 
+    function checkTeamExistsById(request, response, next){
+        log.info('teamMiddleware --> checkTeamExistsById start.');
+
+        const teamId = request.params.teamId != null ? request.params.teamId : request.body.teamId;
+        log.debug('Team ID = ' + teamId + '.');
+
+        teamHelper.getTeamById(teamId)
+        .then(function(team){
+            if(team){
+                log.info('Team exists, you can go to next step!');
+                log.debug(team);
+                log.info('teamMiddleware --> checkTeamExistsById ended.');
+                next();
+            }
+            else{
+                log.warn('WARN_040 --> Team with ID = ' + teamId + ' not exists, you cannot go to next step!');
+                log.info('teamMiddleware --> checkTeamExistsById ended.');
+                response.status(404).send(new responseMessage('WARN_040', 'WARNING --> Team with ID = ' + teamId + ' not exists, you cannot go to next step!'));
+                return;
+            }
+        })
+        .catch(function(error){
+            log.error('FAT_047 --> Fatal server error on checking team with ID = ' + teamId + ' exists.');
+            log.error(error);
+            log.info('teamMiddleware --> checkTeamExistsById ended.');
+            response.status(500).send(new responseMessage('FAT_047', 'FATAL --> Fatal server error on checking team with ID = ' + teamId + ' exists. Check immediately console and logs.'));
+            return;
+        });
+    }
+
     function checkTeamNotExists(request, response, next){
         log.info('teamMiddleware --> checkTeamNotExists start.');
 
@@ -98,6 +130,45 @@ function teamMiddleware(){
             log.error(error);
             log.info('teamMiddleware --> checkTeamNotExists ended.');
             response.status(500).send(new responseMessage('FAT_036', 'FATAL --> Fatal error on checking team ' + teamName + ' not exists. Check immediately console and logs.'));
+        });
+    }
+
+    function checkIfTeamIsFree(request, response, next){
+        log.info('userMiddleware --> checkIfTeamIsFree start.');
+
+        const teamId = request.params.teamId != null ? request.params.teamId : request.body.teamId;
+        log.debug('Team id = ' + teamId);
+
+        teamHelper.getTeamById(teamId)
+        .then(function(team){
+            if(team){
+                log.info('Team with id = ' + teamId + ' found!');
+                log.debug(team);
+
+                if(!team.managerUser){
+                    log.info('Manager is not assigned to this club, you can continue with next step!');
+                    log.info('userMiddleware --> checkIfTeamIsFree ended.');
+                    next();
+                }
+                else{
+                    log.warn('WARN_041 - Manager is already assigned to club with id ' + teamId + ', you cannot continue with next step!');
+                    log.info('userMiddleware --> checkIfTeamIsFree ended.');
+                    response.status(409).send(new responseMessage('WARN_041', 'Manager is already assigned to club with id ' + teamId + ', you cannot continue with next step!'));
+                    return;
+                }
+            }
+            else{
+                log.warn('WARN_040 --> Team with ID = ' + teamId + ' not exists, you cannot go to next step!');
+                log.info('teamMiddleware --> checkIfTeamIsFree ended.');
+                response.status(404).send(new responseMessage('WARN_040', 'WARNING --> Team with ID = ' + teamId + ' not exists, you cannot go to next step!'));
+                return;
+            }
+        })
+        .catch(function(error){
+            log.error('FAT_055 --> Fatal error on checking team with ID ' + teamId + ' is free.');
+            log.error(error);
+            log.info('teamMiddleware --> checkTeamNotExists ended.');
+            response.status(500).send(new responseMessage('FAT_055', 'FATAL --> Fatal error on checking team with ID ' + teamId + ' is free. Check immediately console and logs.'));
         });
     }
 }

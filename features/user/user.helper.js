@@ -13,14 +13,13 @@ function userHelper(){
     userHelper.insertNewUser = insertNewUser;
     userHelper.updateUser = updateUser;
     userHelper.deleteUser = deleteUser;
-    userHelper.setUserTeam = setUserTeam;
 
     return userHelper;
 
     function getUserByUsername(username){
         return new Promise(function(resolve, reject){
             userModel.findOne({username: new RegExp('^' + username + '$', 'i')})
-            // .populate('team')
+            .populate('team')
             .then(function(user){
                 resolve(user);
             })
@@ -48,6 +47,7 @@ function userHelper(){
     function getAllUsers(){
         return new Promise(function(resolve, reject){
             userModel.find({})
+            .populate('team')
             .then(function(users){
                 resolve(users);
             })
@@ -92,22 +92,6 @@ function userHelper(){
             userModel.deleteOne({username: new RegExp('^' + username + '$', 'i')})
             .then(function(userDeleted){
                 resolve(userDeleted);
-            })
-            .catch(function(error){
-                reject(error);
-            });
-        });
-    }
-
-    function setUserTeam(username, teamId){
-        return new Promise(function(resolve, reject){
-            userModel.updateOne(
-                {username: new RegExp('^' + username + '$', 'i')},
-                {team: teamName},
-                {new: true}
-            )
-            .then(function(userUpdated){
-                resolve(userUpdated);
             })
             .catch(function(error){
                 reject(error);

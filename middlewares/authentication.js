@@ -5,6 +5,7 @@
 const log = require('../utils/logger');
 const jwt = require('jwt-simple');
 const responseMessage = require('../utils/responseMessage');
+const userHelper = require('../features/user/user.helper');
 
 function authenticationMiddleware(){
     let authenticationMiddleware = this;
@@ -144,10 +145,32 @@ function authenticationMiddleware(){
         const payload = isTokenValid(token);
 
         if(payload){
-            log.info('Token is valid! You are authorized.');
-            log.info('authenticationMiddleware --> checkLoginStatus ended.');
-            response.status(200).send(payload.sub);
-            return;
+            log.info('Token is valid! Checking username...');
+            const username = payload.sub.username;
+
+            userHelper.getUserByUsername(username)
+            .then(function(user){
+                if(user){
+                    log.info('User ' + username + ' stored in token, found! You are authorized!');
+                    log.debug(user);
+                    log.info('authenticationMiddleware --> checkLoginStatus ended.');
+                    response.status(200).send(payload.sub);
+                    return;
+                }
+                else{
+                    log.error('ERR_039 --> Username stored in session not found. Please login again.');
+                    log.info('authenticationMiddleware --> checkLoginStatus ended.');
+                    response.status(401).send(new responseMessage('ERR_039', 'ERROR --> Username stored in session not found. Please login again.'))
+                    return;
+                }
+            })
+            .catch(function(error){
+                log.error('FAT_048 --> Fatal error on checking login status.');
+                log.error(error);
+                log.info('authenticationMiddleware --> checkLoginStatus ended.');
+                response.status(500).send(new responseMessage('FAT_048', 'FATAL --> Fatal error on checking login status. Check immediately console and logs.'));
+                return;
+            });
         }
         else{
             log.info('Token is not valid, your session is expired. Please login again!');
@@ -155,28 +178,6 @@ function authenticationMiddleware(){
             response.status(401).send(new responseMessage('ERR_038', 'ERROR --> Token is not valid, your session is expired. Please login again!'))
             return;
         }
-
-        // TODOPOST - This validation is very useful for user validation, but in this moment is not our goal.
-        // userHelper.getUserByUsername(payload.sub)
-        // .then(function(user){
-        //     if(user !== null){
-        //         log.logSeparator(console.info, 'User ' + payload.sub + ' stored in token, found!')
-        //         log.logSeparator(console.debug, user);
-        //         response.status(200).send(new responseMessage('INFO', 'INFO --> User ' + payload.sub + ' stored in token, found!'));
-        //         return;
-        //     }
-        //     else{
-        //         log.logSeparator(console.error, 'ERROR - ERR_039 --> Username stored in session not found. Please login again.');
-        //         response.status(401).send(new responseMessage('ERR_039', 'ERROR --> Username stored in session not found. Please login again.'))
-        //         return;
-        //     }
-        // })
-        // .catch(function(error){
-        //     log.logSeparator(console.error, 'FATAL - FAT_048 --> Fatal error on checking login status.');
-        //     log.logSeparator(console.error, error);
-        //     response.status(500).send(new responseMessage('FAT_048', 'FATAL --> Fatal error on checking login status.'));
-        //     return;
-        // });
     }
 
     /**
@@ -250,7 +251,6 @@ function authenticationMiddleware(){
 
         return payload;
     }
-
 }
 
 module.exports = new authenticationMiddleware();

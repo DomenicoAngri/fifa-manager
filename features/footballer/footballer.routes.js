@@ -13,6 +13,7 @@ const router = express.Router();
 
 // TODO - Prevedere specie di paginazione in servizio getAll per non farsi restituire 20K record.
 // TODO - set footballer to team - search footballer from name, id - footballer pagination
+// TODO - Sviluppare metodo che prende in input una serie di giocatori e li associa tutti ad un team, senza fare uno ad uno.
 
 /**************
  * Routes

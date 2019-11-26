@@ -137,13 +137,6 @@ const teamSchema = new mongoose.Schema({
         unique: false,
         required: true
     },
-    totalManagers:{
-        type: Number,
-        minlength: 0,
-        default: 0,
-        unique: false,
-        required: true
-    },
     currentYellowCards: {
         type: Number,
         minlength: 0,
@@ -152,6 +145,13 @@ const teamSchema = new mongoose.Schema({
         required: true
     },
     currentRedCards: {
+        type: Number,
+        minlength: 0,
+        default: 0,
+        unique: false,
+        required: true
+    },
+    totalManagers:{
         type: Number,
         minlength: 0,
         default: 0,
