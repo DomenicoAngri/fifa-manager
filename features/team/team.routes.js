@@ -36,7 +36,7 @@ router.get('/',
 
 router.post('/',
     auth.authenticationLikeAdmin,
-    teamMiddleware.checkMandatoryFields,
+    teamMiddleware.checkTeamNameField,
     teamMiddleware.checkTeamNotExists,
     teamController.insertNewTeam
 );

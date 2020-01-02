@@ -180,22 +180,41 @@ function userController(){
         });
     }
 
+    /* 
+        1) rifare metodo per consistenza delle informazioni passate.
+        2) fare metodo in modo che astragga tutto all'utilizzatore e faccia tutto da solo.
+        dall'aggiornamento del team ai dati, se un team è già assegnato all'utente,
+        se un team è già assegnato ad un altro utente, diassociare team all'utente.
+
+        SetUserTeam, vuole in ingresso nome del team ed username della persona alla quale assegnarlo.
+
+        - Controllare che team da assegnare sia libero?
+        - Se non libero fare tutto in automatico, o restituire messaggio di errore?
+        - Se utente non ha team assegnazione è diretta
+        - Se utente ha team, sostituire team attuale aggiornarnando senza rompere coglioni all'utente finale
+    */
+
     function setUserTeam(request, response){
         log.info('userController --> setUserTeam start.');
 
+        const userId = request.body.userId;
         const username = request.body.username;
         const teamId = request.body.teamId;
+        const teamName = request.body.teamName;
         const body = {team: teamId};
+        log.debug('User ID = ' + userId);
         log.debug('Username = ' + username);
         log.debug('Team ID = ' + teamId);
+        log.debug('Team name = ' + teamName);
 
+        // Here we are updating first user profile with team ID.
         userHelper.updateUser(username, body)
         .then(function(userUpdated){
             if(userUpdated.nModified > 0){
                 log.info('Team with ID = ' + teamId + ' correctly assigned to ' + username + '!');
                 
-                const teamName = userUpdated.teamName;
-                const userId = userUpdated._id;
+                // After user update, we have to update the team info with user ID.
+                // We are restoring all current information to default value, but we will increase total manager with +1.
                 const body = {
                     managerUser: userId,
                     currentScoredGoals: 0,
@@ -210,12 +229,7 @@ function userController(){
                 };
 
                 log.info('Starting updating team\'s manager id...');
-
-                /// SONO QUI DICE CHE IL TEAM NAME ED USERID SONO UNDEFINED
                 
-                log.debug('Team name = ' + teamName);
-                log.debug('User id = ' + userId);
-
                 teamHelper.updateteam(teamName, body)
                 .then(function(teamUpdated){
                     if(teamUpdated.nModified > 0){

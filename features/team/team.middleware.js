@@ -6,40 +6,55 @@ const teamHelper = require('./team.helper');
 const responseMessage = require('../../utils/responseMessage');
 const log = require('../../utils/logger');
 
+const whiteSpaceValidation = RegExp('^ *$');
+
 function teamMiddleware(){
     let teamMiddleware = this;
-
-    teamMiddleware.checkMandatoryFields = checkMandatoryFields;
+    
+    teamMiddleware.checkTeamNameField = checkTeamNameField;
+    teamMiddleware.checkOriginalTeamNameField = checkOriginalTeamNameField;
     teamMiddleware.checkTeamExists = checkTeamExists;
+    teamMiddleware.checkTeamIdField = checkTeamIdField;
     teamMiddleware.checkTeamExistsById = checkTeamExistsById;
     teamMiddleware.checkTeamNotExists = checkTeamNotExists;
     teamMiddleware.checkIfTeamIsFree = checkIfTeamIsFree;
 
     return teamMiddleware;
 
-    function checkMandatoryFields(request, response, next){
-        log.info('teamMiddleware --> checkMandatoryFields start.');
+    function checkTeamNameField(request, response, next){
+        log.info('teamMiddleware --> checkTeamName start.');
 
         const teamName = request.body.teamName;
-        const originalTeamName = request.body.originalTeamName;
-        const whiteSpaceValidation = RegExp('^ *$');
-        log.debug('Team name = ' + teamName + '.');
+        log.debug('Team name = ' + teamName);
 
         if(!teamName || whiteSpaceValidation.test(teamName)){
             log.error('ERR_033 --> Team name cannot be empty or null!');
-            log.info('teamMiddleware --> checkMandatoryFields ended.');
             response.status(400).send(new responseMessage('ERR_033', 'ERROR --> Team name cannot be empty or null!'));
-            return;
-        }
-        else if(!originalTeamName || whiteSpaceValidation.test(originalTeamName)){
-            log.error('ERR_034 --> Original team name cannot be empty or null!');
-            log.info('teamMiddleware --> checkMandatoryFields ended.');
-            response.status(400).send(new responseMessage('ERR_034', 'ERROR --> Original team name cannot be empty or null!'));
+            log.info('teamMiddleware --> checkTeamName ended.');
             return;
         }
         else{
             log.info('Team name is valid!');
-            log.info('teamMiddleware --> checkMandatoryFields ended.');
+            log.info('teamMiddleware --> checkTeamName ended.');
+            next();
+        }
+    }
+
+    function checkOriginalTeamNameField(request, response, next){
+        log.info('teamMiddleware --> checkOriginalTeamName start.');
+
+        const originalTeamName = request.body.originalTeamName;
+        log.debug('Original team name = ' + originalTeamName);
+
+        if(!originalTeamName || whiteSpaceValidation.test(originalTeamName)){
+            log.error('ERR_034 --> Original team name cannot be empty or null!');
+            log.info('teamMiddleware --> checkOriginalTeamName ended.');
+            response.status(400).send(new responseMessage('ERR_034', 'ERROR --> Original team name cannot be empty or null!'));
+            return;
+        }
+        else{
+            log.info('Original team name is valid!');
+            log.info('teamMiddleware --> checkOriginalTeamName ended.');
             next();
         }
     }
@@ -72,6 +87,25 @@ function teamMiddleware(){
             response.status(500).send(new responseMessage('FAT_043', 'FATAL --> Fatal server error on checking team ' + teamName + ' exists. Check immediately console and logs.'));
             return;
         });
+    }
+
+    function checkTeamIdField(request, response, next){
+        log.info('teamMiddleware --> checkTeamIdField start.');
+
+        const teamId = request.body.teamId;
+        log.debug('Team ID = ' + teamId);
+        
+        if(!teamId || whiteSpaceValidation.test(teamId)){
+            log.error('ERR_043 - Team ID cannot be empty or null!');
+            log.info('teamMiddleware --> checkTeamIdField ended.');
+            response.status(400).send(new responseMessage('ERR_043', 'ERROR --> Team ID cannot be empty or null!'));
+            return;
+        }
+        else{
+            log.info('Team ID is valid!');
+            log.info('teamMiddleware --> checkTeamIdField ended.');
+            next();
+        }
     }
 
     function checkTeamExistsById(request, response, next){

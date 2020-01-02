@@ -10,19 +10,38 @@ const whiteSpaceValidation = RegExp('^ *$');
 function userMiddleware(){
     let userMiddleware = this;
 
+    userMiddleware.checkUserIdField = checkUserIdField;
     userMiddleware.checkUsernameField = checkUsernameField;
     userMiddleware.checkPasswordField = checkPasswordField;
     userMiddleware.checkOriginalUsernameField = checkOriginalUsernameField;
-    userMiddleware.checkTeamIdField = checkTeamIdField;
     userMiddleware.checkUserExists = checkUserExists;
     userMiddleware.checkUserNotExists = checkUserNotExists;
 
     return userMiddleware;
 
+    function checkUserIdField(request, response, next){
+        log.info('userMiddleware --> checkUserIdField start.');
+
+        const userId = request.body.userId;
+        log.debug('User ID = ' + userId);
+
+        if(!userId || whiteSpaceValidation.test(userId)){
+            log.error('ERR_044 - User ID cannot be empty or null!');
+            response.status(400).send(new responseMessage('ERR_044', 'ERROR --> User ID cannot be empty or null!'));
+            log.info('userMiddleware --> checkUserIdField ended.');
+            return;
+        }
+        else{
+            log.info('User ID is valid!');
+            log.info('userMiddleware --> checkUserIdField ended.');
+            next();
+        }
+    }
+
     /**
      * Check mandatory fields.
      */
-
+    
     function checkUsernameField(request, response, next){
         log.info('userMiddleware --> checkUsernameField start.');
 
@@ -75,25 +94,6 @@ function userMiddleware(){
         else{
             log.info('Original username is valid!');
             log.info('userMiddleware --> checkOriginalUsernameField ended.');
-            next();
-        }
-    }
-
-    function checkTeamIdField(request, response, next){
-        log.info('userMiddleware --> checkTeamIdField start.');
-
-        const teamId = request.body.teamId;
-        log.debug('Team ID = ' + teamId);
-        
-        if(!teamId || whiteSpaceValidation.test(teamId)){
-            log.error('ERR_043 - Team ID cannot be empty or null!');
-            log.info('userMiddleware --> checkTeamIdField ended.');
-            response.status(400).send(new responseMessage('ERR_043', 'ERROR --> Team ID cannot be empty or null!'));
-            return;
-        }
-        else{
-            log.info('Team ID is valid!');
-            log.info('userMiddleware --> checkTeamIdField ended.');
             next();
         }
     }
