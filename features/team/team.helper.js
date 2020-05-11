@@ -82,11 +82,13 @@ function teamHelper(){
         });
     }
 
-    function updateteam(teamName, teamBody){
+    function updateteam(teamName, updateOperator, teamBody){
         return new Promise(function(resolve, reject){
+            const updateOperatorQuery = updateOperator ? {[updateOperator]: teamBody} : {$set: teamBody};
+
             teamModel.updateOne(
                 {teamName: new RegExp('^' + teamName + '$', 'i')},
-                {$set: teamBody},
+                updateOperatorQuery,
                 {new: true}
             )
             .then(function(teamUpdated){

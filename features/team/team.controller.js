@@ -14,7 +14,6 @@ function teamController(){
     teamController.getTeamByUser = getTeamByUser;
     teamController.insertNewTeam = insertNewTeam;
     teamController.updateTeam = updateTeam;
-    // teamController.setUserTeam = setUserTeam;
     teamController.deleteTeam = deleteTeam;
 
     return teamController;
@@ -139,7 +138,7 @@ function teamController(){
         const teamName = request.params.teamName;
         log.debug('Updating ' + teamName + '\s team...');
 
-        helper.updateteam(teamName, request.body)
+        helper.updateteam(teamName, null, request.body)
         .then(function(teamUpdated){
             if(teamUpdated.nModified > 0){
                 log.info('Team ' + teamName + ' updated!');
@@ -162,9 +161,6 @@ function teamController(){
             return;
         });
     }
-
-    // function setUserTeam(request, response){
-    // }
 
     function deleteTeam(request, response){
         log.info('teamController --> deleteTeam start.');

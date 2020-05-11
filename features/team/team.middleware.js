@@ -18,6 +18,8 @@ function teamMiddleware(){
     teamMiddleware.checkTeamExistsById = checkTeamExistsById;
     teamMiddleware.checkTeamNotExists = checkTeamNotExists;
     teamMiddleware.checkIfTeamIsFree = checkIfTeamIsFree;
+    teamMiddleware.checkIfTeamIsNotFree = checkIfTeamIsNotFree;
+    // userMiddleware.checkTeamConsistency = checkTeamConsistency;
 
     return teamMiddleware;
 
@@ -168,7 +170,7 @@ function teamMiddleware(){
     }
 
     function checkIfTeamIsFree(request, response, next){
-        log.info('userMiddleware --> checkIfTeamIsFree start.');
+        log.info('teamMiddleware --> checkIfTeamIsFree start.');
 
         const teamId = request.params.teamId != null ? request.params.teamId : request.body.teamId;
         log.debug('Team id = ' + teamId);
@@ -180,14 +182,14 @@ function teamMiddleware(){
                 log.debug(team);
 
                 if(!team.managerUser){
-                    log.info('Manager is not assigned to this club, you can continue with next step!');
-                    log.info('userMiddleware --> checkIfTeamIsFree ended.');
+                    log.info('Team is free, you can continue with next step!');
+                    log.info('teamMiddleware --> checkIfTeamIsFree ended.');
                     next();
                 }
                 else{
-                    log.warn('WARN_041 - Manager is already assigned to club with id ' + teamId + ', you cannot continue with next step!');
-                    log.info('userMiddleware --> checkIfTeamIsFree ended.');
-                    response.status(409).send(new responseMessage('WARN_041', 'Manager is already assigned to club with id ' + teamId + ', you cannot continue with next step!'));
+                    log.warn('WARN_041 - Team is already assigned to manager with id ' + team.managerUser + ', you cannot continue with next step!');
+                    log.info('teamMiddleware --> checkIfTeamIsFree ended.');
+                    response.status(409).send(new responseMessage('WARN_041', 'Team is already assigned to manager with id ' + team.managerUser + ', you cannot continue with next step!'));
                     return;
                 }
             }
@@ -201,10 +203,82 @@ function teamMiddleware(){
         .catch(function(error){
             log.error('FAT_055 --> Fatal error on checking team with ID ' + teamId + ' is free.');
             log.error(error);
-            log.info('teamMiddleware --> checkTeamNotExists ended.');
+            log.info('teamMiddleware --> checkIfTeamIsFree ended.');
             response.status(500).send(new responseMessage('FAT_055', 'FATAL --> Fatal error on checking team with ID ' + teamId + ' is free. Check immediately console and logs.'));
         });
     }
+
+    function checkIfTeamIsNotFree(request, response, next){
+        log.info('teamMiddleware --> checkIfTeamIsNotFree start.');
+
+        const teamId = request.params.teamId != null ? request.params.teamId : request.body.teamId;
+        log.debug('Team id = ' + teamId);
+
+        teamHelper.getTeamById(teamId)
+        .then(function(team){
+            if(team){
+                log.info('Team with id = ' + teamId + ' found!');
+                log.debug(team);
+
+                if(team.managerUser){
+                    log.info('Team have manager, you can continue with next step!');
+                    log.info('teamMiddleware --> checkIfTeamIsNotFree ended.');
+                    next();
+                }
+                else{
+                    log.warn('WARN_044 - Team not have a manger, so you cannot continue with next step!');
+                    log.info('teamMiddleware --> checkIfTeamIsNotFree ended.');
+                    response.status(409).send(new responseMessage('WARN_044', 'Team not have a manger, so you cannot continue with next step'));
+                    return;
+                }
+            }
+            else{
+                log.warn('WARN_040 --> Team with ID = ' + teamId + ' not exists, you cannot go to next step!');
+                log.info('teamMiddleware --> checkIfTeamIsNotFree ended.');
+                response.status(404).send(new responseMessage('WARN_040', 'WARNING --> Team with ID = ' + teamId + ' not exists, you cannot go to next step!'));
+                return;
+            }
+        })
+        .catch(function(error){
+            log.error('FAT_058 --> Fatal error on checking team with ID ' + teamId + ' is not free.');
+            log.error(error);
+            log.info('teamMiddleware --> checkIfTeamIsNotFree ended.');
+            response.status(500).send(new responseMessage('FAT_058', 'FATAL --> Fatal error on checking team with ID ' + teamId + ' is not free. Check immediately console and logs.'));
+        });
+    }
+    
+    // function checkTeamConsistency(request, response, next){
+    //     log.info('teamMiddleware --> checkTeamConsistency start.');
+
+    //     teamId = request.params.teamId != null ? request.params.teamId : request.body.teamId;
+    //     teamName = request.params.teamName != null ? request.params.teamName : request.body.teamName;
+    //     log.debug('TeamID = ' + teamId);
+    //     log.debug('Team = ' + teamName);
+
+    //     log.info('Getting team ' + teamName + ' info...');
+    //     userHelper.getTeamByName(teamName)
+    //     .then((team) => {
+    //         if(team && team.teamId === teamId){
+    //             log.info("Good! Team information are consistent! You can continue with next step!");
+    //             log.debug(team);
+    //             log.info('teamMiddleware --> checkTeamConsistency ended.');
+    //             next();
+    //         }
+    //         else{
+    //             log.error('ERR_047 - Team ' + teamName + ' and userID = ' + teamId + 'aren\'t not consistent. You cannot continue with next step!');
+    //             response.status(400).send(new responseMessage('ERR_047', 'ERROR --> Team ' + teamName + ' and userID = ' + teamId + 'aren\'t not consistent. You cannot continue with next step!'));
+    //             log.info('teamMiddleware --> checkTeamConsistency ended.');
+    //             return;
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         log.error('FAT_062 - Fatal error on getting ' + teamName + ' team.');
+    //         log.error(error);
+    //         response.status(500).send(new responseMessage('FAT_062', 'FATAL --> Fatal error on getting ' + teamName + ' team. Check immediately console and logs.'));
+    //         log.info('teamMiddleware --> checkTeamConsistency ended.');
+    //         return;
+    //     });
+    // }
 }
 
  module.exports = new teamMiddleware();

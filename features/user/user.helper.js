@@ -71,11 +71,13 @@ function userHelper(){
         });
     }
 
-    function updateUser(username, userBody){
+    function updateUser(username, updateOperator, userBody){
         return new Promise(function(resolve, reject){
+            const updateOperatorQuery = updateOperator ? {[updateOperator]: userBody} : {$set: userBody};
+
             userModel.updateOne(
                 {username: new RegExp('^' + username + '$', 'i')},
-                {$set: userBody},
+                updateOperatorQuery,
                 {new: true}
             )
             .then(function(userUpdated){

@@ -16,7 +16,7 @@ const router = express.Router();
  * Routes
  **************/
 
-// TODOPOST - Total errors and warns review.
+// TODO - Total errors and warns review.
 // TODO - Pensare cosa mettere dentro il local storage così da evitare sempre le chiamate a BE
 // TODO - Pensare ad un sistema di cache
 // TODO - Fare metodo per "disabilitare" utente e per staccargli tutto, team giocatori, leghe ecc, cioè archiviarlo.
@@ -54,20 +54,30 @@ router.post('/login',
 
 router.put('/setUserTeam',
     auth.authenticationLikeAdmin,
+    userMiddleware.checkUserIdField,
     userMiddleware.checkUsernameField,
     teamMiddleware.checkTeamIdField,
+    teamMiddleware.checkTeamNameField,
     userMiddleware.checkUserExists,
-    teamMiddleware.checkTeamExistsById,
+    teamMiddleware.checkTeamExists,
+    userMiddleware.checkIfUserNotHaveTeam,
     teamMiddleware.checkIfTeamIsFree,
+    // userMiddleware.checkUserAndTeamInfoConsistency,
     userController.setUserTeam
 );
 
-router.put('/unsetUserTeam',
-    auth.authenticationLikeAdmin,
-    userMiddleware.checkUsernameField,
-    userMiddleware.checkUserExists,
-    userController.unsetUserTeam
-);
+// router.put('/unsetUserTeam',
+//     userMiddleware.checkUserIdField,
+//     userMiddleware.checkUsernameField,
+//     teamMiddleware.checkTeamIdField,
+//     teamMiddleware.checkTeamNameField,
+//     userMiddleware.checkUserExists,
+//     teamMiddleware.checkTeamExists,
+//     userMiddleware.checkIfUserHaveTeam,
+//     teamMiddleware.checkIfTeamIsNotFree,
+//     userMiddleware.checkUserAndTeamInfoConsistency,
+//     userController.unsetUserTeam
+// );
 
 // TODO - mettere username qui nel body
 

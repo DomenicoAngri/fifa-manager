@@ -126,7 +126,7 @@ function userController(){
         const username = request.params.username;
         log.debug('Updating user ' + username + '.');
 
-        userHelper.updateUser(username, request.body)
+        userHelper.updateUser(username, null, request.body)
         .then(function(userUpdated){
             if(userUpdated.nModified > 0){
                 log.info('User ' + username + ' updated!');
@@ -180,18 +180,13 @@ function userController(){
         });
     }
 
-    /* 
-        1) rifare metodo per consistenza delle informazioni passate.
-        2) fare metodo in modo che astragga tutto all'utilizzatore e faccia tutto da solo.
-        dall'aggiornamento del team ai dati, se un team è già assegnato all'utente,
-        se un team è già assegnato ad un altro utente, diassociare team all'utente.
+    /*
+        TODO SONO QUI, DEVO FARE I TEST. NON funziona unset.
 
-        SetUserTeam, vuole in ingresso nome del team ed username della persona alla quale assegnarlo.
+        TODO NICEHAVE: Se si chiamano due servizi uno interno all'altro, il cui risultato dipende dall'altro, e se succede che uno va in errore 
+        e l'altro resta aggiornato, bisognerebbe trovare il modo di rollbackare il tutto.
 
-        - Controllare che team da assegnare sia libero?
-        - Se non libero fare tutto in automatico, o restituire messaggio di errore?
-        - Se utente non ha team assegnazione è diretta
-        - Se utente ha team, sostituire team attuale aggiornarnando senza rompere coglioni all'utente finale
+        TODO: vedere se il manager +1 funziona. Visto, sembra non funzionare, ma forse per colpa del bug di sopra. Vedere quando si risolve altro bug.
     */
 
     function setUserTeam(request, response){
@@ -208,7 +203,7 @@ function userController(){
         log.debug('Team name = ' + teamName);
 
         // Here we are updating first user profile with team ID.
-        userHelper.updateUser(username, body)
+        userHelper.updateUser(username, null, body)
         .then(function(userUpdated){
             if(userUpdated.nModified > 0){
                 log.info('Team with ID = ' + teamId + ' correctly assigned to ' + username + '!');
@@ -230,7 +225,7 @@ function userController(){
 
                 log.info('Starting updating team\'s manager id...');
                 
-                teamHelper.updateteam(teamName, body)
+                teamHelper.updateteam(teamName, null, body)
                 .then(function(teamUpdated){
                     if(teamUpdated.nModified > 0){
                         log.info('Team ' + teamName + ' updated with new user manager!');
@@ -273,17 +268,59 @@ function userController(){
     function unsetUserTeam(request, response){
         log.info('userController --> unsetUserTeam start.');
 
+        const userId = request.body.userId;
         const username = request.body.username;
+        const teamId = request.body.teamId;
+        const teamName = request.body.teamName;
         const body = {team: null}
+        log.debug('User ID = ' + userId);
         log.debug('Username = ' + username);
+        log.debug('Team ID = ' + teamId);
+        log.debug('Team name = ' + teamName);
 
-        userHelper.updateUser(username, body)
+        userHelper.updateUser(username, '$unset', body)
         .then(function(userUpdated){
             if(userUpdated.nModified > 0){
-                log.info(username + '\'s team correctly unset!');
-                log.info('userController --> unsetUserTeam ended.');
-                response.status(200).send(new responseMessage('INFO', 'INFO --> ' + username + '\'s team correctly unset!'));
-                return;
+                log.info(username + '\'s team correctly unset from user model!');
+
+                // After user update, we have to update the team info with user ID.
+                // We are restoring all current information to default value.
+                const body = {
+                    currentScoredGoals: 0,
+                    currentConcededGoals: 0,
+                    currentWonMatches: 0,
+                    currentLossesMatches: 0,
+                    currentDrawMatches: 0,
+                    currentTotalMatches: 0,
+                    currentYellowCards: 0,
+                    currentRedCards: 0
+                };
+
+                log.info('Starting remove user with ID = ' + userId + ' from ' + teamName + '\'s team...');
+
+                teamHelper.updateteam(teamName, '$unset', body)
+                .then(teamUpdated => {
+                    if(teamUpdated.nModified > 0){
+                        log.info('User with ID = ' + userId + ' deleted from ' + teamName + ' team!');
+                        log.debug(teamUpdated);
+                        log.info('userController --> unsetUserTeam ended.');
+                        response.status(200).send(new responseMessage('INFO', 'INFO --> ' + username + '\'s team correctly unset!'));
+                        return;
+                    }
+                    else{
+                        log.warn('WARN_042 - ' + username + '\'s team not unsetted; this can be occurred when user cannot have assigned team, user or team not exists, or nothing new was updated.');
+                        log.info('userController --> setUserTeam ended.');
+                        response.status(404).send(new responseMessage('WARN_042','WARN --> ' + username + '\s team not unsetted; this can be occurred when user cannot have assigned team, user or team not exists, or nothing new was updated.'));
+                        return;
+                    }
+                })
+                .catch(error => {
+                    log.error('FAT_057 --> Fatal error on updating team ' + teamName + ' for unset manager with ID = ' + userId + '.');
+                    log.error(error);
+                    log.info('userController --> unsetUserTeam ended.');
+                    response.status(500).send(new responseMessage('FAT_057', 'FATAL --> Fatal error on updating team ' + teamName + ' for unset manager with ID = ' + userId + '. Check immediately console and logs.'));
+                    return;
+                });                
             }
             else{
                 log.warn('WARN_042 - ' + username + '\'s team not unsetted; this can be occurred when user cannot have assigned team, user or team not exists, or nothing new was updated.');
